@@ -1,0 +1,104 @@
+.parent {
+    background-color: #324B50;
+}
+
+.content{
+    border: #fff solid 10px;
+    border-radius: 15px;
+    color: #324B50;
+}
+
+.inputField input{
+    border: solid 2px #356E79;
+}
+
+.leftPart, .rigthPart{
+    height: 90vh;
+
+}
+.leftPart{
+    border-radius: 15px;
+    background: #E4F5E9;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0px 40px;
+}
+
+.leftPart h1{
+    font-size: 1.75rem;
+    font-weight: 600;
+}
+
+.imgField{
+    width: 80%
+}
+
+.rigthPart h2{
+    font-size: 3rem;
+    font-weight: 600;
+}
+
+.rigthPart p{
+    font-size: 1.3rem;
+}
+
+.inputDiv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 15px 0px;
+}
+
+.inputDiv p{
+    margin-bottom: 30px;
+}
+
+.input{
+    border: 2px solid #356E79;
+    border-radius: 5px;
+    margin: 5px 0px;
+    height: 40px;
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 15px;
+}
+
+.input input{
+    height: 100%;
+    width: 100%;
+    font-size: 1.35rem;
+}
+
+.content svg{
+    font-size: 1.5rem;
+}
+
+.btn{
+    height: 40px;
+    min-width: 120px;
+    max-width: 170px;
+    border-radius: 5px;
+    margin: 10px 0px;
+    padding: 5px 10px;
+    background: #324B50;
+    font-size: 1.25rem;
+    color: #fff ;
+    text-align: center;
+}
+
+.btn button{
+    margin: 0px 5px;
+}
+
+.footer p{
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+.footer a{
+    text-decoration: underline;
+}
