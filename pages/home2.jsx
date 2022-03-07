@@ -7,9 +7,9 @@ import doctor3 from "../assets/doctor3.svg";
 function Home2() {
   return (
     <>
-      <div className="flex justify-center relative">
+      <div className="flex justify-center relative mt-[-55px]">
         <button
-          className=" mb-[-20px] bg-[#356E79] font-medium inline-flex items-center px-8 py-3 rounded-2xl shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
+          className=" mb-[-20px] bg-[#356E79] font-medium inline-flex items-center px-10 py-2 rounded-2xl shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
           type="submit"
         >
           why choose us?

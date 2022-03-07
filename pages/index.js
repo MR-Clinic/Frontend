@@ -1,22 +1,18 @@
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
+import Navbar from "./navbar";
+import Footer from "./footer";
+import Home1 from "./home1";
+import Home2 from "./home2";
 
 export default function Home() {
   return (
     <>
-      <h1 className="text-3xl   text-blue-400 rounded-lg underline">
-        Hello world!
-      </h1>
-      <h1 className="text-3xl  font-poppins   text-blue-400 rounded-lg underline">
-        Hello world!
-      </h1>
-      <h1 className="text-3xl  font-inter  text-blue-400 rounded-lg underline">
-        Hello world!
-      </h1>
-      <h1 className="text-3xl  font-redhat   text-blue-400 rounded-lg underline">
-        Hello world!
-      </h1>
+      <Navbar />
+      <Home1 />
+      <Home2 />
+      <Footer />
     </>
   );
 }
