@@ -1,9 +1,5 @@
 import React from "react";
 import Image from "next/image";
-// palleteLight1: "#E4F5E9",
-//         palleteDark1: "#356E79",
-//         palleteLight2: "#95B0B6",
-//         palleteDark2: "#324B50",
 import { FaForward } from "react-icons/fa";
 import imgHome from "../assets/imgHome.svg";
 
