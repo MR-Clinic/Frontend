@@ -11,42 +11,52 @@ import swal from "sweetalert";
 const urlRegisterPatient = "";
 
 function SignUpPatient() {
-  const [userName, setUserName] = useState("");
+  const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   const validateRegister = () => {
-    if (userName.trim() < 0) {
-      swal("name can't be empty");
+    if(username === '' && email === '' && password === ''){
+      swal("Input Kosong", "Silahkan Masukkan Data Yang Sesuai", "error");
+    }else if (username === '') {
+      swal("Input Salah", "Username Tidak Boleh Kosong", "error");
+    } else if (username.match(/^$|\s+/)) {
+      swal("Input Salah", "Username Tidak Boleh  Ada Spasi", "error");
     } else if (email === "") {
-      swal("email can't be empty");
+      swal("Input Salah", "Email Tidak Boleh Kosong", "error");
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
-      swal("please, input the correct email");
+      swal("Input Salah", "Format Email Salah", "error");
     } else if (password === "") {
-      swal("password can't be empty");
+      swal("Input Salah", "Password Tidak Boleh Kosong", "error");
+    } else if (password.length < 8) {
+      swal("Input Salah", "Password Kurang Dari 8 Karakter", "error")
     } else {
-      RegisterClinic();
+      swal("Selamat Datang Kembali", "Anda akan diarahkan ke halaman dashboard","success")
+      setInterval(() => {
+        swal.close();
+        
+      }, 3000);
     }
   };
 
   return (
     <>
-      <div className="bg-[#324B50] p-20 text-[#324B50] font-redhat">
-        <div className="bg-white p-2 rounded-lg shadow-white shadow-md">
-          <div className="grid grid-cols-3  rounded-lg">
+      <div className="bg-[#324B50] p-20 text-[#324B50] font-redhat min-h-screen flex">
+        <div className="bg-white px-5 py-3 rounded-lg  shadow-md h-[80vh]">
+          <div className="grid grid-cols-3  rounded-lg h-full">
             {/* left-section */}
-            <div className="grid bg-[#E4F5E9] drop-shadow-lg ">
-              <div className="grid justify-center ">
-                <div className="w-[230px] h-[80px] pt-[200px]">
-                  <Image src={logoImg} />
-                </div>
-                <div className="w-[250px] mt-[80px]">
+            <div className="grid bg-[#E4F5E9] rounded-lg ">
+              <div className="grid items-center justify-center px-24">
+                <div>
+                  <div className="w-5/6">
+                    <Image src={logoImg} />
+                  </div>
                   <p className=" font-semibold text-[30px] leading-[35px] ">
                     {" "}
                     Website Medical Record Clinic{" "}
                   </p>
-                  <p className=" pt-2 text-[16px] leading-[20px] pb-[150px]">
+                  <p className=" pt-2 text-[16px] leading-[20px]">
                     {" "}
                     Sistemasi Data Kesehatan Terpercaya !{" "}
                   </p>
@@ -54,17 +64,17 @@ function SignUpPatient() {
               </div>
             </div>
             {/* right-section */}
-            <div className="col-span-2 bg-white drop-shadow-lg rounded-lg z-10 ">
+            <div className="col-span-2 bg-white rounded-lg z-10 flex justify-center items-center relative">
               <div className="grid justify-center capitalize ">
-                <p className="font-semibold text-[40px] leading-[50px] w-[400px] text-center pt-[100px]">
-                  mulai jaga kesehatanmu!
+                <p className="font-semibold text-[40px] leading-[50px] text-center">
+                  ayo mulai buka klinik milik kamu!
                 </p>
                 <div className="flex justify-center">
                   <p> selamat datang, silahkan daftarkan akun mu !</p>
                 </div>
                 {/* input button */}
-                <div className=" py-5 space-y-3">
-                  <div className="relative block">
+                <div className=" py-5 space-y-3 ">
+                  <div className="relative block w-4/6 m-auto">
                     <input
                       type="text"
                       className="placeholder-[#324B50] form-control block w-full px-4 py-2 text-lg font-normal text-gray-700 bg-white bg-clip-padding
@@ -77,7 +87,7 @@ function SignUpPatient() {
                       <FaRegUser size={22} />
                     </div>
                   </div>
-                  <div className="relative block">
+                  <div className="relative block w-4/6 m-auto">
                     <input
                       type="text"
                       className="placeholder-[#324B50] form-control block w-full px-4 py-2 text-lg font-normal text-gray-700 bg-white bg-clip-padding
@@ -90,7 +100,7 @@ function SignUpPatient() {
                       <FiMail size={22} />
                     </div>
                   </div>
-                  <div className="relative block">
+                  <div className="relative block w-4/6 m-auto">
                     <input
                       type="password"
                       className=" placeholder-[#324B50] form-control block w-full px-4 py-2 text-lg font-normal text-gray-700 bg-white bg-clip-padding
@@ -115,14 +125,12 @@ function SignUpPatient() {
                   </div>
                 </div>
                 {/* direct to register */}
-                <div className="grid justify-center text-xs mt-7 mb-5 font-medium ">
+                <div className="flex justify-center text-xs mt-10 font-medium absolute bottom-3 left-[42%] ">
                   <p> sudah punya akun?</p>
-                  <Link href="/login">
-                    <p className="underline cursor-pointer ml-4">
-                      {" "}
-                      masuk disini
-                    </p>
-                  </Link>
+                  <a href="/login" className="underline cursor-pointer ml-1">
+                    {" "}
+                    masuk disini
+                  </a>
                 </div>
               </div>
             </div>
