@@ -1,13 +1,13 @@
 import React from "react";
 import Image from "next/image";
-import doctor1 from "../assets/doctor1.svg";
-import doctor2 from "../assets/doctor2.svg";
-import doctor3 from "../assets/doctor3.svg";
+import doctor1 from "../../assets/doctor1.svg";
+import doctor2 from "../../assets/doctor2.svg";
+import doctor3 from "../../assets/doctor3.svg";
 
 function Home2() {
   return (
     <>
-      <div className="flex justify-center relative drop-shadow-lg">
+      <div className="flex justify-start pl-4 relative drop-shadow-lg">
         <button
           className=" cursor-default mb-[-20px] bg-[#356E79] font-medium inline-flex items-center px-10 py-2 rounded-2xl shadow-md text-white "
           type="submit"

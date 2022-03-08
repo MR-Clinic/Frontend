@@ -1,6 +1,6 @@
 import React from "react";
-import doctor1 from "../assets/smilingdoctor.svg";
-import doctor2 from "../assets/smilingdoctorman.svg";
+import doctor1 from "../../assets/smilingdoctor.svg";
+import doctor2 from "../../assets/smilingdoctorman.svg";
 import Image from "next/image";
 
 function home3() {

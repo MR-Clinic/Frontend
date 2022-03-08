@@ -8,14 +8,14 @@ import {
 } from "react-icons/fa";
 import { AiOutlineMail } from "react-icons/ai";
 import Image from "next/image";
-import logoimg from "../assets/logo mrc.svg";
+import logoimg from "../../assets/logo mrc.svg";
 
 function ContactUs() {
   return (
     <>
-      <div className="flex justify-start relative z-20 pl-4 ">
+      <div className="flex justify-end relative z-20 pr-4 ">
         <button
-          className=" drop-shadow-lg cursor-default inactive mb-[-20px] bg-[#95B0B6] font-medium inline-flex items-center px-7 py-2 rounded-2xl shadow-md text-white "
+          className=" drop-shadow-lg cursor-default inactive mb-[-20px] bg-[#356E79] font-medium inline-flex items-center px-7 py-2 rounded-2xl shadow-md text-white "
           type="submit"
         >
           contact us

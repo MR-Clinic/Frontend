@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { FaForward } from "react-icons/fa";
-import imgHome from "../assets/imgHome.svg";
+import imgHome from "../../assets/imgHome.svg";
 
 function Home1() {
   return (
