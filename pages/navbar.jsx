@@ -6,7 +6,7 @@ import Link from "next/link";
 function Navbar() {
   return (
     <>
-      <div className="bg-[#356E79]">
+      <div className="bg-[#356E79] drop-shadow-lg">
         <div className="flex justify-between py-2 pl-7">
           <div className="w-[100px]">
             <Image src={logo} />

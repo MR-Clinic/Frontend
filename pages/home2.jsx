@@ -7,9 +7,9 @@ import doctor3 from "../assets/doctor3.svg";
 function Home2() {
   return (
     <>
-      <div className="flex justify-center relative mt-[-55px]">
+      <div className="flex justify-center relative drop-shadow-lg">
         <button
-          className=" mb-[-20px] bg-[#356E79] font-medium inline-flex items-center px-10 py-2 rounded-2xl shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
+          className=" cursor-default mb-[-20px] bg-[#356E79] font-medium inline-flex items-center px-10 py-2 rounded-2xl shadow-md text-white "
           type="submit"
         >
           why choose us?
@@ -39,7 +39,7 @@ function Home2() {
                   dan disajikan dalam bentuk yang lebih informatif
                 </p>
                 <button
-                  className=" mt-3 bg-[#356E79] font-sm inline-flex items-center px-4 py-2 rounded-2xl shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
+                  className="drop-shadow-lg mt-3 bg-[#356E79] font-sm inline-flex items-center px-4 py-2 rounded-2xl shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
                   type="submit"
                 >
                   check now
@@ -57,7 +57,7 @@ function Home2() {
                   kemudian book!
                 </p>
                 <button
-                  className=" mt-3 bg-[#356E79] font-sm inline-flex items-center px-4 py-2 rounded-2xl shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
+                  className="drop-shadow-lg mt-3 bg-[#356E79] font-sm inline-flex items-center px-4 py-2 rounded-2xl shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
                   type="submit"
                 >
                   check now
@@ -77,6 +77,12 @@ function Home2() {
                   medical record tercatat di database, sehingga bisa diakses
                   kapan saja dan dimana saja !
                 </p>
+                <button
+                  className="drop-shadow-lg mt-3 bg-[#356E79] font-sm inline-flex items-center px-4 py-2 rounded-2xl shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
+                  type="submit"
+                >
+                  check now
+                </button>
               </div>
             </div>
           </div>

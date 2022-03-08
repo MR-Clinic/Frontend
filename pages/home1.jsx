@@ -37,9 +37,9 @@ function Home1() {
               <br />
               semakin maksimal, yuk gabung bersama kami !
             </div>
-            <div className="flex justify-start mt-10 mb-20">
+            <div className="flex justify-start mt-10 mb-20 ">
               <button
-                className=" mb-[40px] bg-[#356E79] font-medium inline-flex items-center px-3 py-3 rounded-2xl shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
+                className=" drop-shadow-lg mb-[40px] bg-[#356E79] font-medium inline-flex items-center px-3 py-3 rounded-2xl shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
                 type="submit"
               >
                 Get Started
