@@ -13,7 +13,7 @@ function Faq() {
           FAQ ?
         </button>
       </div>
-      <div className="bg-[#E4F5E9] py-5 mb-5">
+      <div className="bg-[#E4F5E9] py-5 mb-10">
         <div className="flex justify-center">
           <p className="font-bold text-black text-xl">
             {" "}
