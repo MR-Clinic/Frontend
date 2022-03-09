@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import doctor1 from "../../assets/doctor1.svg";
 import doctor2 from "../../assets/doctor2.svg";
-import doctor3 from "../../assets/doctor3.svg";
+import doctor3 from "../../assets/somedoctor.svg";
 
 function Home2() {
   return (
