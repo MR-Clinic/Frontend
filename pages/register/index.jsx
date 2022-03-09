@@ -119,7 +119,7 @@ function SignUpPatient() {
                       type="submit"
                       onClick={() => validateRegister()}
                     >
-                      Login
+                      Register
                       <FaSignInAlt className="ml-2" />
                     </button>
                   </div>
