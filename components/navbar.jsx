@@ -4,8 +4,9 @@ import logo from "../assets/logo mrc.svg";
 import Link from "next/link";
 import { AiOutlineDown } from "react-icons/ai";
 import { Menu, Transition } from "@headlessui/react";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment } from "react";
 import { useRouter } from "next/router";
+import swal from "sweetalert";
 
 function Navbar() {
   // dropdown func
@@ -132,15 +133,17 @@ function Navbar() {
               as="div"
               className="relative inline-block text-left px-5 z-70"
             >
-              <div>
-                <Menu.Button className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-black rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-                  hello Mr. Awenks
-                  <AiOutlineDown
-                    className="w-5 h-5 ml-2 -mr-1 text-violet-200 hover:text-violet-100"
-                    aria-hidden="true"
-                  />
-                </Menu.Button>
-              </div>
+              {getToken ? (
+                <div>
+                  <Menu.Button className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-black rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+                    hello Mr. Awenks
+                    <AiOutlineDown
+                      className="w-5 h-5 ml-2 -mr-1 text-violet-200 hover:text-violet-100"
+                      aria-hidden="true"
+                    />
+                  </Menu.Button>
+                </div>
+              ) : null}
               <Transition
                 as={Fragment}
                 enter="transition ease-out duration-100"
@@ -186,6 +189,21 @@ function Navbar() {
                               ? "bg-violet-500 text-white"
                               : "text-gray-900"
                           } z-70 group flex rounded-md items-center w-full px-4 py-2 text-sm`}
+                          onClick={() => {
+                            swal({
+                              title: "Anda yakin ingin keluar?",
+                              icon: "warning",
+                              buttons: true,
+                              dangerMode: true,
+                            }).then((willDelete) => {
+                              if (willDelete) {
+                                Logout();
+                                swal("Anda berhasil Logout!", {
+                                  icon: "success",
+                                });
+                              }
+                            });
+                          }}
                         >
                           {active ? (
                             <DuplicateActiveIcon

@@ -1,7 +1,5 @@
 import React from "react";
-import Image from "next/image";
 import { FaForward } from "react-icons/fa";
-import imgHome from "../../assets/imgHome.svg";
 
 function Home1() {
   return (
@@ -47,7 +45,7 @@ function Home1() {
               </button>
             </div>
           </div>
-          <div className="grid h-full w-full ml-[50px]">
+          <div className="grid h-full  ml-[50px]">
             <div className="img-doctor w-full"></div>
           </div>
         </div>

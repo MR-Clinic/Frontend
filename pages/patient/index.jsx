@@ -1,10 +1,12 @@
 import React from "react";
 import Image from "next/image";
 import avatar from "../../assets/avatar1.png";
+import Navbar from "../../components/navbar";
 
 function index() {
   return (
     <>
+      <Navbar />
       <div className="bg-[#E4F5E9]">
         <div className="grid grid-cols-2">
           <div className="grid pl-8 pt-8">
