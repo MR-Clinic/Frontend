@@ -115,20 +115,50 @@ function Navbar() {
             <Image src={logo} alt="logo-navbar" />
           </div>
           <div className="flex items-center px-2 font-semibold text-white cursor-pointer ">
-            <p className="px-7 hover:bg-[#356E79] rounded-lg p-2 "> Feature </p>
-            <p className="px-7 hover:bg-[#356E79] rounded-lg p-2"> About </p>
-            <p className="px-7 hover:bg-[#356E79] rounded-lg p-2"> Contact </p>
-            <p className="px-7 hover:bg-[#356E79] rounded-lg p-2"> FAQ </p>
+            {getToken ? (
+              <div className="flex items-center px-2">
+                <Link href="/">
+                  <p className="px-7 hover:bg-[#356E79] rounded-lg p-2">
+                    {" "}
+                    Homepage{" "}
+                  </p>
+                </Link>
+                <Link href="/patient">
+                  <p className="px-7 hover:bg-[#356E79] rounded-lg p-2">
+                    {" "}
+                    Dashboard{" "}
+                  </p>
+                </Link>
+              </div>
+            ) : (
+              <div className="flex items-center px-2">
+                <p className="px-7 hover:bg-[#356E79] rounded-lg p-2 ">
+                  {" "}
+                  Feature{" "}
+                </p>
+                <p className="px-7 hover:bg-[#356E79] rounded-lg p-2">
+                  {" "}
+                  About{" "}
+                </p>
+                <p className="px-7 hover:bg-[#356E79] rounded-lg p-2">
+                  {" "}
+                  Contact{" "}
+                </p>
+                <p className="px-7 hover:bg-[#356E79] rounded-lg p-2"> FAQ </p>
+              </div>
+            )}
           </div>
           <div className="flex justify-start items-center pr-5">
-            <Link href="/register">
-              <button
-                className=" bg-[#356E79] border-2 border-white font-medium inline-flex items-center px-5 py-1 rounded-2xl shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
-                type="submit"
-              >
-                Sign Up
-              </button>
-            </Link>
+            {getToken ? null : (
+              <Link href="/register">
+                <button
+                  className=" bg-[#356E79] border-2 border-white font-medium inline-flex items-center px-5 py-1 rounded-2xl shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
+                  type="submit"
+                >
+                  Sign Up
+                </button>
+              </Link>
+            )}
             <Menu
               as="div"
               className="relative inline-block text-left px-5 z-70"
@@ -157,7 +187,7 @@ function Navbar() {
                   <div className="px-1 py-1 ">
                     <Menu.Item>
                       {({ active }) => (
-                        <Link href="/patient">
+                        <Link href="/patient" className="active:bg-[#E4F5E9]">
                           <button
                             className={`${
                               active
@@ -185,9 +215,7 @@ function Navbar() {
                       {({ active }) => (
                         <button
                           className={`${
-                            active
-                              ? "bg-violet-500 text-white"
-                              : "text-gray-900"
+                            active ? "bg-[#E4F5E9] text-black" : "text-gray-900"
                           } z-70 group flex rounded-md items-center w-full px-4 py-2 text-sm`}
                           onClick={() => {
                             swal({

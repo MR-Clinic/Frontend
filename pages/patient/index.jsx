@@ -7,14 +7,14 @@ function index() {
   return (
     <>
       <Navbar />
-      <div className="bg-[#E4F5E9]">
+      <div className="bg-[#E4F5E9] text-[#356E79]">
         <div className="grid grid-cols-2">
           <div className="grid pl-8 pt-8">
             <p className="font-semibold text-xl mb-5"> Profile Data</p>
-            <div className="bg-white border-2  mb-5 rounded-lg px-5 w-[430px] ">
+            <div className="bg-white border-2  mb-5 rounded-lg px-5 w-[80%] ">
               <div className="flex justify-start py-5 ">
                 <div className="grid grid-cols-2 ">
-                  <div className="grid space-y-2 pl-2 text-xs">
+                  <div className="grid space-y-2 pl-2 text-sm">
                     {" "}
                     <p className="font-bold"> NIK </p>
                     <p className="font-bold"> Nama Lengkap </p>
@@ -25,7 +25,7 @@ function index() {
                     <p className="font-bold"> Status </p>
                     <p className="font-bold"> Pekerjaan </p>
                   </div>
-                  <div className="grid items-end space-y-2 pl-5 text-xs">
+                  <div className="grid items-end space-y-2 pl-5 text-sm">
                     <p> : 121212121212</p>
                     <p> : Muhammad Rizki Adiwiganda</p>
                     <p> : Pria</p>
@@ -113,7 +113,7 @@ function index() {
               </div>
             </div>
           </div>
-          <div className="grid justify-start pl-8 pt-5 text-xs">
+          <div className="grid justify-start pl-8 pt-5 text-sm">
             <p className="font-semibold text-xl mb-5">Janji Kunjungan</p>
             <div className="bg-white border-2  mb-5 rounded-lg px-5 w-[430px] ">
               <div className="flex justify-start py-5 ">
@@ -136,27 +136,31 @@ function index() {
             </div>
           </div>
         </div>
-        <div className="grid justify-start pl-8 pt-5 text-xs">
+        <div className="grid justify-start pl-8 pt-5 text-sm">
           <p className="font-semibold text-xl mb-5">Sejarah Kunjungan</p>
-          <div className="bg-white border-2  mb-5 rounded-lg px-5 w-[1030px] ">
-            <div className="flex justify-start py-5 ">
-              <div className="grid grid-cols-2 ">
-                <div className="grid space-y-2 pl-4">
-                  {" "}
-                  <p className="font-bold"> Clinic </p>
-                  <p className="font-bold"> Dokter </p>
-                  <p className="font-bold"> Hari Kunjungan </p>
-                  <p className="font-bold"> Alamat </p>
-                </div>
-                <div className="grid items-end space-y-2 pl-5">
-                  <p> : Klinik Bersama sama</p>
-                  <p> : dr awenk</p>
-                  <p> : 22/03/2022</p>
-                  <p> : Jl. ABCD efghjkkk </p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <table class="table-auto bg-white rounded-lg p-3">
+            <thead>
+              <tr>
+                <th className="py-3">Tanggal</th>
+                <th className="px-3">Dokter</th>
+                <th className="px-3">Alamat Praktek </th>
+                <th className="px-3">Diagnosa Utama</th>
+                <th className="px-3">Diagnosa Tambahan</th>
+                <th className="px-3">Daftar obat</th>
+              </tr>
+            </thead>
+            <div className="border-2 w-[700px]"></div>
+            <tbody>
+              <tr>
+                <td className="px-3">05/03/22</td>
+                <td className="px-3">dr. lindawati</td>
+                <td className="px-3">jl. sana sini bisa kemana aja</td>
+                <td className="px-3">flu</td>
+                <td className="px-3">demam dll</td>
+                <td className="px-3">lihat resep</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </>
