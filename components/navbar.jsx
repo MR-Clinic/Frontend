@@ -132,19 +132,34 @@ function Navbar() {
               </div>
             ) : (
               <div className="flex items-center px-2">
-                <p className="px-7 hover:bg-[#356E79] rounded-lg p-2 ">
+                <a
+                  href="#feature"
+                  className="px-7 hover:bg-[#356E79] rounded-lg p-2 "
+                >
                   {" "}
                   Feature{" "}
-                </p>
-                <p className="px-7 hover:bg-[#356E79] rounded-lg p-2">
+                </a>
+                <a
+                  href="#about"
+                  className="px-7 hover:bg-[#356E79] rounded-lg p-2"
+                >
                   {" "}
                   About{" "}
-                </p>
-                <p className="px-7 hover:bg-[#356E79] rounded-lg p-2">
+                </a>
+                <a
+                  href="#contact"
+                  className="px-7 hover:bg-[#356E79] rounded-lg p-2"
+                >
                   {" "}
                   Contact{" "}
-                </p>
-                <p className="px-7 hover:bg-[#356E79] rounded-lg p-2"> FAQ </p>
+                </a>
+                <a
+                  href="#faq"
+                  className="px-7 hover:bg-[#356E79] rounded-lg p-2"
+                >
+                  {" "}
+                  FAQ{" "}
+                </a>
               </div>
             )}
           </div>
