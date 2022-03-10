@@ -6,21 +6,21 @@ import Image from "next/image";
 function home3() {
   return (
     <>
-      <div className="flex justify-end relative drop-shadow-lg ">
+      <div className="flex justify-end relative drop-shadow-lg mr-[3%]">
         <button
-          className="cursor-default inactive mb-[-20px] bg-[#356E79] font-medium inline-flex items-center px-10 py-2 rounded-2xl shadow-md text-white "
+          className="cursor-default inactive mb-[-20px] bg-[#356E79] font-medium inline-flex items-center px-10 py-3 rounded-2xl shadow-md text-white "
           type="submit"
         >
           about us and what the others think
         </button>
       </div>
       <div className="bg-[#E4F5E9] pt-20 px-24 ">
-        <div className="bg-[#324B50] rounded-lg h-[250px]"> </div>
-        <div className="flex justify-center mt-[-300px] ">
-          <div className="w-[350px] ml-[-100px]">
-            <Image src={doctor1} />
+        <div className="bg-[#324B50] rounded-lg h-[280px]"> </div>
+        <div className="flex justify-center mt-[-350px] ">
+          <div className="w-[400px] ml-[-100px]">
+            <Image src={doctor1} alt="img-doctor1" />
           </div>
-          <div className="capitalize flex flex-col items-center text-white relative pl-16 mt-14">
+          <div className="capitalize flex flex-col items-center text-white relative pl-16 mt-[8%]">
             <p className="font-semibold text-2xl mt-7 mb-5 w-[200px] text-center ">
               {" "}
               jaminan layanan terbaik !
@@ -48,8 +48,8 @@ function home3() {
               mr jaash singh, doctor at medika farma clinic
             </p>
           </div>
-          <div className="w-[420px] mt-[-30px] ml-[200px]">
-            <Image src={doctor2} />
+          <div className="w-[500px] mt-[-30px] ml-[200px]">
+            <Image src={doctor2} alt="img-doctor2" />
           </div>
         </div>
       </div>

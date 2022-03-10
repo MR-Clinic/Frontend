@@ -5,9 +5,9 @@ import { AiOutlineDown } from "react-icons/ai";
 function Faq() {
   return (
     <>
-      <div className="flex justify-starts pl-4 relative drop-shadow-lg">
+      <div className="flex justify-starts ml-[3%] relative drop-shadow-lg">
         <button
-          className=" cursor-default mb-[-20px] bg-[#356E79] font-medium inline-flex items-center px-10 py-2 rounded-2xl shadow-md text-white "
+          className=" cursor-default mb-[-20px] bg-[#356E79] font-medium inline-flex items-center px-10 py-3 rounded-2xl shadow-md text-white "
           type="submit"
         >
           FAQ ?

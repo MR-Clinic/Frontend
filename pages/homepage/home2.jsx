@@ -9,7 +9,7 @@ function Home2() {
     <>
       <div className="flex justify-start pl-4 relative drop-shadow-lg">
         <button
-          className=" cursor-default mb-[-20px] bg-[#356E79] font-medium inline-flex items-center px-10 py-2 rounded-2xl shadow-md text-white "
+          className=" ml-[3%] cursor-default mb-[-20px] bg-[#356E79] font-medium inline-flex items-center px-10 py-3 rounded-2xl shadow-md text-white "
           type="submit"
         >
           why choose us?
@@ -18,11 +18,11 @@ function Home2() {
       <div className="bg-[#E4F5E9] ">
         <div className="grid grid-cols-3">
           <div className="grid pl-5">
-            <div className="w-[300px] mt-10 mb-20">
-              <Image src={doctor1} />
+            <div className="w-[60%] mt-10 mb-20 ml-8">
+              <Image src={doctor1} alt="img-doctor1" />
             </div>
             <div className=" mb-5">
-              <Image src={doctor3} />{" "}
+              <Image src={doctor3} alt="img-doctor3" />{" "}
             </div>
           </div>
           <div className="grid">
@@ -45,7 +45,7 @@ function Home2() {
                   check now
                 </button>
               </div>
-              <div className="text-right mb-10  mr-[-80px]">
+              <div className="text-right mb-10  mr-[-100px]">
                 <p className="font-bold text-[39px]"> Book a doctor</p>
                 <p className="text-xs">
                   {" "}
@@ -63,7 +63,7 @@ function Home2() {
                   check now
                 </button>
               </div>
-              <div className="text-left ml-[15px] pt-3 mb-5">
+              <div className="text-left ml-[15px] pt-10 mb-5">
                 <p className="font-bold text-[39px] leading-[40px] ">
                   {" "}
                   get a realtime report
@@ -86,8 +86,8 @@ function Home2() {
               </div>
             </div>
           </div>
-          <div className="grid justify-center w-[350px] ml-[70px] mt-[60px]">
-            <Image src={doctor2} />
+          <div className="grid w-[75%] justify-center  ml-[27%] mb-[10%]">
+            <Image src={doctor2} alt="img-doctor2" />
           </div>
         </div>
       </div>

@@ -16,7 +16,7 @@ function ContactUs() {
       <div className="bg-[#324B50] drop-shadow-lg shadow-white">
         <div className=" grid grid-cols-3">
           <div className="grid opacity-50 px-20">
-            <Image src={logoimg} />
+            <Image src={logoimg} alt="logo-footer" />
           </div>
           <div className="grid text-white pb-5 px-10 pt-7">
             <p className="font-bold text-lg text-white pb-2"> Contact Us</p>
