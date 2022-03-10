@@ -20,3 +20,14 @@ a {
   box-sizing: border-box;
   transition: all ease 0.2s;
 }
+
+.test {
+  color: red;
+}
+
+.img-doctor {
+  background-image: url("../assets/imgHome.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: right;
+}

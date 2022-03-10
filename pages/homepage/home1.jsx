@@ -1,16 +1,14 @@
 import React from "react";
-import Image from "next/image";
 import { FaForward } from "react-icons/fa";
-import imgHome from "../../assets/imgHome.svg";
 
 function Home1() {
   return (
     <>
-      <div className="bg-[#E4F5E9]">
+      <div className="bg-[#E4F5E9] mb-7 h-full">
         {/* left section */}
         <div className=" grid grid-cols-3 text text-black font-redhat">
-          <div className="col-span-2 ml-10">
-            <div className="flex justify-end capitalize mt-[80px] font-sm mr-[85px]">
+          <div className="col-span-2 ml-[8%]">
+            <div className="flex justify-start capitalize mt-[50px] ml-[45%] font-sm ">
               telah digunakan oleh lebih dari 100++ klinik rekanan
             </div>
             <div className="uppercase font-bold text-[50px] leading-tight">
@@ -37,9 +35,9 @@ function Home1() {
               <br />
               semakin maksimal, yuk gabung bersama kami !
             </div>
-            <div className="flex justify-start mt-10 mb-20 ">
+            <div className="flex justify-start mt-10 mb-10">
               <button
-                className=" drop-shadow-lg mb-[40px] bg-[#356E79] font-medium inline-flex items-center px-3 py-3 rounded-2xl shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
+                className=" drop-shadow-lg mb-[20px] bg-[#356E79] font-medium inline-flex items-center px-3 py-3 rounded-2xl shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
                 type="submit"
               >
                 Get Started
@@ -47,14 +45,11 @@ function Home1() {
               </button>
             </div>
           </div>
-          <div className="grid">
-            <div className="w-[500px] ml-[-78px]">
-              <Image src={imgHome} />
-            </div>
+          <div className="grid h-full  ml-[50px]">
+            <div className="img-doctor w-full"></div>
           </div>
         </div>
       </div>
-      ;
     </>
   );
 }
