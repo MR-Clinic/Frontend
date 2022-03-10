@@ -7,10 +7,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import swal from "sweetalert";
+import { useRouter } from "next/router";
 
 const urlRegisterPatient = "";
 
 function SignUpPatient() {
+  const route = useRouter();
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -127,7 +129,7 @@ function SignUpPatient() {
                 {/* direct to register */}
                 <div className="flex justify-center text-xs mt-10 font-medium absolute bottom-3 left-[42%] ">
                   <p> sudah punya akun?</p>
-                  <a href="/login" className="underline cursor-pointer ml-1">
+                  <a onClick={()=>route.push("/login")} className="underline cursor-pointer ml-1">
                     {" "}
                     masuk disini
                   </a>

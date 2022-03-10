@@ -6,6 +6,7 @@ import logoImg from "../assets/Logo.png";
 import Image from "next/image";
 import { useState } from "react";
 import swal from "sweetalert";
+import { useRouter } from "next/router";
 
 const urlLogin = "";
 
@@ -13,6 +14,8 @@ function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const route = useRouter();
 
   const validateLogin = () => {
     if(username === '' && password === ''){
@@ -108,7 +111,7 @@ function Login() {
                 {/* direct to register */}
                 <div className="flex justify-center text-xs mt-10 font-medium absolute bottom-3 left-[42%] ">
                   <p> Belum punya akun?</p>
-                  <a href="/register" className="underline cursor-pointer ml-1">
+                  <a onClick={()=>route.push("/register")} className="underline cursor-pointer ml-1">
                     {" "}
                     ayo mulai daftar
                   </a>
