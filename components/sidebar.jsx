@@ -37,8 +37,8 @@ function Sidebar() {
           {isOpen ? (
             <div className="bg-[#324B50] w-[120px] h-screen ">
               <div className="flex flex-col text-white items-start">
-                <div className="mt-[10%] font-bold">
-                  <p className="hover:bg-[#356E79] py-2 px-2 rounded-md cursor-pointer">
+                <div className="mt-[10%] font-bold text-center">
+                  <p className="bg-[#356E79] py-2 px-2  text-center ">
                     {" "}
                     Dashboard Menu
                   </p>
