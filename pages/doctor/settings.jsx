@@ -193,10 +193,10 @@ function Settings() {
       </Transition>
       <Nav />
       <Sidebar />
-      <div className="bg-[#E4F5E9] h-full text-[#324B50]">
+      <div className="bg-[#E4F5E9] h-full text-[#324B50] ">
         <div className="ml-[7%]">
-          <p className="text-3xl font-bold pt-5 mb-3"> Pengaturan</p>{" "}
-          <div className="bg-white border-2 p-5 mb-5 rounded-lg w-6/12">
+          <p className="text-2xl font-bold pt-5 mb-3"> Pengaturan</p>{" "}
+          <div className="bg-white border-2 p-5 mb-5 rounded-lg w-6/12 drop-shadow-lg">
             <p className="text-xl font-bold border-b-2 border-gray-500">
               {" "}
               Akun
@@ -244,7 +244,7 @@ function Settings() {
             </div>
             <div className="pl-5">
               <button
-                className="bg-[#324B50] text-white px-6 py-1  rounded-lg mt-5 hover:opacity-80"
+                className="bg-[#324B50] text-white px-6 py-1 drop-shadow-lg rounded-lg mt-5 hover:opacity-80"
                 onClick={openModalEdit}
               >
                 {" "}
@@ -252,7 +252,7 @@ function Settings() {
               </button>
             </div>
           </div>
-          <div className="bg-white border-2 p-5 pb-10 rounded-lg w-6/12">
+          <div className="bg-white border-2 p-5 pb-10 rounded-lg w-6/12 drop-shadow-lg">
             <p className="text-xl font-bold border-b-2 border-gray-500">
               {" "}
               Admin Akun
@@ -276,7 +276,7 @@ function Settings() {
             </div>
             <div className="pl-5">
               <button
-                className="bg-[#324B50] text-white px-6 py-1  rounded-lg mt-5 hover:opacity-80"
+                className="bg-[#324B50] text-white px-6 py-1 drop-shadow-lg rounded-lg mt-5 hover:opacity-80"
                 onClick={openModalChange}
               >
                 {" "}

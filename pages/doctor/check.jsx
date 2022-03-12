@@ -8,7 +8,7 @@ function Check() {
     <>
       <Nav />
       <Sidebar />
-      <div className="bg-[#E4F5E9] text-[#324B50]">
+      <div className="bg-[#E4F5E9] h-full text-[#324B50]">
         <div className="ml-[7%] mr-[5%]">
           <div className=" flex justify-between border-b-2 border-gray-600">
             <div className="flex flex-col justify-start">
@@ -27,7 +27,7 @@ function Check() {
             </div>
           </div>
 
-          <div className="bg-white border-2 rounded-lg p-5 mt-5">
+          <div className="bg-white border-2 rounded-lg p-5 mt-5 drop-shadow-lg">
             <div className="grid grid-cols-2">
               <div className="grid items-start ml-10 border-r-4 border-gray-700">
                 <p className="text-2xl font-bold mb-3 "> Informasi Pasien</p>
@@ -66,7 +66,7 @@ function Check() {
             </div>
           </div>
 
-          <div className="bg-white border-2 rounded-lg p-5 mt-5">
+          <div className="bg-white border-2 rounded-lg drop-shadow-lg p-5 mt-5 ">
             <div className="ml-10">
               <p className="text-2xl font-bold mb-3 "> Data Pemeriksaan</p>
               <div className="flex flex-wrap">
