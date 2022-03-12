@@ -18,7 +18,7 @@ function Login() {
   const route = useRouter();
 
   const validateLogin = () => {
-    if(username === '' && password === ''){
+    if (username === "" && password === "") {
       swal("Input Kosong", "Silahkan Masukkan Data Yang Sesuai", "error");
     } else if (username === "") {
       swal("Input Salah", "Username Tidak Boleh Kosong", "error");
@@ -27,12 +27,15 @@ function Login() {
     } else if (password === "") {
       swal("Input Salah", "Password Tidak Boleh Kosong", "error");
     } else if (password.length < 8) {
-      swal("Input Salah", "Password is less than 8", "error")
+      swal("Input Salah", "Password is less than 8", "error");
     } else {
-      swal("Selamat Datang Kembali", "Anda akan diarahkan ke halaman dashboard","success")
+      swal(
+        "Selamat Datang Kembali",
+        "Anda akan diarahkan ke halaman dashboard",
+        "success"
+      );
       setInterval(() => {
         swal.close();
-        
       }, 3000);
     }
   };
@@ -47,7 +50,7 @@ function Login() {
               <div className="grid items-center justify-center px-24">
                 <div>
                   <div className="w-5/6">
-                    <Image src={logoImg} />
+                    <Image src={logoImg} alt="logo" />
                   </div>
                   <p className=" font-semibold text-[30px] leading-[35px] ">
                     {" "}
@@ -111,7 +114,10 @@ function Login() {
                 {/* direct to register */}
                 <div className="flex justify-center text-xs mt-10 font-medium absolute bottom-3 left-[42%] ">
                   <p> Belum punya akun?</p>
-                  <a onClick={()=>route.push("/register")} className="underline cursor-pointer ml-1">
+                  <a
+                    onClick={() => route.push("/register")}
+                    className="underline cursor-pointer ml-1"
+                  >
                     {" "}
                     ayo mulai daftar
                   </a>

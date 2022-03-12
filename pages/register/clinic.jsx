@@ -30,12 +30,15 @@ function SignUpClinic() {
     } else if (password === "") {
       swal("Input Salah", "Password Tidak Boleh Kosong", "error");
     } else if (password.length < 8) {
-      swal("Input Salah", "Password Kurang Dari 8 Karakter", "error")
+      swal("Input Salah", "Password Kurang Dari 8 Karakter", "error");
     } else {
-      swal("Selamat Datang Kembali", "Anda akan diarahkan ke halaman dashboard","success")
+      swal(
+        "Selamat Datang Kembali",
+        "Anda akan diarahkan ke halaman dashboard",
+        "success"
+      );
       setInterval(() => {
         swal.close();
-        
       }, 3000);
     }
   };
@@ -50,7 +53,7 @@ function SignUpClinic() {
               <div className="grid items-center justify-center px-24">
                 <div>
                   <div className="w-5/6">
-                    <Image src={logoImg} />
+                    <Image src={logoImg} alt="logo" />
                   </div>
                   <p className=" font-semibold text-[30px] leading-[35px] ">
                     {" "}
@@ -119,7 +122,7 @@ function SignUpClinic() {
                       type="submit"
                       onClick={() => validateRegister()}
                     >
-                      Login
+                      Register
                       <FaSignInAlt className="ml-2" />
                     </button>
                   </div>
@@ -127,7 +130,10 @@ function SignUpClinic() {
                 {/* direct to register */}
                 <div className="flex justify-center text-xs mt-10 font-medium absolute bottom-3 left-[42%] ">
                   <p> sudah punya akun?</p>
-                  <a onClick={()=>route.push("/login")} className="underline cursor-pointer ml-1">
+                  <a
+                    onClick={() => route.push("/login")}
+                    className="underline cursor-pointer ml-1"
+                  >
                     {" "}
                     masuk disini
                   </a>
