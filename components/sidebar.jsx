@@ -12,7 +12,7 @@ function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
-      <div className=" mt-[-80px] absolute">
+      <div className=" mt-[-80px] fixed">
         <div className="flex">
           <div className="bg-[#324B50] w-[70px] h-screen">
             <div className="flex flex-col text-white items-center">

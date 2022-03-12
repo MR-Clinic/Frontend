@@ -39,10 +39,10 @@ function home3() {
             <div className="grid mt-[150px] text-justify w-[450px] ">
               <p>
                 {" "}
-                " mr clinic is one of the best clinic management web app ! we
-                got more than 80% satisified customer growth here. so when you
+                mr clinic is one of the best clinic management web app ! we got
+                more than 80% satisified customer growth here. so when you
                 search a good management database for your clinic, mr clinic is
-                the best answer "
+                the best answer
               </p>
               <p className="font-bold text-[16px] ml-[90px]">
                 {" "}

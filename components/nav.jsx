@@ -25,7 +25,7 @@ function NavDashboard() {
           <div className="flex justify-between py-3 items-center pl-28">
             <div className="flex justify-start">
               <div className="w-[10%] mx-5">
-                <Image src={logo} />{" "}
+                <Image src={logo} alt="logo" />{" "}
               </div>
               <p className="text-4xl"> | </p>
               <p className="pl-5 font-light text-2xl capitalize">
