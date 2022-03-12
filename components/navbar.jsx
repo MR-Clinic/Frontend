@@ -117,13 +117,13 @@ function Navbar() {
           <div className="flex items-center px-2 font-semibold text-white cursor-pointer ">
             {getToken ? (
               <div className="flex items-center px-2">
-                <Link href="/">
+                <Link href="/" passHref>
                   <p className="px-7 hover:bg-[#356E79] rounded-lg p-2">
                     {" "}
                     Homepage{" "}
                   </p>
                 </Link>
-                <Link href="/patient">
+                <Link href="/patient" passHref>
                   <p className="px-7 hover:bg-[#356E79] rounded-lg p-2">
                     {" "}
                     Dashboard{" "}
@@ -165,7 +165,7 @@ function Navbar() {
           </div>
           <div className="flex justify-start items-center pr-5">
             {getToken ? null : (
-              <Link href="/register">
+              <Link href="/register" passHref>
                 <button
                   className=" bg-[#356E79] border-2 border-white font-medium inline-flex items-center px-5 py-1 rounded-2xl shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
                   type="submit"
@@ -202,7 +202,11 @@ function Navbar() {
                   <div className="px-1 py-1 ">
                     <Menu.Item>
                       {({ active }) => (
-                        <Link href="/patient" className="active:bg-[#E4F5E9]">
+                        <Link
+                          href="/patient"
+                          passHref
+                          className="active:bg-[#E4F5E9]"
+                        >
                           <button
                             className={`${
                               active

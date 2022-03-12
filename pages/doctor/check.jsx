@@ -1,8 +1,9 @@
 import React from "react";
 import Nav from "../../components/nav";
 import Sidebar from "../../components/sidebar";
+import { FaTrashAlt } from "react-icons/fa";
 
-function periksa() {
+function Check() {
   return (
     <>
       <Nav />
@@ -11,7 +12,7 @@ function periksa() {
         <div className="ml-[7%] mr-[5%]">
           <div className=" flex justify-between border-b-2 border-gray-600">
             <div className="flex flex-col justify-start">
-              <p className="text-3xl font-bold pt-5">
+              <p className="text-3xl font-bold pt-10">
                 {" "}
                 Rizki Adiwiganda (Nama Pasien)
               </p>
@@ -20,7 +21,7 @@ function periksa() {
                 12764763864876 (nik)
               </p>
             </div>
-            <div className="font-bold text-3xl pt-5">
+            <div className="font-bold text-3xl pt-10">
               {" "}
               No. Medical Records : 1212121{" "}
             </div>
@@ -123,25 +124,69 @@ function periksa() {
               <div className="grid grid-cols-2 ">
                 <div className="px-3 border-r-4 border-gray-700">
                   <p> Diagnosa Utama</p>
-                  <input
+                  <textarea
                     className="border-2 w-[400px] h-[100px] border-gray-700 rounded-lg"
                     type="text"
                   />
                   <p> Diagnosa Tambahan</p>
-                  <input
+                  <textarea
                     className="border-2 w-[400px] h-[150px] border-gray-700 rounded-lg"
                     type="text"
                   />
                   <p> Tindakan </p>
-                  <input
+                  <textarea
                     className="border-2 w-[400px] h-[200px] border-gray-700 rounded-lg"
                     type="text"
                   />
                 </div>
-                <div className="flex justify-center items-end px-5">
-                  <button className="text-white font-semibold px-6 py-1 bg-[#324B50] rounded-lg hover:opacity-80 ">
-                    submit
+                <div className="ml-8">
+                  <p className="text-2xl font-bold mt-3 mb-3 "> Resep</p>
+                  <p className="font-semibold"> Obat</p>
+                  <div className="flex mb-3">
+                    <input
+                      className="border-2 w-[250px] border-gray-700 rounded-lg  px-5"
+                      type="text"
+                    />
+                    <input
+                      className="border-2 w-[60px] border-gray-700 rounded-lg ml-3 px-2 "
+                      type="number"
+                      placeholder="1,2"
+                    />
+                    <p className="font-bold text-3xl ml-3"> / </p>
+                    <input
+                      className="border-2 w-[150px] border-gray-700 rounded-lg ml-3 px-5"
+                      type="text"
+                      placeholder="hari/minggu"
+                    />
+                  </div>
+                  <button className=" font-semibold items-center text-white px-3 py-1 border-2 bg-[#324B50] rounded-lg hover:opacity-80 ">
+                    Tambah <span className=""> + </span>
                   </button>
+                  <div className="mt-5">
+                    <p className="font-semibold"> Semua Resep</p>
+                    <div className="border-2 border-[#324B50] p-3 w-[500px] rounded-lg">
+                      <div className="flex justify-between mx-2 py-1">
+                        <p className="font-semibold">Paracetamol</p>
+                        <p className="font-semibold"> 3 / hari </p>
+                        <FaTrashAlt />
+                      </div>
+                      <div className="flex justify-between mx-2 py-1">
+                        <p className="font-semibold">Paracetamol</p>
+                        <p className="font-semibold"> 3 / hari </p>
+                        <FaTrashAlt />
+                      </div>
+                      <div className="flex justify-between mx-2 py-1">
+                        <p className="font-semibold">Paracetamol</p>
+                        <p className="font-semibold"> 3 / hari </p>
+                        <FaTrashAlt />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex justify-end items-end mt-5  ">
+                    <button className="text-white font-semibold px-6 py-1 bg-[#324B50] rounded-lg hover:opacity-80 ">
+                      submit
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -152,4 +197,4 @@ function periksa() {
   );
 }
 
-export default periksa;
+export default Check;

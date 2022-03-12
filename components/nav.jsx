@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../assets/logo.png";
+import logo from "../assets/Logo.png";
 import Image from "next/image";
 import avatar from "../assets/avatar1.png";
 import { FaSignInAlt } from "react-icons/fa";
@@ -45,9 +45,9 @@ function NavDashboard() {
                 </div>
               </div>
               <p className=" text-4xl  "> | </p>
-              <div className="flex mx-5 justify-center items-center mb-3 bg-[#356E79] py-1 px-3 rounded-lg cursor-pointer">
+              <div className="flex mx-5 justify-center items-center mb-3 bg-[#356E79] py-1 px-3 rounded-lg cursor-pointer hover:opacity-80">
                 <div
-                  className="font-bold text-white"
+                  className="font-bold text-white "
                   onClick={() => {
                     swal({
                       title: "Anda yakin ingin keluar?",
