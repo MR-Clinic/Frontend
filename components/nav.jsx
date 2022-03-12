@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../assets/logo.png";
+import logo from "../assets/Logo.png";
 import Image from "next/image";
 import avatar from "../assets/avatar1.png";
 import { FaSignInAlt } from "react-icons/fa";
