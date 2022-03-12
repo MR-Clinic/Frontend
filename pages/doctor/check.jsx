@@ -3,7 +3,7 @@ import Nav from "../../components/nav";
 import Sidebar from "../../components/sidebar";
 import { FaTrashAlt } from "react-icons/fa";
 
-function Periksa() {
+function Check() {
   return (
     <>
       <Nav />
@@ -12,7 +12,7 @@ function Periksa() {
         <div className="ml-[7%] mr-[5%]">
           <div className=" flex justify-between border-b-2 border-gray-600">
             <div className="flex flex-col justify-start">
-              <p className="text-3xl font-bold pt-5">
+              <p className="text-3xl font-bold pt-10">
                 {" "}
                 Rizki Adiwiganda (Nama Pasien)
               </p>
@@ -21,7 +21,7 @@ function Periksa() {
                 12764763864876 (nik)
               </p>
             </div>
-            <div className="font-bold text-3xl pt-5">
+            <div className="font-bold text-3xl pt-10">
               {" "}
               No. Medical Records : 1212121{" "}
             </div>
@@ -124,17 +124,17 @@ function Periksa() {
               <div className="grid grid-cols-2 ">
                 <div className="px-3 border-r-4 border-gray-700">
                   <p> Diagnosa Utama</p>
-                  <input
+                  <textarea
                     className="border-2 w-[400px] h-[100px] border-gray-700 rounded-lg"
                     type="text"
                   />
                   <p> Diagnosa Tambahan</p>
-                  <input
+                  <textarea
                     className="border-2 w-[400px] h-[150px] border-gray-700 rounded-lg"
                     type="text"
                   />
                   <p> Tindakan </p>
-                  <input
+                  <textarea
                     className="border-2 w-[400px] h-[200px] border-gray-700 rounded-lg"
                     type="text"
                   />
@@ -144,17 +144,17 @@ function Periksa() {
                   <p className="font-semibold"> Obat</p>
                   <div className="flex mb-3">
                     <input
-                      className="border-2 w-[250px] border-gray-700 rounded-lg"
+                      className="border-2 w-[250px] border-gray-700 rounded-lg  px-5"
                       type="text"
                     />
                     <input
-                      className="border-2 w-[50px] border-gray-700 rounded-lg ml-3"
+                      className="border-2 w-[60px] border-gray-700 rounded-lg ml-3 px-2 "
                       type="number"
                       placeholder="1,2"
                     />
                     <p className="font-bold text-3xl ml-3"> / </p>
                     <input
-                      className="border-2 w-[150px] border-gray-700 rounded-lg ml-3"
+                      className="border-2 w-[150px] border-gray-700 rounded-lg ml-3 px-5"
                       type="text"
                       placeholder="hari/minggu"
                     />
@@ -197,4 +197,4 @@ function Periksa() {
   );
 }
 
-export default Periksa;
+export default Check;
