@@ -38,25 +38,41 @@ function SignUpPatient() {
     } else if (nik.length < 16) {
       swal("Input Salah", "nik Kurang Dari 16 Karakter", "error");
     } else {
-      swal(
-        "Selamat Datang Kembali",
-        "Anda akan diarahkan ke halaman dashboard",
-        "success"
-      );
-      setTimeout(() => {
-        swal.close();
-      }, 3000);
+      registerPatient();
     }
   };
+
   const registerPatient = () => {
     setLoading(true);
     const body = {
-      name: username,
+      userName: username,
       email: email,
       password: password,
       nik: nik,
     };
-    axios.post(urlRegisterPatient, body).then(response);
+    axios
+      .post(urlRegisterPatient, body)
+      .then(() => {
+        swal(
+          "Selamat register berhasil !",
+          "Anda akan diarahkan ke halaman login",
+          "success"
+        );
+        setTimeout(() => {
+          swal.close();
+        }, 3000);
+        route.push("/login");
+      })
+      .catch(() => {
+        swal(
+          "sorry!",
+          "register gagal, email sudah digunakan atau user sudah terdaftar",
+          "error"
+        );
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (

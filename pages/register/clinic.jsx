@@ -50,7 +50,11 @@ function SignUpClinic() {
     axios
       .post(urlRegisterClinic, formData)
       .then(() => {
-        swal("Selamat !", "Anda akan diarahkan ke halaman login", "success");
+        swal(
+          "Selamat register berhasil !",
+          "Anda akan diarahkan ke halaman login",
+          "success"
+        );
         setTimeout(() => {
           swal.close();
         }, 3000);
