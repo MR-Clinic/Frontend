@@ -26,7 +26,7 @@ a {
 }
 
 .img-doctor {
-  background-image: url("../public/assets/imgHome.svg");
+  background-image: url("https://raw.githubusercontent.com/akmalays/upload-image/main/imghome.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: right;
