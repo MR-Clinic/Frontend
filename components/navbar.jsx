@@ -14,12 +14,15 @@ function Navbar() {
   const router = useRouter();
   const getToken =
     typeof window !== "undefined" ? localStorage.getItem("token") : null;
+  const profile =
+    typeof window !== "undefined" ? localStorage.getItem("profile") : null;
+  const route = useRouter();
 
   function Logout() {
     if (getToken) {
       localStorage.removeItem("token");
-      localStorage.removeItem("dataProfile");
-      router.push("/");
+      localStorage.removeItem("profile");
+      route.push("/");
     }
   }
 
@@ -237,19 +240,7 @@ function Navbar() {
                             active ? "bg-[#E4F5E9] text-black" : "text-gray-900"
                           } z-70 group flex rounded-md items-center w-full px-4 py-2 text-sm`}
                           onClick={() => {
-                            swal({
-                              title: "Anda yakin ingin keluar?",
-                              icon: "warning",
-                              buttons: true,
-                              dangerMode: true,
-                            }).then((willDelete) => {
-                              if (willDelete) {
-                                Logout();
-                                swal("Anda berhasil Logout!", {
-                                  icon: "success",
-                                });
-                              }
-                            });
+                            Logout();
                           }}
                         >
                           {active ? (

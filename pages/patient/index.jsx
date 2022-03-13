@@ -120,7 +120,6 @@ function Index() {
           </div>
         </Dialog>
       </Transition>
-      ;
       <Navbar />
       <div className="bg-[#E4F5E9] h-full text-[#356E79]">
         <div className="grid grid-cols-2">
