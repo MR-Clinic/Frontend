@@ -16,8 +16,6 @@ function Login() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const profile =
-    typeof window !== "undefined" ? localStorage.getItem("profile") : null;
   const route = useRouter();
 
   const validateLogin = () => {
@@ -46,19 +44,20 @@ function Login() {
     axios
       .post(urlLogin, body)
       .then((response) => {
+        const typeProfile = response.data.data.type;
         swal(
           "Selamat Datang Kembali",
           "Anda akan diarahkan ke halaman dashboard",
           "success"
         );
-        setInterval(() => {
+        setTimeout(() => {
           swal.close();
         }, 3000);
         localStorage.setItem("token", response.data.data);
         localStorage.setItem("profile", response.data.data.type);
-        if (profile === "doctor") {
+        if (typeProfile === "doctor") {
           route.push("/doctor");
-        } else if (profile === "patient") {
+        } else if (typeProfile === "patient") {
           route.push("/patient");
         }
       })

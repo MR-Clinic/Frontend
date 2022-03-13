@@ -72,7 +72,7 @@ function SignUpPatient() {
             <div className="col-span-2 bg-white rounded-lg z-10 flex justify-center items-center relative">
               <div className="grid justify-center capitalize ">
                 <p className="font-semibold text-[40px] leading-[50px] text-center">
-                  ayo mulai buka klinik milik kamu!
+                  Mulai Jaga Kesehatanmu!
                 </p>
                 <div className="flex justify-center">
                   <p> selamat datang, silahkan daftarkan akun mu !</p>
@@ -130,7 +130,15 @@ function SignUpPatient() {
                   </div>
                 </div>
                 {/* direct to register */}
-                <div className="flex justify-center text-xs mt-10 font-medium absolute bottom-3 left-[42%] ">
+                <div className="grid justify-center text-xs mt-10 font-medium absolute bottom-3 left-[42%] ">
+                  <p> buka klinik?</p>
+                  <a
+                    onClick={() => route.push("/register/clinic")}
+                    className="underline cursor-pointer ml-1"
+                  >
+                    {" "}
+                    silahkan daftar disini!
+                  </a>
                   <p> sudah punya akun?</p>
                   <a
                     onClick={() => route.push("/login")}
