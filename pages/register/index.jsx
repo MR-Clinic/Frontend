@@ -130,23 +130,26 @@ function SignUpPatient() {
                   </div>
                 </div>
                 {/* direct to register */}
-                <div className="grid justify-center text-xs mt-10 font-medium absolute bottom-3 left-[42%] ">
-                  <p> buka klinik?</p>
-                  <a
-                    onClick={() => route.push("/register/clinic")}
-                    className="underline cursor-pointer ml-1"
-                  >
-                    {" "}
-                    silahkan daftar disini!
-                  </a>
-                  <p> sudah punya akun?</p>
-                  <a
-                    onClick={() => route.push("/login")}
-                    className="underline cursor-pointer ml-1"
-                  >
-                    {" "}
-                    masuk disini
-                  </a>
+                <div className="flex justify-between text-xs space-x-10 mt-10 font-medium absolute bottom-3 left-[28%] ">
+                  <div className="flex">
+                    <p>buka klinik?</p>
+                    <a
+                      onClick={() => route.push("/register/clinic")}
+                      className="underline cursor-pointer ml-1"
+                    >
+                      silahkan daftar disini !
+                    </a>
+                  </div>
+                  <div className="flex">
+                    <p> sudah punya akun?</p>
+                    <a
+                      onClick={() => route.push("/login")}
+                      className="underline cursor-pointer ml-1"
+                    >
+                      {" "}
+                      masuk disini !
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
