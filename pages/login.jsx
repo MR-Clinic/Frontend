@@ -8,6 +8,7 @@ import { useState } from "react";
 import swal from "sweetalert";
 import { useRouter } from "next/router";
 import axios from "axios";
+import ReactLoading from "react-loading";
 
 const urlLogin = "https://faliqadlan.cloud.okteto.net/login";
 
@@ -27,8 +28,8 @@ function Login() {
       swal("Input Salah", "Username Tidak Boleh  Ada Spasi", "error");
     } else if (password === "") {
       swal("Input Salah", "Password Tidak Boleh Kosong", "error");
-      // } else if (password.length < 8) {
-      //   swal("Input Salah", "Password is less than 8", "error");
+    } else if (password.length < 8) {
+      swal("Input Salah", "Password is less than 8", "error");
     } else {
       doLogin();
     }
@@ -132,10 +133,17 @@ function Login() {
                   {loading ? (
                     <div className="flex justify-center ">
                       <button
-                        className=" mb-[40px] bg-[#324B50] font-medium inline-flex items-center px-3 py-1 rounded-md shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
+                        className=" mb-[40px] bg-[#324B50] font-medium inline-flex items-center px-3 py-2 rounded-md shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
                         type="submit"
                       >
-                        Loading ....
+                        Loading
+                        <ReactLoading
+                          className="ml-2 mb-2"
+                          type={"spin"}
+                          color={"#ffffff"}
+                          height={"20px"}
+                          width={"30px"}
+                        />
                       </button>
                     </div>
                   ) : (
