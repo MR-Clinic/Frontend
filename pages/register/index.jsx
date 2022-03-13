@@ -8,14 +8,17 @@ import Link from "next/link";
 import { useState } from "react";
 import swal from "sweetalert";
 import { useRouter } from "next/router";
+import axios from "axios";
+import ReactLoading from "react-loading";
 
-const urlRegisterPatient = "";
+const urlRegisterPatient = "https://faliqadlan.cloud.okteto.net/patient";
 
 function SignUpPatient() {
   const route = useRouter();
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [nik, setNik] = useState("");
   const [loading, setLoading] = useState(false);
 
   const validateRegister = () => {
@@ -33,16 +36,44 @@ function SignUpPatient() {
       swal("Input Salah", "Password Tidak Boleh Kosong", "error");
     } else if (password.length < 8) {
       swal("Input Salah", "Password Kurang Dari 8 Karakter", "error");
+    } else if (nik.length < 16) {
+      swal("Input Salah", "nik Kurang Dari 16 Karakter", "error");
     } else {
-      swal(
-        "Selamat Datang Kembali",
-        "Anda akan diarahkan ke halaman dashboard",
-        "success"
-      );
-      setInterval(() => {
-        swal.close();
-      }, 3000);
+      registerPatient();
     }
+  };
+
+  const registerPatient = () => {
+    setLoading(true);
+    const body = {
+      userName: username,
+      email: email,
+      password: password,
+      nik: nik,
+    };
+    axios
+      .post(urlRegisterPatient, body)
+      .then(() => {
+        swal(
+          "Selamat register berhasil !",
+          "Anda akan diarahkan ke halaman login",
+          "success"
+        );
+        setTimeout(() => {
+          swal.close();
+        }, 3000);
+        route.push("/login");
+      })
+      .catch(() => {
+        swal(
+          "sorry!",
+          "register gagal, email sudah digunakan atau user sudah terdaftar",
+          "error"
+        );
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
@@ -72,7 +103,7 @@ function SignUpPatient() {
             <div className="col-span-2 bg-white rounded-lg z-10 flex justify-center items-center relative">
               <div className="grid justify-center capitalize ">
                 <p className="font-semibold text-[40px] leading-[50px] text-center">
-                  ayo mulai buka klinik milik kamu!
+                  Mulai Jaga Kesehatanmu!
                 </p>
                 <div className="flex justify-center">
                   <p> selamat datang, silahkan daftarkan akun mu !</p>
@@ -87,6 +118,19 @@ function SignUpPatient() {
                       id="exampleFormControlInput2"
                       placeholder="Username"
                       onChange={(e) => setUserName(e.target.value)}
+                    />
+                    <div className="absolute inset-y-0 right-4 flex items-center  text-[#324B50]">
+                      <FaRegUser size={22} />
+                    </div>
+                  </div>
+                  <div className="relative block w-4/6 m-auto">
+                    <input
+                      type="text"
+                      className="placeholder-[#324B50] form-control block w-full px-4 py-2 text-lg font-normal text-gray-700 bg-white bg-clip-padding
+                     border-2 border-solid border-[#324B50] rounded-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none "
+                      id="exampleFormControlInput2"
+                      placeholder="NIK"
+                      onChange={(e) => setNik(e.target.value)}
                     />
                     <div className="absolute inset-y-0 right-4 flex items-center  text-[#324B50]">
                       <FaRegUser size={22} />
@@ -118,27 +162,56 @@ function SignUpPatient() {
                       <HiOutlineKey size={22} />
                     </div>
                   </div>
-                  <div className="flex justify-center ">
-                    <button
-                      className=" mb-[40px] bg-[#324B50] font-medium inline-flex items-center px-3 py-1 rounded-md shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
-                      type="submit"
-                      onClick={() => validateRegister()}
-                    >
-                      Register
-                      <FaSignInAlt className="ml-2" />
-                    </button>
-                  </div>
+                  {loading ? (
+                    <div className="flex justify-center ">
+                      <button
+                        className=" mb-[40px] bg-[#324B50] font-medium inline-flex items-center px-3 py-2 rounded-md shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
+                        type="submit"
+                      >
+                        Loading
+                        <ReactLoading
+                          className="ml-2 mb-2"
+                          type={"spin"}
+                          color={"#ffffff"}
+                          height={"20px"}
+                          width={"30px"}
+                        />
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="flex justify-center ">
+                      <button
+                        className=" mb-[40px] bg-[#324B50] font-medium inline-flex items-center px-3 py-1 rounded-md shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
+                        type="submit"
+                        onClick={() => validateRegister()}
+                      >
+                        Register
+                        <FaSignInAlt className="ml-2" />
+                      </button>
+                    </div>
+                  )}
                 </div>
                 {/* direct to register */}
-                <div className="flex justify-center text-xs mt-10 font-medium absolute bottom-3 left-[42%] ">
-                  <p> sudah punya akun?</p>
-                  <a
-                    onClick={() => route.push("/login")}
-                    className="underline cursor-pointer ml-1"
-                  >
-                    {" "}
-                    masuk disini
-                  </a>
+                <div className="flex justify-between text-xs space-x-10 mt-10 font-medium absolute bottom-3 left-[28%] ">
+                  <div className="flex">
+                    <p>buka klinik?</p>
+                    <a
+                      onClick={() => route.push("/register/clinic")}
+                      className="underline cursor-pointer ml-1"
+                    >
+                      silahkan daftar disini !
+                    </a>
+                  </div>
+                  <div className="flex">
+                    <p> sudah punya akun?</p>
+                    <a
+                      onClick={() => route.push("/login")}
+                      className="underline cursor-pointer ml-1"
+                    >
+                      {" "}
+                      masuk disini !
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>

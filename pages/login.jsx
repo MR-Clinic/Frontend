@@ -7,8 +7,10 @@ import Image from "next/image";
 import { useState } from "react";
 import swal from "sweetalert";
 import { useRouter } from "next/router";
+import axios from "axios";
+import ReactLoading from "react-loading";
 
-const urlLogin = "";
+const urlLogin = "https://faliqadlan.cloud.okteto.net/login";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -29,17 +31,45 @@ function Login() {
     } else if (password.length < 8) {
       swal("Input Salah", "Password is less than 8", "error");
     } else {
-      swal(
-        "Selamat Datang Kembali",
-        "Anda akan diarahkan ke halaman dashboard",
-        "success"
-      );
-      setInterval(() => {
-        swal.close();
-      }, 3000);
+      doLogin();
     }
   };
 
+  const doLogin = () => {
+    setLoading(true);
+    const body = {
+      userName: username,
+      password: password,
+    };
+
+    axios
+      .post(urlLogin, body)
+      .then((response) => {
+        const typeProfile = response.data.data.type;
+        swal(
+          "Selamat Datang Kembali",
+          "Anda akan diarahkan ke halaman dashboard",
+          "success"
+        );
+        setTimeout(() => {
+          swal.close();
+        }, 3000);
+        localStorage.setItem("token", response.data.data);
+        localStorage.setItem("profile", response.data.data.type);
+        if (typeProfile === "doctor") {
+          route.push("/doctor");
+        } else if (typeProfile === "patient") {
+          route.push("/patient");
+        }
+      })
+      .catch((error) => {
+        swal("sorry!", "Email atau Password Salah!", "error");
+        console.log(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
   return (
     <>
       <div className="bg-[#324B50] p-20 text-[#324B50] font-redhat min-h-screen flex">
@@ -100,16 +130,34 @@ function Login() {
                       <HiOutlineKey size={22} />
                     </div>
                   </div>
-                  <div className="flex justify-center ">
-                    <button
-                      className=" mb-[40px] bg-[#324B50] font-medium inline-flex items-center px-3 py-1 rounded-md shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
-                      type="submit"
-                      onClick={() => validateLogin()}
-                    >
-                      Login
-                      <FaSignInAlt className="ml-2" />
-                    </button>
-                  </div>
+                  {loading ? (
+                    <div className="flex justify-center ">
+                      <button
+                        className=" mb-[40px] bg-[#324B50] font-medium inline-flex items-center px-3 py-2 rounded-md shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
+                        type="submit"
+                      >
+                        Loading
+                        <ReactLoading
+                          className="ml-2 mb-2"
+                          type={"spin"}
+                          color={"#ffffff"}
+                          height={"20px"}
+                          width={"30px"}
+                        />
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="flex justify-center ">
+                      <button
+                        className=" mb-[40px] bg-[#324B50] font-medium inline-flex items-center px-3 py-1 rounded-md shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
+                        type="submit"
+                        onClick={() => validateLogin()}
+                      >
+                        Login
+                        <FaSignInAlt className="ml-2" />
+                      </button>
+                    </div>
+                  )}
                 </div>
                 {/* direct to register */}
                 <div className="flex justify-center text-xs mt-10 font-medium absolute bottom-3 left-[42%] ">
