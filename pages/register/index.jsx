@@ -8,14 +8,16 @@ import Link from "next/link";
 import { useState } from "react";
 import swal from "sweetalert";
 import { useRouter } from "next/router";
+import axios from "axios";
 
-const urlRegisterPatient = "";
+const urlRegisterPatient = "https://faliqadlan.cloud.okteto.net/patient";
 
 function SignUpPatient() {
   const route = useRouter();
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [nik, setNik] = useState("");
   const [loading, setLoading] = useState(false);
 
   const validateRegister = () => {
@@ -33,16 +35,28 @@ function SignUpPatient() {
       swal("Input Salah", "Password Tidak Boleh Kosong", "error");
     } else if (password.length < 8) {
       swal("Input Salah", "Password Kurang Dari 8 Karakter", "error");
+    } else if (nik.length < 16) {
+      swal("Input Salah", "nik Kurang Dari 16 Karakter", "error");
     } else {
       swal(
         "Selamat Datang Kembali",
         "Anda akan diarahkan ke halaman dashboard",
         "success"
       );
-      setInterval(() => {
+      setTimeout(() => {
         swal.close();
       }, 3000);
     }
+  };
+  const registerPatient = () => {
+    setLoading(true);
+    const body = {
+      name: username,
+      email: email,
+      password: password,
+      nik: nik,
+    };
+    axios.post(urlRegisterPatient, body).then(response);
   };
 
   return (
@@ -87,6 +101,19 @@ function SignUpPatient() {
                       id="exampleFormControlInput2"
                       placeholder="Username"
                       onChange={(e) => setUserName(e.target.value)}
+                    />
+                    <div className="absolute inset-y-0 right-4 flex items-center  text-[#324B50]">
+                      <FaRegUser size={22} />
+                    </div>
+                  </div>
+                  <div className="relative block w-4/6 m-auto">
+                    <input
+                      type="text"
+                      className="placeholder-[#324B50] form-control block w-full px-4 py-2 text-lg font-normal text-gray-700 bg-white bg-clip-padding
+                     border-2 border-solid border-[#324B50] rounded-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none "
+                      id="exampleFormControlInput2"
+                      placeholder="NIK"
+                      onChange={(e) => setNik(e.target.value)}
                     />
                     <div className="absolute inset-y-0 right-4 flex items-center  text-[#324B50]">
                       <FaRegUser size={22} />

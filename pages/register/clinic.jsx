@@ -8,8 +8,9 @@ import Link from "next/link";
 import swal from "sweetalert";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import axios from "axios";
 
-const urlRegisterClinic = "";
+const urlRegisterClinic = "https://faliqadlan.cloud.okteto.net/doctor";
 
 function SignUpClinic() {
   const route = useRouter();
@@ -19,6 +20,7 @@ function SignUpClinic() {
   const [loading, setLoading] = useState(false);
 
   const validateRegister = () => {
+    console.log("cek validate");
     if (username.trim() < 0) {
       swal("Input Salah", "Username Tidak Boleh Kosong", "error");
     } else if (username.match(/^$|\s+/)) {
@@ -32,15 +34,38 @@ function SignUpClinic() {
     } else if (password.length < 8) {
       swal("Input Salah", "Password Kurang Dari 8 Karakter", "error");
     } else {
-      swal(
-        "Selamat Datang Kembali",
-        "Anda akan diarahkan ke halaman dashboard",
-        "success"
-      );
-      setInterval(() => {
-        swal.close();
-      }, 3000);
+      doSignUp();
     }
+  };
+
+  const doSignUp = () => {
+    setLoading(true);
+
+    const formData = new FormData();
+    formData.append("userName", username);
+    formData.append("email", email);
+    formData.append("password", password);
+    console.log(formData, "cek form data");
+
+    axios
+      .post(urlRegisterClinic, formData)
+      .then(() => {
+        swal("Selamat !", "Anda akan diarahkan ke halaman login", "success");
+        setTimeout(() => {
+          swal.close();
+        }, 3000);
+        route.push("/login");
+      })
+      .catch(() => {
+        swal(
+          "sorry!",
+          "register gagal, email sudah digunakan atau user sudah terdaftar",
+          "error"
+        );
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
