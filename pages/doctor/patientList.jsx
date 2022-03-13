@@ -2,7 +2,7 @@ import React from "react";
 import Nav from "../../components/nav";
 import Sidebar from "../../components/sidebar";
 
-function patientList() {
+function PatientList() {
   return (
     <>
       <Nav />
@@ -11,7 +11,7 @@ function patientList() {
         <div className="ml-[7%]">
           <p className="text-2xl font-bold pt-5 mb-3"> Daftar Pasien</p>
           <div className="flex flex-wrap items-start mt-10">
-            <div className="bg-white rounded-lg p-5 flex flex-col items-start ml-5 w-[220px] mb-5">
+            <div className="bg-white rounded-lg p-5 flex flex-col items-start drop-shadow-lg ml-5 w-[220px] mb-5">
               <p className="text-xl font-bold"> John Dorian </p>
               <p className=""> Pria </p>
               <p className=""> 123456789327372 </p>
@@ -23,7 +23,7 @@ function patientList() {
                 </p>
               </div>
             </div>
-            <div className="bg-white rounded-lg p-5 flex flex-col items-start ml-5 w-[220px] mb-5">
+            <div className="bg-white rounded-lg p-5 flex flex-col drop-shadow-lg items-start ml-5 w-[220px] mb-5">
               <p className="text-xl font-bold"> John Dorian </p>
               <p className=""> Pria </p>
               <p className=""> 123456789327372 </p>
@@ -35,7 +35,7 @@ function patientList() {
                 </p>
               </div>
             </div>
-            <div className="bg-white rounded-lg p-5 flex flex-col items-start ml-5 w-[220px] mb-5">
+            <div className="bg-white rounded-lg p-5 flex flex-col drop-shadow-lg items-start ml-5 w-[220px] mb-5">
               <p className="text-xl font-bold"> John Dorian </p>
               <p className=""> Pria </p>
               <p className=""> 123456789327372 </p>
@@ -47,7 +47,7 @@ function patientList() {
                 </p>
               </div>
             </div>
-            <div className="bg-white rounded-lg p-5 flex flex-col items-start ml-5 w-[220px] mb-5">
+            <div className="bg-white rounded-lg p-5 drop-shadow-lg flex flex-col items-start ml-5 w-[220px] mb-5">
               <p className="text-xl font-bold"> John Dorian </p>
               <p className=""> Pria </p>
               <p className=""> 123456789327372 </p>
@@ -66,4 +66,4 @@ function patientList() {
   );
 }
 
-export default patientList;
+export default PatientList;
