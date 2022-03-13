@@ -6,6 +6,7 @@ import {
   FaAddressBook,
   FaTimes,
 } from "react-icons/fa";
+import { FiSettings } from "react-icons/fi";
 import { useRouter } from "next/router";
 
 function Sidebar() {
@@ -30,6 +31,7 @@ function Sidebar() {
                   <FaHome size={25} />
                   <FaUserMd className="mt-14" size={25} />
                   <FaAddressBook className="mt-14" size={25} />
+                  <FiSettings className="mt-14" size={25} />
                 </div>
               </div>
             </div>
@@ -37,7 +39,7 @@ function Sidebar() {
           {isOpen ? (
             <div className="bg-[#324B50] w-[120px] h-screen ">
               <div className="flex flex-col text-white items-start">
-                <div className="mt-[10%] font-bold text-center">
+                <div className="mt-[10%] ml-2 font-bold text-left">
                   <p className="bg-[#356E79] py-2 px-2  text-center ">
                     {" "}
                     Dashboard Menu
@@ -51,6 +53,9 @@ function Sidebar() {
                   </div>
                   <div className="mt-10 hover:bg-[#356E79] py-2 px-2 rounded-md cursor-pointer">
                     <p> Contact</p>
+                  </div>
+                  <div className="mt-10 hover:bg-[#356E79] py-2 px-2 rounded-md cursor-pointer">
+                    <p> Settings</p>
                   </div>
                 </div>
               </div>

@@ -122,7 +122,7 @@ function Index() {
       </Transition>
       ;
       <Navbar />
-      <div className="bg-[#E4F5E9] text-[#356E79]">
+      <div className="bg-[#E4F5E9] h-full text-[#356E79]">
         <div className="grid grid-cols-2">
           <div className="pl-8 pt-8">
             <p className="font-bold text-xl mb-5"> Profile Data</p>
