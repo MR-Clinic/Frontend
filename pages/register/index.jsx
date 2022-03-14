@@ -55,10 +55,6 @@ function SignUpPatient() {
     datePlaceholderSet(a);
   }
 
-  const body={
-    username, email, password, nik, full_name, address, gender, job, status, religion, place, date,
-  }
-
   const validatePart1 = () => {
     if(username === '' && email === '' && password === ''){
       swal("Input Kosong", "Silahkan Masukkan Data Yang Sesuai", "error");
@@ -94,7 +90,7 @@ function SignUpPatient() {
     } else if (nik === "" || full_name === "" || address === "" || job === "" || status === "" || religion ===""){
       swal("Form Masih Kosong", "Silahkan Masukkan Data Sesuai KTP Anda", "error");
     } else {
-      // registerPatient();
+      registerPatient();
     }
   }
 
@@ -105,14 +101,23 @@ function SignUpPatient() {
 
   const registerPatient = () => {
     setLoading(true);
-    const body = {
-      userName: username,
-      email: email,
-      password: password,
-      nik: nik,
-    };
+    const formData = new FormData();
+    
+    formData.append("userName",username)
+    formData.append("email",email)
+    formData.append("password",password)
+    formData.append("nik",nik)
+    formData.append("name",full_name)
+    formData.append("address",address)
+    formData.append("gender",gender)
+    formData.append("job",job)
+    formData.append("status",status)
+    formData.append("religion",religion)
+    formData.append("placeBirth",place)
+    formData.append("dob",date)
+
     axios
-      .post(urlRegisterPatient, body)
+      .post(urlRegisterPatient, formData)
       .then(() => {
         swal(
           "Selamat register berhasil !",
@@ -175,7 +180,7 @@ function SignUpPatient() {
                       type="text"
                       className="placeholder-[#324B50] form-control block w-full px-4 py-2 text-lg font-normal text-gray-700 bg-white bg-clip-padding
                      border-2 border-solid border-[#324B50] rounded-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none "
-                      id="exampleFormControlInput2"
+                      id="Username"
                       placeholder="Username"
                       onChange={(e) => setUserName(e.target.value)}
                     />
@@ -189,7 +194,7 @@ function SignUpPatient() {
                       type="text"
                       className="placeholder-[#324B50] form-control block w-full px-4 py-2 text-lg font-normal text-gray-700 bg-white bg-clip-padding
                      border-2 border-solid border-[#324B50] rounded-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none "
-                      id="exampleFormControlInput2"
+                      id="Email"
                       placeholder="Email"
                       onChange={(e) => setEmail(e.target.value)}
                     />
@@ -202,7 +207,7 @@ function SignUpPatient() {
                       type="password"
                       className=" placeholder-[#324B50] form-control block w-full px-4 py-2 text-lg font-normal text-gray-700 bg-white bg-clip-padding
                      border-2 border-solid border-[#324B50] rounded-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none "
-                      id="exampleFormControlInput2"
+                      id="Password"
                       placeholder="Password"
                       onChange={(e) => setPassword(e.target.value)}
                     />
