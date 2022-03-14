@@ -37,8 +37,8 @@ function SignUpPatient() {
   const [date, dateSet] = useState("");
 
   //class transformer
-  const [state, setState] = useState("hidden");
-  const [state2, setState2] = useState("");
+  const [state, setState] = useState("");
+  const [state2, setState2] = useState("hidden");
   const [optSelect, setOptSel]= useState("Jenis Kelamin")
   const [optSelect2, setOptSel2]= useState("Status")
   const [optSelect3, setOptSel3]= useState("Agama")
@@ -61,8 +61,6 @@ function SignUpPatient() {
 
   const validatePart1 = () => {
     if(username === '' && email === '' && password === ''){
-    const [nik, setNik] = useState("");
-    const [loading, setLoading] = useState(false);
       swal("Input Kosong", "Silahkan Masukkan Data Yang Sesuai", "error");
     } else if (username === "") {
       swal("Input Salah", "Username Tidak Boleh Kosong", "error");
@@ -76,11 +74,8 @@ function SignUpPatient() {
       swal("Input Salah", "Password Tidak Boleh Kosong", "error");
     } else if (password.length < 8) {
       swal("Input Salah", "Password Kurang Dari 8 Karakter", "error");
-    } else if (nik.length < 16) {
-      swal("Input Salah", "nik Kurang Dari 16 Karakter", "error");
     } else {
-      setInterval(() => {
-        swal.close();
+      setTimeout(() => {
         setState("hidden")
         setState2("")
       }, 1000);
@@ -99,7 +94,7 @@ function SignUpPatient() {
     } else if (nik === "" || full_name === "" || address === "" || job === "" || status === "" || religion ===""){
       swal("Form Masih Kosong", "Silahkan Masukkan Data Sesuai KTP Anda", "error");
     } else {
-      registerPatient();
+      // registerPatient();
     }
   }
 
@@ -188,19 +183,7 @@ function SignUpPatient() {
                       <FaRegUser size={22} />
                     </div>
                   </div>
-                  <div className="relative block w-4/6 m-auto">
-                    <input
-                      type="text"
-                      className="placeholder-[#324B50] form-control block w-full px-4 py-2 text-lg font-normal text-gray-700 bg-white bg-clip-padding
-                     border-2 border-solid border-[#324B50] rounded-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none "
-                      id="exampleFormControlInput2"
-                      placeholder="NIK"
-                      onChange={(e) => setNik(e.target.value)}
-                    />
-                    <div className="absolute inset-y-0 right-4 flex items-center  text-[#324B50]">
-                      <FaRegUser size={22} />
-                    </div>
-                  </div>
+                  
                   <div className="relative block w-4/6 m-auto">
                     <input
                       type="text"
@@ -237,28 +220,10 @@ function SignUpPatient() {
                       <FaSignInAlt className="ml-2" />
                     </button>
                   </div>
-                    <div className="flex justify-center ">
-                      <button
-                        className=" mb-[40px] bg-[#324B50] font-medium inline-flex items-center px-3 py-1 rounded-md shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
-                        type="submit"
-                        onClick={() => validateRegister()}
-                      >
-                        Register
-                        <FaSignInAlt className="ml-2" />
-                      </button>
-                    </div>
+                    
                 </div>
                 {/* direct to register */}
-                <div className="flex justify-between text-xs space-x-10 mt-10 font-medium absolute bottom-3 left-[28%] ">
-                  <div className="flex">
-                    <p>buka klinik?</p>
-                    <a
-                      onClick={() => route.push("/register/clinic")}
-                      className="underline cursor-pointer ml-1"
-                    >
-                      silahkan daftar disini !
-                    </a>
-                  </div>
+                <div className="flex justify-between text-xs space-x-10 font-medium absolute bottom-3 left-[40%] ">
                   <div className="flex">
                     <p> sudah punya akun?</p>
                     <a
@@ -531,14 +496,6 @@ function SignUpPatient() {
                      )}
                     </div>
                   </div>
-                </div>
-                {/* direct to register */}
-                <div className={"flex justify-center text-xs mt-10 font-medium absolute bottom-3 left-[42%] "+ state}>
-                  <p> Belum punya akun?</p>
-                  <a onClick={()=>route.push("/register")} className="underline cursor-pointer ml-1">
-                    {" "}
-                    ayo mulai daftar
-                  </a>
                 </div>
               </div>
             </div>

@@ -145,7 +145,7 @@ function Login() {
                         onClick={() => validateLogin()}
                       >
                         Login
-                        <FaSignInAlt className="ml-2" />
+                        <CgLogIn className="ml-2" />
                       </button>
                     </div>
                   )}

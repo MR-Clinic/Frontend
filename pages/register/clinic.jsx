@@ -54,6 +54,7 @@ function SignUpClinic() {
     } else if (password.length < 8) {
       swal("Input Salah", "Password Kurang Dari 8 Karakter", "error");
     } else {
+      setState("hidden")
       setState2("")
     }
   };
@@ -71,7 +72,7 @@ function SignUpClinic() {
       swal("Input Kosong", " Maksimal Kunjungan Tidak Boleh Kosong", "error")
     }else{
       swal("Register Berhasil", "Terima Kasih Sudah Mendaftar, Anda Akan Diarahkan Kehalaman Login", "success")
-      setInterval(() => {
+      setTimeout(() => {
         swal.close();
         route.push('/login')
         doSignUp();
