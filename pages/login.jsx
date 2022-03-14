@@ -1,12 +1,13 @@
 import React from "react";
-import { FaSignInAlt } from "react-icons/fa";
-import { HiOutlineKey } from "react-icons/hi";
-import { FiMail } from "react-icons/fi";
+import { CgLogIn } from "react-icons/cg";
+import { FiUser } from "react-icons/fi";
+import { MdOutlineVpnKey } from "react-icons/md";
 import logoImg from "../assets/Logo.png";
 import Image from "next/image";
 import { useState } from "react";
 import swal from "sweetalert";
 import { useRouter } from "next/router";
+import form from "../styles/Form.module.css"
 
 const urlLogin = "";
 
@@ -40,9 +41,11 @@ function Login() {
   return (
     <>
       <div className="bg-[#324B50] p-20 text-[#324B50] font-redhat min-h-screen flex">
-        <div className="bg-white px-5 py-3 rounded-lg shadow-white shadow-md h-[80vh]">
+        <div className="bg-white px-5 py-3 rounded-lg shadow-white shadow-md min-h-[80vh]">
           <div className="grid grid-cols-3  rounded-lg h-full">
+
             {/* left-section */}
+
             <div className="grid bg-[#E4F5E9] rounded-lg ">
               <div className="grid items-center justify-center px-24">
                 <div>
@@ -60,42 +63,30 @@ function Login() {
                 </div>
               </div>
             </div>
-            {/* right-section */}
-            <div className="col-span-2 bg-white rounded-lg z-10 flex justify-center items-center relative">
+
+            {/* right-section Part 1*/}
+
+            <div className={"col-span-2 bg-white rounded-lg z-10 flex justify-center items-center relative "}>
               <div className="grid justify-center capitalize ">
-                <p className="font-semibold text-[40px] leading-[50px] text-center">
-                  pantau selalu kesehatanmu!
-                </p>
+                <p className="font-semibold text-[40px] leading-[50px] text-center"> pantau selalu kesehatanmu!</p>
                 <div className="flex justify-center">
                   <p> selamat datang, silahkan masuk ke akun mu !</p>
                 </div>
                 {/* input button */}
-                <div className=" py-5 space-y-3 ">
-                  <div className="relative block w-4/6 m-auto">
-                    <input
-                      type="text"
-                      className="placeholder-[#324B50] form-control block w-full px-4 py-2 text-lg font-normal text-gray-700 bg-white bg-clip-padding
-                     border-2 border-solid border-[#324B50] rounded-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none "
-                      id="username"
-                      placeholder="Username"
-                      onChange={(e) => setUsername(e.target.value)}
-                    />
-                    <div className="absolute inset-y-0 right-4 flex items-center text-[#324B50]">
-                      <FiMail size={22} />
-                    </div>
-                  </div>
-                  <div className="relative block w-4/6 m-auto">
-                    <input
-                      type="password"
-                      className=" placeholder-[#324B50] form-control block w-full px-4 py-2 text-lg font-normal text-gray-700 bg-white bg-clip-padding
-                     border-2 border-solid border-[#324B50] rounded-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none "
-                      id="password"
-                      placeholder="Password"
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <div className="absolute inset-y-0 right-4 flex items-center text-[#324B50]">
-                      <HiOutlineKey size={22} />
-                    </div>
+                <div>
+                  <div className={form.inputDiv}>
+                      <div>
+                        <div className={form.input}>
+                          <input type="text" className="{form.inputStyle} " id="nik" placeholder="Username" onChange={(e) => setUsername(e.target.value)}/>
+                          <FiUser/>
+                        </div>
+                      </div>
+                      <div>
+                        <div className={form.input}>
+                          <input type="password" className="{form.inputStyle} " id="full_name" placeholder="Password" onChange={(e) => setPassword(e.target.value)}/>
+                          <MdOutlineVpnKey/>
+                        </div>
+                      </div>
                   </div>
                   <div className="flex justify-center ">
                     <button
@@ -104,16 +95,21 @@ function Login() {
                       onClick={() => validateLogin()}
                     >
                       Login
-                      <FaSignInAlt className="ml-2" />
+                      <CgLogIn className="ml-2" />
                     </button>
                   </div>
                 </div>
                 {/* direct to register */}
-                <div className="flex justify-center text-xs mt-10 font-medium absolute bottom-3 left-[42%] ">
+                <div className="flex justify-center text-xs mt-10 font-medium absolute bottom-3 left-[29%] ">
                   <p> Belum punya akun?</p>
                   <a onClick={()=>route.push("/register")} className="underline cursor-pointer ml-1">
                     {" "}
-                    ayo mulai daftar
+                    daftar sebagai Pasien
+                  </a>
+                  <span> / </span>
+                  <a onClick={()=>route.push("/register/clinic")} className="underline cursor-pointer ml-1">
+                    {" "}
+                    daftar sebagai dokter
                   </a>
                 </div>
               </div>
