@@ -1,4 +1,6 @@
-import React from "react";
+import React, { Fragment, useEffect } from "react";
+import { BsChevronDown } from "react-icons/bs";
+import { CgLogIn,CgLogOut } from "react-icons/cg";
 import { FaSignInAlt, FaRegUser } from "react-icons/fa";
 import { HiOutlineKey } from "react-icons/hi";
 import { FiMail } from "react-icons/fi";
@@ -8,6 +10,8 @@ import Link from "next/link";
 import swal from "sweetalert";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import form from "../../styles/Form.module.css"
+import { Menu, Transition } from "@headlessui/react";
 import axios from "axios";
 import ReactLoading from "react-loading";
 
@@ -18,9 +22,24 @@ function SignUpClinic() {
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [full_name, full_nameSet] = useState("");
+  const [address, addressSet] = useState("");
+  const [dari, dariSet] = useState("");
+  const [sampai, sampaiSet] = useState("");
+  const [total, totalSet] = useState("");
+
+  const body = {
+    username, email, password, full_name, address, dari, sampai, total
+  }
+
+  //class transformer
+  const [state, setState] = useState("");
+  const [state2, setState2] = useState("hidden");
+  const [optSelect, setOptSel]= useState("Senin")
+  const [optSelect2, setOptSel2]= useState("Jumat")
   const [loading, setLoading] = useState(false);
 
-  const validateRegister = () => {
+  const validatePart1 = () => {
     console.log("cek validate");
     if (username.trim() < 0) {
       swal("Input Salah", "Username Tidak Boleh Kosong", "error");
@@ -35,9 +54,35 @@ function SignUpClinic() {
     } else if (password.length < 8) {
       swal("Input Salah", "Password Kurang Dari 8 Karakter", "error");
     } else {
-      doSignUp();
+      setState2("")
     }
   };
+
+  
+  const validatePart2 = () => {
+    console.log(body);
+    if(full_name === ""){
+      swal("Input Kosong", "Nama Tidak Boleh Kosong", "error")
+    }else if(address === ""){
+      swal("Input Kosong", "Alamat Tidak Boleh Kosong", "error")
+    }else if(dari === "" || sampai === ""){
+      swal("Input Kosong", "Jadwal Buka Ada yang Kosong", "error")
+    }else if(total === ""){
+      swal("Input Kosong", " Maksimal Kunjungan Tidak Boleh Kosong", "error")
+    }else{
+      swal("Register Berhasil", "Terima Kasih Sudah Mendaftar, Anda Akan Diarahkan Kehalaman Login", "success")
+      setInterval(() => {
+        swal.close();
+        route.push('/login')
+        doSignUp();
+      }, 3000);
+    }
+  }
+  
+  const backBtn= () =>{
+    setState("")
+    setState2("hidden")
+  }
 
   const doSignUp = () => {
     setLoading(true);
@@ -97,7 +142,7 @@ function SignUpClinic() {
               </div>
             </div>
             {/* right-section */}
-            <div className="col-span-2 bg-white rounded-lg z-10 flex justify-center items-center relative">
+            <div className={"col-span-2 bg-white rounded-lg z-10 flex justify-center items-center relative " + state}>
               <div className="grid justify-center capitalize ">
                 <p className="font-semibold text-[40px] leading-[50px] text-center">
                   ayo mulai buka klinik milik kamu!
@@ -146,34 +191,16 @@ function SignUpClinic() {
                       <HiOutlineKey size={22} />
                     </div>
                   </div>
-                  {loading ? (
-                    <div className="flex justify-center ">
-                      <button
-                        className=" mb-[40px] bg-[#324B50] font-medium inline-flex items-center px-3 py-2 rounded-md shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
-                        type="submit"
-                      >
-                        Loading
-                        <ReactLoading
-                          className="ml-2 mb-2"
-                          type={"spin"}
-                          color={"#ffffff"}
-                          height={"20px"}
-                          width={"30px"}
-                        />
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="flex justify-center ">
-                      <button
-                        className=" mb-[40px] bg-[#324B50] font-medium inline-flex items-center px-3 py-1 rounded-md shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
-                        type="submit"
-                        onClick={() => validateRegister()}
-                      >
-                        Register
-                        <FaSignInAlt className="ml-2" />
-                      </button>
-                    </div>
-                  )}
+                  <div className="flex justify-center ">
+                    <button
+                      className=" mb-[40px] bg-[#324B50] font-medium inline-flex items-center px-3 py-1 rounded-md shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
+                      type="submit"
+                      onClick={() => validatePart1()}
+                    >
+                      Register
+                      <FaSignInAlt className="ml-2" />
+                    </button>
+                  </div>
                 </div>
                 {/* direct to register */}
                 <div className="flex justify-center text-xs mt-10 font-medium absolute bottom-3 left-[42%] ">
@@ -184,6 +211,242 @@ function SignUpClinic() {
                   >
                     {" "}
                     masuk disini
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* right-section Part 2*/}
+
+            <div className={"col-span-2 bg-white rounded-lg z-10 flex justify-center items-center relative "+ state2}>
+              <div className="grid justify-center capitalize ">
+                <p className="font-semibold text-[40px] leading-[50px] text-center">
+                  Lengkapi Data Anda
+                </p>
+                <div className="flex justify-around">
+                  <p> Silahkan isi data sesuai KTP anda.</p>
+                </div>
+                {/* input button */}
+                <div className="grid grid-cols-2 gap-5">
+                  <div className={"col-span-2 " + form.inputDiv }>
+                      
+                      <div>
+                        <span>Nama Lengkap</span>
+                        <div className={form.input}>
+                          <input type="text" className="{form.inputStyle} " id="job" placeholder="dr. Nama Lengkap" onChange={(e) => full_nameSet("dr. "+e.target.value)}/>
+                        </div>
+                      </div>
+                      <div>
+                        <span>Alamat Klinik</span>
+                        <div className={form.input}>
+                          <input type="text" className="{form.inputStyle} " id="job" placeholder="Alamat Klinik" onChange={(e) => addressSet(e.target.value)}/>
+                        </div>
+                      </div>
+                      <div>
+                        <span>Jadwal Buka Klinik</span>
+                        <div className={form.input+' '+form.ttl}>
+                          <div className="flex justify-between gap-2 capitalize w-full">
+                            <div className={form.ttlIn+" "}>
+                              <Menu as="div" className="relative inline-block w-full h-full text-left z-20">
+                              <div className="h-full">
+                                <Menu.Button className="inline-flex items-center px-3 justify-between w-full h-full text-slate-500">
+                                  {optSelect}
+                                  <BsChevronDown className="ml-3"/>
+                                </Menu.Button>
+                              </div>
+
+                              <Transition
+                                as={Fragment}
+                                enter="transition ease-out duration-100"
+                                enterFrom="transform opacity-0 scale-95"
+                                enterTo="transform opacity-100 scale-100"
+                                leave="transition ease-in duration-75"
+                                leaveFrom="transform opacity-100 scale-100"
+                                leaveTo="transform opacity-0 scale-95"
+                              >
+                                <Menu.Items className="origin-top-right z-20 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 max-h-[120px] snap-y overflow-y-scroll focus:outline-none ">
+                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{dariSet("Senin"); setOptSel("Senin")}}>
+                                    <Menu.Item>
+                                        <span className="w-full ">
+                                        Senin
+                                        </span>
+                                    </Menu.Item>
+                                  </div>
+                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{dariSet("Selasa"); setOptSel("Selasa")}}>
+                                    <Menu.Item>
+                                        <span className="w-full ">
+                                          Selasa
+                                        </span>
+                                    </Menu.Item>
+                                  </div>
+                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{dariSet("Rabu"); setOptSel("Rabu")}}>
+                                    <Menu.Item>
+                                        <span className="w-full ">
+                                          Rabu
+                                        </span>
+                                    </Menu.Item>
+                                  </div>
+                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{dariSet("Kamis"); setOptSel("Kamis")}}>
+                                    <Menu.Item>
+                                        <span className="w-full ">
+                                          Kamis
+                                        </span>
+                                    </Menu.Item>
+                                  </div>
+                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{dariSet("Jumat"); setOptSel("Jumat")}}>
+                                    <Menu.Item>
+                                        <span className="w-full ">
+                                          Jumat
+                                        </span>
+                                    </Menu.Item>
+                                  </div>
+                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{dariSet("Sabtu"); setOptSel("Sabtu")}}>
+                                    <Menu.Item>
+                                        <span className="w-full ">
+                                          Sabtu
+                                        </span>
+                                    </Menu.Item>
+                                  </div>
+                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{dariSet("Minggu"); setOptSel("Minggu")}}>
+                                    <Menu.Item>
+                                        <span className="w-full ">
+                                          Minggu
+                                        </span>
+                                    </Menu.Item>
+                                  </div>
+                                </Menu.Items>
+                              </Transition>
+                              </Menu>
+                            </div>
+                            <span className="px-2 py-2">S/D</span>
+
+                            <div className={form.ttlIn+" "}>
+                              <Menu as="div" className="relative inline-block w-full h-full text-left z-20">
+                              <div className="h-full">
+                                <Menu.Button className="inline-flex items-center px-3 justify-between w-full h-full text-slate-500">
+                                  {optSelect2}
+                                  <BsChevronDown className="ml-3"/>
+                                </Menu.Button>
+                              </div>
+
+                              <Transition
+                                as={Fragment}
+                                enter="transition ease-out duration-100"
+                                enterFrom="transform opacity-0 scale-95"
+                                enterTo="transform opacity-100 scale-100"
+                                leave="transition ease-in duration-75"
+                                leaveFrom="transform opacity-100 scale-100"
+                                leaveTo="transform opacity-0 scale-95"
+                              >
+                                <Menu.Items className="origin-top-right z-20 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 max-h-[120px] snap-y overflow-y-scroll focus:outline-none ">
+                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{sampaiSet("Senin"); setOptSel2("Senin")}}>
+                                    <Menu.Item>
+                                        <span className="w-full ">
+                                        Senin
+                                        </span>
+                                    </Menu.Item>
+                                  </div>
+                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{sampaiSet("Selasa"); setOptSel2("Selasa")}}>
+                                    <Menu.Item>
+                                        <span className="w-full ">
+                                          Selasa
+                                        </span>
+                                    </Menu.Item>
+                                  </div>
+                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{sampaiSet("Rabu"); setOptSel2("Rabu")}}>
+                                    <Menu.Item>
+                                        <span className="w-full ">
+                                          Rabu
+                                        </span>
+                                    </Menu.Item>
+                                  </div>
+                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{sampaiSet("Kamis"); setOptSel2("Kamis")}}>
+                                    <Menu.Item>
+                                        <span className="w-full ">
+                                          Kamis
+                                        </span>
+                                    </Menu.Item>
+                                  </div>
+                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{sampaiSet("Jumat"); setOptSel2("Jumat")}}>
+                                    <Menu.Item>
+                                        <span className="w-full ">
+                                          Jumat
+                                        </span>
+                                    </Menu.Item>
+                                  </div>
+                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{sampaiSet("Sabtu"); setOptSel2("Sabtu")}}>
+                                    <Menu.Item>
+                                        <span className="w-full ">
+                                          Sabtu
+                                        </span>
+                                    </Menu.Item>
+                                  </div>
+                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{sampaiSet("Minggu"); setOptSel2("Minggu")}}>
+                                    <Menu.Item>
+                                        <span className="w-full ">
+                                          Minggu
+                                        </span>
+                                    </Menu.Item>
+                                  </div>
+                                </Menu.Items>
+                              </Transition>
+                              </Menu>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <span>Jumlah Maksimal Kunjungan</span>
+                        <div className={form.input}>
+                          <input type="number" id="maxs" name="maxs" placeholder="Jumlah" max="99" maxLength="2" onChange={(e)=>{totalSet(e.target.value)}}/>
+                        </div>
+                      </div>
+                  </div>
+                  <div className="col-span-2">
+                    <div className={"flex justify-between " + form.btn}>
+
+                      <button
+                        className="bg-[#324B50] font-medium inline-flex items-center px-3 py-1 rounded-md shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
+                        type="submit"
+                        onClick={() => backBtn()}
+                      >
+                        <CgLogOut className="m-2" />
+                        Back
+                      </button>
+
+                     {loading ? (
+                        <button
+                          className=" mb-[40px] bg-[#324B50] font-medium inline-flex items-center px-3 py-2 rounded-md shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
+                          type="submit"
+                        >
+                          Loading
+                          <ReactLoading
+                            className="ml-2 mb-2"
+                            type={"spin"}
+                            color={"#ffffff"}
+                            height={"20px"}
+                            width={"30px"}
+                          />
+                        </button>
+                    ) : (
+                      <button
+                        className="bg-[#324B50] font-medium inline-flex items-center px-3 py-1 rounded-md shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
+                        type="submit"
+                        onClick={() => validatePart2()}
+                      >
+                        Submit
+                        <CgLogIn className="m-2" />
+                      </button>
+                    )}
+                    </div>
+                  </div>
+                </div>
+                {/* direct to register */}
+                <div className={"flex justify-center text-xs mt-10 font-medium absolute bottom-3 left-[42%] "+ state}>
+                  <p> Belum punya akun?</p>
+                  <a onClick={()=>route.push("/register")} className="underline cursor-pointer ml-1">
+                    {" "}
+                    ayo mulai daftar
                   </a>
                 </div>
               </div>
