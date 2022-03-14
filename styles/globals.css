@@ -69,6 +69,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   right: 0;
   top: 0;
   width: auto;
+}
+
 .test {
   color: red;
 }
