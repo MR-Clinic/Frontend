@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { CgLogIn } from "react-icons/cg";
 import { FiUser } from "react-icons/fi";
 import { MdOutlineVpnKey } from "react-icons/md";
@@ -19,6 +19,17 @@ function Login() {
   const [loading, setLoading] = useState(false);
 
   const route = useRouter();
+
+  useEffect(()=>{
+    if(localStorage.getItem('token')){
+      const profile = localStorage.getItem('profile')
+      if (profile === "doctor") {
+        route.push("/doctor");
+      } else if (profile === "patient") {
+        route.push("/patient");
+      }
+    }
+  })
 
   const validateLogin = () => {
     if (username === "" && password === "") {
@@ -46,6 +57,7 @@ function Login() {
     axios
       .post(urlLogin, body)
       .then((response) => {
+        console.log(response);
         const typeProfile = response.data.data.type;
         swal(
           "Selamat Datang Kembali",
@@ -55,7 +67,7 @@ function Login() {
         setTimeout(() => {
           swal.close();
         }, 3000);
-        localStorage.setItem("token", response.data.data);
+        localStorage.setItem("token", response.data.data.token);
         localStorage.setItem("profile", response.data.data.type);
         if (typeProfile === "doctor") {
           route.push("/doctor");

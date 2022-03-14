@@ -35,6 +35,17 @@ function SignUpClinic() {
   const [optSelect2, setOptSel2]= useState("Jumat")
   const [loading, setLoading] = useState(false);
 
+  useEffect(()=>{
+    if(localStorage.getItem('token')){
+      const profile = localStorage.getItem('profile')
+      if (profile === "doctor") {
+        route.push("/doctor");
+      } else if (profile === "patient") {
+        route.push("/patient");
+      }
+    }
+  })
+
   const validatePart1 = () => {
     console.log("cek validate");
     if (username.trim() < 0) {
