@@ -69,4 +69,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   right: 0;
   top: 0;
   width: auto;
+.test {
+  color: red;
+}
+
+.img-doctor {
+  background-image: url("https://raw.githubusercontent.com/akmalays/upload-image/main/imghome.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: right;
 }

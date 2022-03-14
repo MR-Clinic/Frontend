@@ -12,8 +12,10 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import form from "../../styles/Form.module.css"
 import { Menu, Transition } from "@headlessui/react";
+import axios from "axios";
+import ReactLoading from "react-loading";
 
-const urlRegisterClinic = "";
+const urlRegisterClinic = "https://faliqadlan.cloud.okteto.net/doctor";
 
 function SignUpClinic() {
   const route = useRouter();
@@ -38,7 +40,7 @@ function SignUpClinic() {
   const [loading, setLoading] = useState(false);
 
   const validatePart1 = () => {
-    
+    console.log("cek validate");
     if (username.trim() < 0) {
       swal("Input Salah", "Username Tidak Boleh Kosong", "error");
     } else if (username.match(/^$|\s+/)) {
@@ -50,9 +52,8 @@ function SignUpClinic() {
     } else if (password === "") {
       swal("Input Salah", "Password Tidak Boleh Kosong", "error");
     } else if (password.length < 8) {
-      swal("Input Salah", "Password Kurang Dari 8 Karakter", "error")
+      swal("Input Salah", "Password Kurang Dari 8 Karakter", "error");
     } else {
-      setState("hidden")
       setState2("")
     }
   };
@@ -73,6 +74,7 @@ function SignUpClinic() {
       setInterval(() => {
         swal.close();
         route.push('/login')
+        doSignUp();
       }, 3000);
     }
   }
@@ -81,6 +83,40 @@ function SignUpClinic() {
     setState("")
     setState2("hidden")
   }
+
+  const doSignUp = () => {
+    setLoading(true);
+
+    const formData = new FormData();
+    formData.append("userName", username);
+    formData.append("email", email);
+    formData.append("password", password);
+    console.log(formData, "cek form data");
+
+    axios
+      .post(urlRegisterClinic, formData)
+      .then(() => {
+        swal(
+          "Selamat register berhasil !",
+          "Anda akan diarahkan ke halaman login",
+          "success"
+        );
+        setTimeout(() => {
+          swal.close();
+        }, 3000);
+        route.push("/login");
+      })
+      .catch(() => {
+        swal(
+          "sorry!",
+          "register gagal, email sudah digunakan atau user sudah terdaftar",
+          "error"
+        );
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
 
   return (
     <>
@@ -92,7 +128,7 @@ function SignUpClinic() {
               <div className="grid items-center justify-center px-24">
                 <div>
                   <div className="w-5/6">
-                    <Image src={logoImg} />
+                    <Image src={logoImg} alt="logo" />
                   </div>
                   <p className=" font-semibold text-[30px] leading-[35px] ">
                     {" "}
@@ -169,7 +205,10 @@ function SignUpClinic() {
                 {/* direct to register */}
                 <div className="flex justify-center text-xs mt-10 font-medium absolute bottom-3 left-[42%] ">
                   <p> sudah punya akun?</p>
-                  <a onClick={()=>route.push("/login")} className="underline cursor-pointer ml-1">
+                  <a
+                    onClick={() => route.push("/login")}
+                    className="underline cursor-pointer ml-1"
+                  >
                     {" "}
                     masuk disini
                   </a>
@@ -374,7 +413,22 @@ function SignUpClinic() {
                         <CgLogOut className="m-2" />
                         Back
                       </button>
-                      
+
+                     {loading ? (
+                        <button
+                          className=" mb-[40px] bg-[#324B50] font-medium inline-flex items-center px-3 py-2 rounded-md shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
+                          type="submit"
+                        >
+                          Loading
+                          <ReactLoading
+                            className="ml-2 mb-2"
+                            type={"spin"}
+                            color={"#ffffff"}
+                            height={"20px"}
+                            width={"30px"}
+                          />
+                        </button>
+                    ) : (
                       <button
                         className="bg-[#324B50] font-medium inline-flex items-center px-3 py-1 rounded-md shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
                         type="submit"
@@ -383,6 +437,7 @@ function SignUpClinic() {
                         Submit
                         <CgLogIn className="m-2" />
                       </button>
+                    )}
                     </div>
                   </div>
                 </div>
