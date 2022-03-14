@@ -12,14 +12,18 @@ function Index() {
   const [isOpen, setIsOpen] = useState(false);
   const [date, setDate] = useState("");
   const dispatch = useDispatch();
-  // const dataDoctor = useSelector((data) => data.getAllDoctors.getAllDoctors);
+  const dataDoctor = useSelector(
+    (data) => data.getAllDoctorsReducer.listAllDoctors
+  );
   const dataPatient = useSelector(
     (data) => data.patientDetailReducer.listPatientDetail
   );
-  console.log("cek datapatient", dataPatient);
-  // useEffect(() => {
-  //   dispatch(allStore.getAllDoctors());
-  // }, [dispatch]);
+  console.log("cek datapatient", dataDoctor);
+
+  useEffect(() => {
+    console.log("masuk use effect", allStore);
+    dispatch(allStore.getAllDoctors());
+  }, [dispatch]);
 
   useEffect(() => {
     console.log("masuk use effect", allStore);
@@ -158,239 +162,21 @@ function Index() {
                   {dataPatient ? (
                     <div className="grid items-end space-y-2 pl-5 text-sm">
                       <p> : {dataPatient.nik}</p>
-                      <p> : Muhammad Rizki Adiwiganda{dataPatient.name}</p>
-                      <p> : Pria{dataPatient.gender}</p>
-                      <p> : Jl. ABCD efghjkkk{dataPatient.address} </p>
+                      <p> : {dataPatient.name}</p>
+                      <p> : {dataPatient.gender}</p>
+                      <p> : {dataPatient.address} </p>
                       <p>
                         {" "}
-                        : Medan, 22 November 1997{dataPatient.placeBirth},{" "}
-                        {dataPatient.dob}
+                        : {dataPatient.placeBirth}, {dataPatient.dob}
                       </p>
-                      <p> : Islam {dataPatient.religion}</p>
-                      <p> : Lajang {dataPatient.status}</p>
-                      <p> : Web Developer {dataPatient.job}</p>
+                      <p> : {dataPatient.religion}</p>
+                      <p> : {dataPatient.status}</p>
+                      <p> : {dataPatient.job}</p>
                     </div>
                   ) : null}
                 </div>
               </div>
             </div>
-          </div>
-          <div className=" ml-[-100px] pt-8 ">
-            <p className="font-bold text-xl"> List Dokter</p>
-            <div className=" flex flex-wrap">
-              <div className="bg-[#324B50] w-[230px] h-[150px] pt-8 mt-5 rounded-lg mr-4  drop-shadow-lg">
-                <div className="bg-white h-full text-[10px]">
-                  <div className="flex justify-center ">
-                    <div className="w-[60px] rounded-full pt-2 ">
-                      <Image src={avatar} alt="doctor-img" />{" "}
-                    </div>
-                    <div className="mx-5 pt-2">
-                      {" "}
-                      <p className="font-semibold text-sm ">John doa</p>
-                      <p> Clinic Bersama</p>
-                      <p> Jl. Depan Bersama dkk</p>
-                    </div>
-                  </div>
-                  <div className="flex justify-between pt-3 px-7">
-                    <div className="bg-rose-700 px-2 py-1 rounded-lg text-white ">
-                      <button> unavailable </button>
-                    </div>
-                    <div className="bg-[#E4F5E9] px-2 py-1 rounded-lg">
-                      <button className=" w-[50px]" onClick={openModal}>
-                        {" "}
-                        buat janji{" "}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-[#324B50] w-[230px] h-[150px] pt-8 mt-5 rounded-lg mr-4 drop-shadow-lg">
-                <div className="bg-white h-full text-[10px]">
-                  <div className="flex justify-center ">
-                    <div className="w-[60px] rounded-full pt-2 ">
-                      <Image src={avatar} alt="doctor-img" />{" "}
-                    </div>
-                    <div className="mx-5 pt-2">
-                      {" "}
-                      <p className="font-semibold text-sm ">John doa</p>
-                      <p> Clinic Bersama</p>
-                      <p> Jl. Depan Bersama dkk</p>
-                    </div>
-                  </div>
-                  <div className="flex justify-between pt-3 px-7">
-                    <div className="bg-[#E4F5E9] px-2 py-1 rounded-lg ">
-                      <button> available </button>
-                    </div>
-                    <div className="bg-[#E4F5E9] px-2 py-1 rounded-lg">
-                      <button className=" w-[50px]"> buat janji </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-[#324B50] w-[230px] h-[150px] pt-8 mt-5 rounded-lg mr-4 drop-shadow-lg">
-                <div className="bg-white h-full text-[10px]">
-                  <div className="flex justify-center ">
-                    <div className="w-[60px] rounded-full pt-2 ">
-                      <Image src={avatar} alt="doctor-img" />{" "}
-                    </div>
-                    <div className="mx-5 pt-2">
-                      {" "}
-                      <p className="font-semibold text-sm ">John doa</p>
-                      <p> Clinic Bersama</p>
-                      <p> Jl. Depan Bersama dkk</p>
-                    </div>
-                  </div>
-                  <div className="flex justify-between pt-3 px-7">
-                    <div className="bg-[#E4F5E9] px-2 py-1 rounded-lg ">
-                      <button> available </button>
-                    </div>
-                    <div className="bg-[#E4F5E9] px-2 py-1 rounded-lg">
-                      <button className=" w-[50px]"> buat janji </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-[#324B50] w-[230px] h-[150px] pt-8 mt-5 rounded-lg mr-4 drop-shadow-lg">
-                <div className="bg-white h-full text-[10px]">
-                  <div className="flex justify-center ">
-                    <div className="w-[60px] rounded-full pt-2 ">
-                      <Image src={avatar} alt="doctor-img" />{" "}
-                    </div>
-                    <div className="mx-5 pt-2">
-                      {" "}
-                      <p className="font-semibold text-sm ">John doa</p>
-                      <p> Clinic Bersama</p>
-                      <p> Jl. Depan Bersama dkk</p>
-                    </div>
-                  </div>
-                  <div className="flex justify-between pt-3 px-7">
-                    <div className="bg-[#E4F5E9] px-2 py-1 rounded-lg ">
-                      <button> available </button>
-                    </div>
-                    <div className="bg-[#E4F5E9] px-2 py-1 rounded-lg">
-                      <button className=" w-[50px]"> buat janji </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-[#324B50] w-[230px] h-[150px] pt-8 mt-5 rounded-lg mr-4 drop-shadow-lg">
-                <div className="bg-white h-full text-[10px]">
-                  <div className="flex justify-center ">
-                    <div className="w-[60px] rounded-full pt-2 ">
-                      <Image src={avatar} alt="doctor-img" />{" "}
-                    </div>
-                    <div className="mx-5 pt-2">
-                      {" "}
-                      <p className="font-semibold text-sm ">John doa</p>
-                      <p> Clinic Bersama</p>
-                      <p> Jl. Depan Bersama dkk</p>
-                    </div>
-                  </div>
-                  <div className="flex justify-between pt-3 px-7">
-                    <div className="bg-[#E4F5E9] px-2 py-1 rounded-lg ">
-                      <button> available </button>
-                    </div>
-                    <div className="bg-[#E4F5E9] px-2 py-1 rounded-lg">
-                      <button className=" w-[50px]"> buat janji </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-[#324B50] w-[230px] h-[150px] pt-8 mt-5 rounded-lg mr-4 drop-shadow-lg">
-                <div className="bg-white h-full text-[10px]">
-                  <div className="flex justify-center ">
-                    <div className="w-[60px] rounded-full pt-2 ">
-                      <Image src={avatar} alt="doctor-img" />{" "}
-                    </div>
-                    <div className="mx-5 pt-2">
-                      {" "}
-                      <p className="font-semibold text-sm ">John doa</p>
-                      <p> Clinic Bersama</p>
-                      <p> Jl. Depan Bersama dkk</p>
-                    </div>
-                  </div>
-                  <div className="flex justify-between pt-3 px-7">
-                    <div className="bg-[#E4F5E9] px-2 py-1 rounded-lg ">
-                      <button> available </button>
-                    </div>
-                    <div className="bg-[#E4F5E9] px-2 py-1 rounded-lg">
-                      <button className=" w-[50px]"> buat janji </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-[#324B50] w-[230px] h-[150px] pt-8 mt-5 rounded-lg mr-4 drop-shadow-lg">
-                <div className="bg-white h-full text-[10px]">
-                  <div className="flex justify-center ">
-                    <div className="w-[60px] rounded-full pt-2 ">
-                      <Image src={avatar} alt="doctor-img" />{" "}
-                    </div>
-                    <div className="mx-5 pt-2">
-                      {" "}
-                      <p className="font-semibold text-sm ">John doa</p>
-                      <p> Clinic Bersama</p>
-                      <p> Jl. Depan Bersama dkk</p>
-                    </div>
-                  </div>
-                  <div className="flex justify-between pt-3 px-7">
-                    <div className="bg-[#E4F5E9] px-2 py-1 rounded-lg ">
-                      <button> available </button>
-                    </div>
-                    <div className="bg-[#E4F5E9] px-2 py-1 rounded-lg">
-                      <button className=" w-[50px]"> buat janji </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-[#324B50] w-[230px] h-[150px] pt-8 mt-5 rounded-lg mr-4 drop-shadow-lg">
-                <div className="bg-white h-full text-[10px]">
-                  <div className="flex justify-center ">
-                    <div className="w-[60px] rounded-full pt-2 ">
-                      <Image src={avatar} alt="doctor-img" />{" "}
-                    </div>
-                    <div className="mx-5 pt-2">
-                      {" "}
-                      <p className="font-semibold text-sm ">John doa</p>
-                      <p> Clinic Bersama</p>
-                      <p> Jl. Depan Bersama dkk</p>
-                    </div>
-                  </div>
-                  <div className="flex justify-between pt-3 px-7">
-                    <div className="bg-[#E4F5E9] px-2 py-1 rounded-lg ">
-                      <button> available </button>
-                    </div>
-                    <div className="bg-[#E4F5E9] px-2 py-1 rounded-lg">
-                      <button className=" w-[50px]"> buat janji </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-[#324B50] w-[230px] h-[150px] pt-8 mt-5 rounded-lg mr-4 drop-shadow-lg">
-                <div className="bg-white h-full text-[10px]">
-                  <div className="flex justify-center ">
-                    <div className="w-[60px] rounded-full pt-2 ">
-                      <Image src={avatar} alt="doctor-img" />{" "}
-                    </div>
-                    <div className="mx-5 pt-2">
-                      {" "}
-                      <p className="font-semibold text-sm ">John doa</p>
-                      <p> Clinic Bersama</p>
-                      <p> Jl. Depan Bersama dkk</p>
-                    </div>
-                  </div>
-                  <div className="flex justify-between pt-3 px-7">
-                    <div className="bg-[#E4F5E9] px-2 py-1 rounded-lg ">
-                      <button> available </button>
-                    </div>
-                    <div className="bg-[#E4F5E9] px-2 py-1 rounded-lg">
-                      <button className=" w-[50px]"> buat janji </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="justify-start pl-8 mt-[-200px] text-sm">
             <p className="font-bold text-xl mb-5">Janji Kunjungan</p>
             <div className="bg-white border-2  mb-5 rounded-lg px-5 w-[430px] drop-shadow-lg ">
               <div className="flex justify-start py-5 ">
@@ -410,6 +196,45 @@ function Index() {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+          <div className=" ml-[-100px] pt-8 ">
+            <p className="font-bold text-xl"> List Dokter</p>
+            <div className=" flex flex-wrap">
+              {dataDoctor
+                ? dataDoctor.map((el, i) => (
+                    <div
+                      className="bg-[#324B50] w-[270px] h-[170px] pt-8 mt-5 rounded-lg mr-4  drop-shadow-lg"
+                      key={i}
+                    >
+                      <div className="bg-white h-full text-[10px]">
+                        <div className="flex justify-center ">
+                          <div className="w-[60px] rounded-full pt-2 ">
+                            <image src={el.image} alt="doctor-img" />{" "}
+                          </div>
+                          <div className="mx-5 pt-2">
+                            {" "}
+                            <p className="font-semibold text-sm ">{el.name}</p>
+                            <p> {el.address}</p>
+                            <p> Left Capacity : {el.leftCapacity} </p>
+                          </div>
+                        </div>
+
+                        <div className="flex justify-between pt-3 px-7">
+                          <div className="bg-rose-700 px-2 py-1 rounded-lg text-white ">
+                            <button> unavailable </button>
+                          </div>
+                          <div className="bg-[#E4F5E9] px-2 py-1 rounded-lg">
+                            <button className=" w-[50px]" onClick={openModal}>
+                              {" "}
+                              buat janji{" "}
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                : null}
             </div>
           </div>
         </div>

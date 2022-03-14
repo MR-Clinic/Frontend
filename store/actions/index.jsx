@@ -1,8 +1,8 @@
-import { GetAllDoctors } from "./getAllDoctorAction";
+import { getAllDoctors } from "./getAllDoctorAction";
 import { getPatientDetails } from "./patientDetailAction";
 
 const allStore = {
-  GetAllDoctors,
+  getAllDoctors,
   getPatientDetails,
 };
 

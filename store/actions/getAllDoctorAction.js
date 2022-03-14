@@ -1,13 +1,19 @@
 import axios from "axios";
 
 const baseUrl = "https://faliqadlan.cloud.okteto.net/doctor/all";
+const getToken =
+  typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
-export const GetAllDoctors = () => {
+export const getAllDoctors = () => {
   return (dispatch) => {
     axios
-      .get(baseUrl)
+      .get(baseUrl, {
+        headers: {
+          Authorization: "Bearer " + getToken,
+        },
+      })
       .then((response) => {
-        dispatch(setListAllDoctors(response.data.Doctors));
+        dispatch(setListAllDoctors(response.data.data.Doctors));
       })
       .catch((error) => {
         console.log("cek error", error);
