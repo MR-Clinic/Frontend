@@ -200,30 +200,34 @@ function Index() {
           </div>
           <div className=" ml-[-100px] pt-8 ">
             <p className="font-bold text-xl"> List Dokter</p>
-            <div className=" flex flex-wrap">
+            <div className=" flex flex-wrap max-h-[75vh] max-w-[60vw] overflow-y-scroll">
               {dataDoctor
                 ? dataDoctor.map((el, i) => (
                     <div
-                      className="bg-[#324B50] w-[270px] h-[170px] pt-8 mt-5 rounded-lg mr-4  drop-shadow-lg"
+                      className="bg-[#324B50] w-[250px] h-[170px] pt-8 mt-5 rounded-lg mr-4  drop-shadow-lg"
                       key={i}
                     >
                       <div className="bg-white h-full text-[10px]">
                         <div className="flex justify-center ">
-                          <div className="w-[60px] rounded-full pt-2 ">
-                            <image src={el.image} alt="doctor-img" />{" "}
+                          <div className="w-[60px] rounded-full pt-4 pl-1">
+                            <Image src={avatar} alt="doctor-img" />{" "}
                           </div>
-                          <div className="mx-5 pt-2">
+                          <div className="ml-6 pt-2">
                             {" "}
                             <p className="font-semibold text-sm ">{el.name}</p>
-                            <p> {el.address}</p>
-                            <p> Left Capacity : {el.leftCapacity} </p>
+                            <p className="w-[140px]"> {el.address}</p>
+                            <p>
+                              {" "}
+                              <span className="font-bold">
+                                {" "}
+                                Left Capacity :{" "}
+                              </span>
+                              {el.leftCapacity}{" "}
+                            </p>
                           </div>
                         </div>
 
-                        <div className="flex justify-between pt-3 px-7">
-                          <div className="bg-rose-700 px-2 py-1 rounded-lg text-white ">
-                            <button> unavailable </button>
-                          </div>
+                        <div className="flex justify-start px-3">
                           <div className="bg-[#E4F5E9] px-2 py-1 rounded-lg">
                             <button className=" w-[50px]" onClick={openModal}>
                               {" "}
