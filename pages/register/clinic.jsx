@@ -22,15 +22,11 @@ function SignUpClinic() {
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [full_name, full_nameSet] = useState("");
+  const [name, nameSet] = useState("");
   const [address, addressSet] = useState("");
   const [dari, dariSet] = useState("");
   const [sampai, sampaiSet] = useState("");
   const [total, totalSet] = useState("");
-
-  const body = {
-    username, email, password, full_name, address, dari, sampai, total
-  }
 
   //class transformer
   const [state, setState] = useState("");
@@ -62,7 +58,7 @@ function SignUpClinic() {
   
   const validatePart2 = () => {
     console.log(body);
-    if(full_name === ""){
+    if(name === ""){
       swal("Input Kosong", "Nama Tidak Boleh Kosong", "error")
     }else if(address === ""){
       swal("Input Kosong", "Alamat Tidak Boleh Kosong", "error")
@@ -71,12 +67,7 @@ function SignUpClinic() {
     }else if(total === ""){
       swal("Input Kosong", " Maksimal Kunjungan Tidak Boleh Kosong", "error")
     }else{
-      swal("Register Berhasil", "Terima Kasih Sudah Mendaftar, Anda Akan Diarahkan Kehalaman Login", "success")
-      setTimeout(() => {
-        swal.close();
-        route.push('/login')
         doSignUp();
-      }, 3000);
     }
   }
   
@@ -87,18 +78,25 @@ function SignUpClinic() {
 
   const doSignUp = () => {
     setLoading(true);
+    username, email, password, name, address, dari, sampai, total
 
     const formData = new FormData();
     formData.append("userName", username);
     formData.append("email", email);
     formData.append("password", password);
+    formData.append("name", name);
+    formData.append("address", address);
+    formData.append("status", "available");
+    formData.append("openDay", dari);
+    formData.append("closeDay", sampai);
+    formData.append("capacity", total);
     console.log(formData, "cek form data");
 
     axios
       .post(urlRegisterClinic, formData)
       .then(() => {
         swal(
-          "Selamat register berhasil !",
+          "Register berhasil !",
           "Anda akan diarahkan ke halaman login",
           "success"
         );
@@ -109,7 +107,7 @@ function SignUpClinic() {
       })
       .catch(() => {
         swal(
-          "sorry!",
+          "Sorry..!",
           "register gagal, email sudah digunakan atau user sudah terdaftar",
           "error"
         );
@@ -234,7 +232,7 @@ function SignUpClinic() {
                       <div>
                         <span>Nama Lengkap</span>
                         <div className={form.input}>
-                          <input type="text" className="{form.inputStyle} " id="job" placeholder="dr. Nama Lengkap" onChange={(e) => full_nameSet("dr. "+e.target.value)}/>
+                          <input type="text" className="{form.inputStyle} " id="job" placeholder="dr. Nama Lengkap" onChange={(e) => nameSet("dr. "+e.target.value)}/>
                         </div>
                       </div>
                       <div>
