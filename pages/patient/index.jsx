@@ -1,14 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import avatar from "../../assets/avatar1.png";
 import Navbar from "../../components/navbar";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
+import allStore from "../../store/actions";
 
 function Index() {
   const [isOpen, setIsOpen] = useState(false);
   const [date, setDate] = useState("");
+  const dispatch = useDispatch();
+  // const dataDoctor = useSelector((data) => data.getAllDoctors.getAllDoctors);
+  const dataPatient = useSelector(
+    (data) => data.patientDetailReducer.listPatientDetail
+  );
+  console.log("cek datapatient", dataPatient);
+  // useEffect(() => {
+  //   dispatch(allStore.getAllDoctors());
+  // }, [dispatch]);
+
+  useEffect(() => {
+    console.log("masuk use effect", allStore);
+    dispatch(allStore.getPatientDetails());
+  }, [dispatch]);
 
   function closeModal() {
     setIsOpen(false);
@@ -139,16 +155,22 @@ function Index() {
                     <p className="font-bold"> Status </p>
                     <p className="font-bold"> Pekerjaan </p>
                   </div>
-                  <div className="grid items-end space-y-2 pl-5 text-sm">
-                    <p> : 121212121212</p>
-                    <p> : Muhammad Rizki Adiwiganda</p>
-                    <p> : Pria</p>
-                    <p> : Jl. ABCD efghjkkk </p>
-                    <p> : Medan, 22 November 1997</p>
-                    <p> : Islam</p>
-                    <p> : Lajang</p>
-                    <p> : Web Developer</p>
-                  </div>
+                  {dataPatient ? (
+                    <div className="grid items-end space-y-2 pl-5 text-sm">
+                      <p> : {dataPatient.nik}</p>
+                      <p> : Muhammad Rizki Adiwiganda{dataPatient.name}</p>
+                      <p> : Pria{dataPatient.gender}</p>
+                      <p> : Jl. ABCD efghjkkk{dataPatient.address} </p>
+                      <p>
+                        {" "}
+                        : Medan, 22 November 1997{dataPatient.placeBirth},{" "}
+                        {dataPatient.dob}
+                      </p>
+                      <p> : Islam {dataPatient.religion}</p>
+                      <p> : Lajang {dataPatient.status}</p>
+                      <p> : Web Developer {dataPatient.job}</p>
+                    </div>
+                  ) : null}
                 </div>
               </div>
             </div>

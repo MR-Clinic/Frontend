@@ -54,7 +54,7 @@ function Login() {
         setTimeout(() => {
           swal.close();
         }, 3000);
-        localStorage.setItem("token", response.data.data);
+        localStorage.setItem("token", response.data.data.token);
         localStorage.setItem("profile", response.data.data.type);
         if (typeProfile === "doctor") {
           route.push("/doctor");
