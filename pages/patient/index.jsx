@@ -23,7 +23,10 @@ function Index() {
     (data) => data.historyVisitReducer.listAllVisit
   );
 
-  console.log(dataHistory, "ini data history");
+  const dataAppointment = useSelector(
+    (data) => data.historyVisitReducer.listAllAppointment
+  );
+  // console.log(dataHistory, "ini data history");
 
   useEffect(() => {
     dispatch(allStore.getAllDoctors());
@@ -34,8 +37,9 @@ function Index() {
   }, [dispatch]);
 
   useEffect(() => {
-    console.log("masuk use effect", allStore);
-    dispatch(allStore.getHistoryVisit());
+    // console.log("masuk use effect", allStore);
+    dispatch(allStore.getHistoryVisit(true, "pending"));
+    dispatch(allStore.getHistoryVisit(false, "ready"));
   }, [dispatch]);
 
   function closeModal() {
@@ -149,6 +153,8 @@ function Index() {
         </Dialog>
       </Transition>
       <Navbar />
+
+      {/* profile section */}
       <div className="bg-[#E4F5E9] h-full text-[#356E79]">
         <div className="grid grid-cols-2">
           <div className="pl-8 pt-8">
@@ -185,27 +191,33 @@ function Index() {
                 </div>
               </div>
             </div>
+
+            {/* appointment section */}
             <p className="font-bold text-xl mb-5">Janji Kunjungan</p>
             <div className="bg-white border-2  mb-5 rounded-lg px-5 w-[584px] drop-shadow-lg ">
               <div className="flex justify-start py-5 ">
-                <div className="grid grid-cols-2 ">
-                  <div className="grid space-y-2 pl-4">
-                    {" "}
-                    <p className="font-bold"> Clinic </p>
-                    <p className="font-bold"> Dokter </p>
-                    <p className="font-bold"> Hari Kunjungan </p>
-                    <p className="font-bold"> Alamat </p>
-                  </div>
-                  <div className="grid items-end space-y-2 pl-5">
-                    <p> : Klinik Bersama sama</p>
-                    <p> : dr awenk</p>
-                    <p> : 22/03/2022</p>
-                    <p> : Jl. ABCD efghjkkk </p>
-                  </div>
-                </div>
+                {dataAppointment
+                  ? dataAppointment.map((el, i) => (
+                      <div className="grid grid-cols-2 " key={i}>
+                        <div className="grid space-y-2 pl-4">
+                          {" "}
+                          <p className="font-bold"> Dokter </p>
+                          <p className="font-bold"> Hari Kunjungan </p>
+                          <p className="font-bold"> Alamat </p>
+                        </div>
+                        <div className="grid items-end space-y-2 pl-5">
+                          <p> : dr awenk {el.doctorName}</p>
+                          <p> : 22/03/2022 {el.date}</p>
+                          <p> : Jl. ABCD efghjkkk{el.doctorAddress} </p>
+                        </div>
+                      </div>
+                    ))
+                  : null}
               </div>
             </div>
           </div>
+
+          {/* doctor list */}
           <div className=" ml-[-100px] pt-8 ">
             <p className="font-bold text-xl"> List Dokter</p>
             <div className=" flex flex-wrap max-h-[75vh] max-w-[60vw] overflow-y-scroll">
@@ -234,7 +246,6 @@ function Index() {
                             </p>
                           </div>
                         </div>
-
                         <div className="flex justify-start px-3">
                           <div className="bg-[#E4F5E9] px-2 py-1 rounded-lg">
                             <button className=" w-[50px]" onClick={openModal}>
@@ -250,6 +261,8 @@ function Index() {
             </div>
           </div>
         </div>
+
+        {/* history visit */}
         <div className="grid justify-start pl-8 pt-5 text-sm ">
           <p className="font-bold text-xl mb-5">Riwayat Kunjungan</p>
           <table className="table-auto bg-white py-3 rounded-lg drop-shadow-lg w-[93vw]  mb-10">
@@ -263,7 +276,6 @@ function Index() {
                 <th className="border-b-2 ">Daftar obat</th>
               </tr>
             </thead>
-
             <tbody>
               {dataHistory
                 ? dataHistory.map((el, i) => (

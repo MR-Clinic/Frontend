@@ -4,7 +4,7 @@ const baseUrl = "https://faliqadlan.cloud.okteto.net/visit";
 const getToken =
   typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
-export const getHistoryVisit = () => {
+export const getHistoryVisit = (isJanjiKunjungan, statusParam) => {
   return (dispatch) => {
     console.log("masuk fungsi get detail", getToken);
     const getType =
@@ -21,11 +21,15 @@ export const getHistoryVisit = () => {
         params: {
           kind: `${getType}`,
           uid: `${getUid}`,
-          status: "ready",
+          status: statusParam,
         },
       })
       .then((response) => {
-        dispatch(setListHistoryVisit(response.data.data.visits));
+        if (isJanjiKunjungan) {
+          dispatch(setListAppointmentVisit(response.data.data.visits));
+        } else {
+          dispatch(setListHistoryVisit(response.data.data.visits));
+        }
         console.log(response);
       })
       .catch((error) => {
@@ -37,6 +41,13 @@ export const getHistoryVisit = () => {
 export const setListHistoryVisit = (payload) => {
   return {
     type: "SET_LIST_HISTORY_VISIT",
+    payload,
+  };
+};
+
+export const setListAppointmentVisit = (payload) => {
+  return {
+    type: "SET_LIST_APPOINTMENT_VISIT",
     payload,
   };
 };
