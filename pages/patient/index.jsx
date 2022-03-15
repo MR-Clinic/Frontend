@@ -18,16 +18,24 @@ function Index() {
   const dataPatient = useSelector(
     (data) => data.patientDetailReducer.listPatientDetail
   );
-  console.log("cek datapatient", dataDoctor);
+
+  const dataHistory = useSelector(
+    (data) => data.historyVisitReducer.listAllVisit
+  );
+
+  console.log(dataHistory, "ini data history");
 
   useEffect(() => {
-    console.log("masuk use effect", allStore);
     dispatch(allStore.getAllDoctors());
   }, [dispatch]);
 
   useEffect(() => {
-    console.log("masuk use effect", allStore);
     dispatch(allStore.getPatientDetails());
+  }, [dispatch]);
+
+  useEffect(() => {
+    console.log("masuk use effect", allStore);
+    dispatch(allStore.getHistoryVisit());
   }, [dispatch]);
 
   function closeModal() {
@@ -178,7 +186,7 @@ function Index() {
               </div>
             </div>
             <p className="font-bold text-xl mb-5">Janji Kunjungan</p>
-            <div className="bg-white border-2  mb-5 rounded-lg px-5 w-[430px] drop-shadow-lg ">
+            <div className="bg-white border-2  mb-5 rounded-lg px-5 w-[584px] drop-shadow-lg ">
               <div className="flex justify-start py-5 ">
                 <div className="grid grid-cols-2 ">
                   <div className="grid space-y-2 pl-4">
@@ -243,8 +251,8 @@ function Index() {
           </div>
         </div>
         <div className="grid justify-start pl-8 pt-5 text-sm ">
-          <p className="font-bold text-xl mb-5">Sejarah Kunjungan</p>
-          <table className="table-auto bg-white py-3 rounded-lg drop-shadow-lg max-w-screen-xl w-screen mb-10">
+          <p className="font-bold text-xl mb-5">Riwayat Kunjungan</p>
+          <table className="table-auto bg-white py-3 rounded-lg drop-shadow-lg w-[93vw]  mb-10">
             <thead>
               <tr>
                 <th className="border-b-2 py-2 ">Tanggal</th>
@@ -255,31 +263,20 @@ function Index() {
                 <th className="border-b-2 ">Daftar obat</th>
               </tr>
             </thead>
+
             <tbody>
-              <tr className="text-center">
-                <td className="py-2">05/03/22</td>
-                <td>dr. lindawati</td>
-                <td>jl. sana sini bisa kemana aja</td>
-                <td>flu</td>
-                <td>demam dll</td>
-                <td>lihat resep</td>
-              </tr>
-              <tr className="text-center">
-                <td className="py-2">05/03/22</td>
-                <td>dr. lindawati</td>
-                <td>jl. sana sini bisa kemana aja</td>
-                <td>flu</td>
-                <td>demam dll</td>
-                <td>lihat resep</td>
-              </tr>
-              <tr className="text-center">
-                <td className="py-2">05/03/22</td>
-                <td>dr. lindawati</td>
-                <td>jl. sana sini bisa kemana aja</td>
-                <td>flu</td>
-                <td>demam dll</td>
-                <td>lihat resep</td>
-              </tr>
+              {dataHistory
+                ? dataHistory.map((el, i) => (
+                    <tr className="text-center" key={i}>
+                      <td className="py-2">05/03/22 {el.date}</td>
+                      <td>dr. lindawati {el.doctorName}</td>
+                      <td>jl. sana sini bisa kemana aja {el.doctorAddress}</td>
+                      <td>flu{el.mainDiagnose}</td>
+                      <td>demam dll{el.addiditionDiagnose}</td>
+                      <td>lihat resep{el.recipe}</td>
+                    </tr>
+                  ))
+                : null}
             </tbody>
           </table>
         </div>

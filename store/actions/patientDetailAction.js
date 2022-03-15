@@ -16,6 +16,7 @@ export const getPatientDetails = () => {
       .then((response) => {
         dispatch(setListPatientDetail(response.data.data));
         localStorage.setItem("name", response.data.data.name);
+        localStorage.setItem("uid", response.data.data.nik);
         console.log(response);
       })
       .catch((error) => {

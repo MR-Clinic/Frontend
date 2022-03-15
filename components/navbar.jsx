@@ -13,17 +13,13 @@ function Navbar() {
 
   const getToken =
     typeof window !== "undefined" ? localStorage.getItem("token") : null;
-  const profile =
-    typeof window !== "undefined" ? localStorage.getItem("profile") : null;
   const name =
     typeof window !== "undefined" ? localStorage.getItem("name") : null;
   const route = useRouter();
 
   function Logout() {
     if (getToken) {
-      localStorage.removeItem("token");
-      localStorage.removeItem("profile");
-      localStorage.removeItem("name");
+      localStorage.clear();
       route.push("/");
     }
   }
