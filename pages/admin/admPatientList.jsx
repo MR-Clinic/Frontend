@@ -24,11 +24,8 @@ function AdmPatientList() {
             <div className="bg-white rounded-lg p-5 flex flex-col items-start ml-5 w-[220px] mb-5">
               {dataPatientList
                 ? dataPatientList.map((el, i) => (
-                    <div className="text-[#324B50]">
-                      <p className="text-xl font-bold" key={i}>
-                        {" "}
-                        {el.patientName}{" "}
-                      </p>
+                    <div className="text-[#324B50]" key={i}>
+                      <p className="text-xl font-bold"> {el.patientName} </p>
                       <p className=""> {el.gender} </p>
                       <p className=""> {el.nik}</p>
 

@@ -12,10 +12,7 @@ function PatientList() {
           <p className="text-2xl font-bold pt-5 mb-3"> Daftar Pasien</p>
 
           <div className="flex flex-wrap items-start mt-10">
-            <div
-              className="bg-white rounded-lg p-5 flex flex-col items-start drop-shadow-lg ml-5 w-[220px] mb-5"
-              key={i}
-            >
+            <div className="bg-white rounded-lg p-5 flex flex-col items-start drop-shadow-lg ml-5 w-[220px] mb-5">
               <p className="text-xl font-bold"> John Dorian </p>
               <p className=""> Pria</p>
               <p className=""> 123456789327372 </p>

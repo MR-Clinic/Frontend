@@ -35,7 +35,7 @@ function VisitList() {
               <tbody>
                 {dataVisitList
                   ? dataVisitList.map((el, i) => (
-                      <tr className="text-center">
+                      <tr className="text-center" key={i}>
                         <td className="py-2">lindawan {el.patientName}</td>
                         <td>121212121212{el.nik}</td>
                         <td>Laki-Laki{el.gender}</td>
