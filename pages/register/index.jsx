@@ -90,7 +90,7 @@ function SignUpPatient() {
   };
 
   const validatePart2 = () => {
-    if (nik.length === 15){
+    if (nik.length !== 15){
       swal("Input NIK Salah", "Jumlah karakter harus 16", "error");
     } else if (nik.match(/[A-Z]/) || nik.match(/[a-z]/)){
       swal("Input NIK Salah", "NIK Tidak Boleh Ada Huruf", "error");

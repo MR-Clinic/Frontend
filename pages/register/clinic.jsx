@@ -52,6 +52,8 @@ function SignUpClinic() {
       swal("Input Salah", "Username Tidak Boleh Kosong", "error");
     } else if (username.match(/^$|\s+/)) {
       swal("Input Salah", "Username Tidak Boleh  Ada Spasi", "error");
+    } else if (username.length < 6) {
+      swal("Input Salah", "Username Minimal 5 Karakter", "error");
     } else if (email === "") {
       swal("Input Salah", "Email Tidak Boleh Kosong", "error");
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
