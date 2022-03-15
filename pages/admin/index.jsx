@@ -257,7 +257,9 @@ function Index() {
           </div>
         </Dialog>
       </Transition>
+
       {/* modal tambah pasien*/}
+
       <Transition appear show={isOpenAddPatient} as={Fragment}>
         <Dialog
           as="div"
