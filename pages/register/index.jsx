@@ -46,9 +46,20 @@ function SignUpPatient() {
   const [loading, setLoading] = useState(false);
 
   useEffect(()=>{
+    if(localStorage.getItem('token')){
+      const profile = localStorage.getItem('profile')
+      if (profile === "doctor") {
+        route.push("/doctor");
+      } else if (profile === "patient") {
+        route.push("/patient");
+      }
+    }
+  })
+  
+  useEffect(()=>{
     console.log(status, "status Report")
   },[ status])
-
+  
   const handleDate = (e) =>{
     let a = moment(e).format("DD-MM-YYYY");
     dateSet(a)
