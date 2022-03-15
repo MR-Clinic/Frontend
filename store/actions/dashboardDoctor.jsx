@@ -3,7 +3,11 @@ import moment from "moment";
 
 const baseUrl = "https://faliqadlan.cloud.okteto.net/"
 const visitUrl = baseUrl+"visit"
+const patientUrl = baseUrl+"patient/profile"
 const Token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+let date = new Date()
+date = moment(date).format("DD-MM-YYYY")
+
 
 export const totalPasien = (uid) =>{
     return (dispatch) => {
@@ -21,7 +25,6 @@ export const totalPasien = (uid) =>{
                     }
                 })
             .then((data)=>{
-                console.log(data);
                 resolve(data.data)
             })
             .catch((response)=>{
@@ -52,7 +55,6 @@ export const kunjunganSumToday = (uid) =>{
                     }
                 })
             .then((data)=>{
-                console.log(data, "sum hari ini");
                 resolve(data.data)
             })
             .catch((response)=>{
@@ -65,9 +67,6 @@ export const kunjunganSumToday = (uid) =>{
 
 export const kunjunganSum = (uid) =>{
     return (dispatch) => {
-        let date = new Date()
-        date = moment(date).format("DD-MM-YYYY")
-        console.log(date);
         return new Promise((resolve, reject)=>{
             axios
             .get(visitUrl,
@@ -82,7 +81,6 @@ export const kunjunganSum = (uid) =>{
                     }
                 })
             .then((data)=>{
-                console.log(data, "sum kunjungan");
                 resolve(data.data)
             })
             .catch((response)=>{
@@ -93,11 +91,59 @@ export const kunjunganSum = (uid) =>{
     }
 }
 
+export const getAllListJK = (uid) =>{
+    return (dispatch) => {
+        axios
+        .get(visitUrl,{
+            headers:{
+                Authorization : "Bearer "+Token
+            },
+            params:{
+                kind: "doctor",
+                uid : uid,
+                // date: date,
+                status: ""
+            }
+        })
+        .then(({data})=>{
+            dispatch(setListJK(data.data))
+        })
+        .catch((response)=>{
+            console.log("error getList Kj", response);
+        })
+    }
+}
+
+export const getPatientModal = (id) =>{
+    return (dispatch) => {
+        return new Promise((resolve, reject)=>{
+            axios
+            .get(patientUrl,
+                {
+                    headers:{
+                        Authorization: 'Bearer '+Token
+                    },
+                    params:{
+                        patient_uid : id
+                    }
+                })
+            .then(({data})=>{
+                console.log("patient",data.data);
+                resolve(data.data)
+            })
+            .catch(({response})=>{
+                console.log(response.data);
+                reject(response)
+            })
+        })
+    }
+}
 
 
-export const setDashboardStatus = (payload) =>{
+
+export const setListJK = (payload) =>{
     return{
-        type: "set_dashboard_list",
+        type: "set_list_jk",
         payload,
     }
 }

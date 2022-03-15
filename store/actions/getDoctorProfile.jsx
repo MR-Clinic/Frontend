@@ -9,6 +9,7 @@ export const getDoctorProfile = (token) => {
             .get(baseUrl+"doctor/profile",{headers : { Authorization : "Bearer " + token}})
             .then(({data})=>{
                 dispatch(setDoctorProfile(data.data))
+                localStorage.setItem("uid", data.data.doctor_uid);
                 resolve(data.data);
             })
             .catch(({response})=>{

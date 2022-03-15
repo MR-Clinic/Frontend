@@ -2,7 +2,7 @@ import { getAllDoctors } from "./getAllDoctorAction";
 import { getPatientDetails } from "./patientDetailAction";
 import { getHistoryVisit } from "./historyVisitAction";
 import { getDoctorProfile } from "./getDoctorProfile"
-import { totalPasien, kunjunganSumToday, kunjunganSum } from "./dashboardDoctor";
+import { totalPasien, kunjunganSumToday, kunjunganSum, getAllListJK, getPatientModal } from "./dashboardDoctor";
 
 const allStore = {
   getAllDoctors,
@@ -11,7 +11,9 @@ const allStore = {
   getDoctorProfile,
   totalPasien,
   kunjunganSumToday,
-  kunjunganSum
+  kunjunganSum,
+  getAllListJK,
+  getPatientModal
 
 };
 
