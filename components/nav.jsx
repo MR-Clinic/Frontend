@@ -40,7 +40,7 @@ function NavDashboard(props) {
               <div className="flex ">
                 <div className="flex flex-col mr-5 ">
                   <p className="font-bold text-right text-lg w-[200px]">
-                    {" "}
+                    dr.
                     {name
                       ? name
                       : props.dataDoctor

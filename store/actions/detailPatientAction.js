@@ -1,11 +1,18 @@
 import axios from "axios";
 
-const baseUrl = "https://faliqadlan.cloud.okteto.net/patient/profile";
+const baseUrl = "https://faliqadlan.cloud.okteto.net/patient/profile?";
+const getToken =
+  typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
 export const detailPatient = (patient_uid) => {
   return (dispatch) => {
     axios
-      .get(baseUrl + "patient_uid=" + patient_uid)
+      .get(baseUrl + "patient_uid=" + patient_uid, {
+        headers: {
+          Authorization: "Bearer " + getToken,
+        },
+      })
+
       .then((response) => {
         dispatch(setDetailPatient(response.data.data));
       })

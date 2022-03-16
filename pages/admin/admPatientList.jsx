@@ -2,16 +2,26 @@ import React, { useEffect } from "react";
 import Nav from "../../components/nav";
 import Sidebar from "../../components/sidebar";
 import allStore from "../../store/actions";
+import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 
 function AdmPatientList() {
+  const router = useRouter();
   const dispatch = useDispatch();
   const dataPatientList = useSelector(
     (data) => data.patientListReducer.adminPatientList
   );
+  const getType =
+    typeof window !== "undefined" ? localStorage.getItem("profile") : null;
   useEffect(() => {
     dispatch(allStore.getPatientList());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (getType !== "doctor") {
+      router.push("/");
+    }
+  });
 
   return (
     <>
@@ -33,8 +43,13 @@ function AdmPatientList() {
                       <p className=""> {el.nik}</p>
 
                       <div className="flex text-xs mt-3">
-                        <p className="font-bold py-1">18 visits</p>
-                        <p className="border-2 rounded-md font-semibold ml-10 px-1 py-1 cursor-pointer">
+                        <p className="font-bold py-1"></p>
+                        <p
+                          className="border-2 rounded-md font-semibold ml-10 px-1 py-1 cursor-pointer"
+                          onClick={() => {
+                            router.push(`/detailpatient/${el.patient_uid}`);
+                          }}
+                        >
                           {" "}
                           Detail Data
                         </p>

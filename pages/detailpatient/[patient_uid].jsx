@@ -13,7 +13,7 @@ function Id() {
   const dispatch = useDispatch();
 
   const dataPatient = useSelector(
-    (data) => data.patientDetailReducer.listPatientDetail
+    (data) => data.detailPatientReducer.detailPatient
   );
   useEffect(() => {
     dispatch(allStore.getPatientDetails());
@@ -49,18 +49,16 @@ function Id() {
                 </div>
                 {dataPatient ? (
                   <div className="grid items-end space-y-2 pl-5 text-sm">
-                    <p> : 121212121212 {dataPatient.nik}</p>
-                    <p> : Muhammad Rizki Adiwiganda {dataPatient.name} </p>
-                    <p> : Pria {dataPatient.gender}</p>
-                    <p> : Jl. ABCD efghjkkk {dataPatient.address}</p>
+                    <p> : {dataPatient.nik}</p>
+                    <p> : {dataPatient.name}</p>
+                    <p> : {dataPatient.address}</p>
                     <p>
                       {" "}
-                      : Medan, 22 November 1997 {dataPatient.placeBirth},{" "}
-                      {dataPatient.dob}
+                      : {dataPatient.placeBirth}, {dataPatient.dob}
                     </p>
-                    <p> : Islam {dataPatient.religion}</p>
-                    <p> : Lajang {dataPatient.status}</p>
-                    <p> : Web Developer {dataPatient.job}</p>
+                    <p> : {dataPatient.religion}</p>
+                    <p> : {dataPatient.status}</p>
+                    <p> : {dataPatient.job}</p>
                   </div>
                 ) : null}
               </div>
