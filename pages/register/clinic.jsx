@@ -79,8 +79,7 @@ function SignUpClinic() {
     }else if(total === ""){
       swal("Input Kosong", " Maksimal Kunjungan Tidak Boleh Kosong", "error")
     }else{
-        // doSignUp();
-
+        doSignUp();
     }
   }
   
@@ -118,7 +117,8 @@ function SignUpClinic() {
         }, 3000);
         route.push("/login");
       })
-      .catch(() => {
+      .catch((e) => {
+        console.log(e.response);
         swal(
           "Sorry..!",
           "register gagal, email sudah digunakan atau user sudah terdaftar",
@@ -255,7 +255,7 @@ function SignUpClinic() {
                       <div>
                         <span>Nama Lengkap</span>
                         <div className={form.input}>
-                          <input type="text" className="{form.inputStyle} " id="job" placeholder="Nama Lengkap" onChange={(e) => nameSet("dr. "+e.target.value)}/>
+                          <input type="text" className="{form.inputStyle} " id="job" placeholder="Nama Lengkap" onChange={(e) => nameSet(e.target.value)}/>
                         </div>
                       </div>
                       <div>

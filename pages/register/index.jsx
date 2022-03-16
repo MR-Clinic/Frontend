@@ -38,8 +38,8 @@ function SignUpPatient() {
   const [date, dateSet] = useState(dateDef);
 
   //class transformer
-  const [state, setState] = useState("hidden");
-  const [state2, setState2] = useState("");
+  const [state, setState] = useState("");
+  const [state2, setState2] = useState("hidden");
   const [optSelect, setOptSel]= useState("Jenis Kelamin")
   const [optSelect2, setOptSel2]= useState("Status")
   const [optSelect3, setOptSel3]= useState("Agama")
