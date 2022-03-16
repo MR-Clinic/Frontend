@@ -34,15 +34,17 @@ function SignUpPatient() {
   const [status, statusSet] = useState("");
   const [religion, religionSet] = useState("");
   const [place, placeSet] = useState("");
-  const [date, dateSet] = useState("");
+  const dateDef = moment(new Date()).format("YYYY-MM-DD");
+  const [date, dateSet] = useState(dateDef);
 
   //class transformer
-  const [state, setState] = useState("");
-  const [state2, setState2] = useState("hidden");
+  const [state, setState] = useState("hidden");
+  const [state2, setState2] = useState("");
   const [optSelect, setOptSel]= useState("Jenis Kelamin")
   const [optSelect2, setOptSel2]= useState("Status")
   const [optSelect3, setOptSel3]= useState("Agama")
   const [datePlaceholder, datePlaceholderSet] =useState("Tanggal Lahir")
+  const [dateVal, dateValSet] =useState("")
   const [loading, setLoading] = useState(false);
 
   useEffect(()=>{
@@ -64,6 +66,7 @@ function SignUpPatient() {
     let a = moment(e).format("DD-MM-YYYY");
     dateSet(a)
     datePlaceholderSet(a);
+    dateValSet(moment(e).format("YYYY-MM-DD"));
   }
 
   const validatePart1 = () => {
@@ -71,8 +74,10 @@ function SignUpPatient() {
       swal("Input Kosong", "Silahkan Masukkan Data Yang Sesuai", "error");
     } else if (username === "") {
       swal("Input Salah", "Username Tidak Boleh Kosong", "error");
+    } else if (username.length < 6) {
+      swal("Input Salah", "Username Minimal 5 Karakter", "error");
     } else if (username.match(/^$|\s+/)) {
-      swal("Input Salah", "Username Tidak Boleh  Ada Spasi", "error");
+      swal("Input Salah", "Username Tidak Boleh Ada Spasi", "error");
     } else if (email === "") {
       swal("Input Salah", "Email Tidak Boleh Kosong", "error");
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
@@ -189,7 +194,7 @@ function SignUpPatient() {
                   <div className="relative block w-4/6 m-auto">
                     <input
                       type="text"
-                      className="placeholder-[#324B50] form-control block w-full px-4 py-2 text-lg font-normal text-gray-700 bg-white bg-clip-padding
+                      className="placeholder-[#324B50] form-control block w-full px-4 py-2 pr-[50px] text-lg font-normal text-gray-700 bg-white bg-clip-padding
                      border-2 border-solid border-[#324B50] rounded-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none "
                       id="Username"
                       placeholder="Username"
@@ -203,7 +208,7 @@ function SignUpPatient() {
                   <div className="relative block w-4/6 m-auto">
                     <input
                       type="text"
-                      className="placeholder-[#324B50] form-control block w-full px-4 py-2 text-lg font-normal text-gray-700 bg-white bg-clip-padding
+                      className="placeholder-[#324B50] form-control block w-full px-4 py-2 pr-[50px] text-lg font-normal text-gray-700 bg-white bg-clip-padding
                      border-2 border-solid border-[#324B50] rounded-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none "
                       id="Email"
                       placeholder="Email"
@@ -216,7 +221,7 @@ function SignUpPatient() {
                   <div className="relative block w-4/6 m-auto">
                     <input
                       type="password"
-                      className=" placeholder-[#324B50] form-control block w-full px-4 py-2 text-lg font-normal text-gray-700 bg-white bg-clip-padding
+                      className=" placeholder-[#324B50] form-control block w-full px-4 py-2 pr-[50px] text-lg font-normal text-gray-700 bg-white bg-clip-padding
                      border-2 border-solid border-[#324B50] rounded-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none "
                       id="Password"
                       placeholder="Password"
@@ -228,7 +233,7 @@ function SignUpPatient() {
                   </div>
                   <div className="flex justify-center ">
                     <button
-                      className=" mb-[40px] bg-[#324B50] font-medium inline-flex items-center px-3 py-1 rounded-md shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
+                      className=" bg-[#324B50] font-medium inline-flex items-center px-5 py-3 rounded-md shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
                       type="submit"
                       onClick={() => validatePart1()}
                     >
@@ -239,7 +244,19 @@ function SignUpPatient() {
                     
                 </div>
                 {/* direct to register */}
-                <div className="flex justify-between text-xs space-x-10 font-medium absolute bottom-3 left-[40%] ">
+                <div className="flex justify-between text-xs space-x-10 font-medium absolute bottom-3 left-[41%] bottom-7 ">
+                  <div className="flex">
+                    <p> daftar sebagai dokter?</p>
+                    <a
+                      onClick={() => route.push("/register/clinic")}
+                      className="underline cursor-pointer ml-1"
+                    >
+                      {" "}
+                      daftar disini !
+                    </a>
+                  </div>
+                </div>
+                <div className="flex justify-between text-xs space-x-10 font-medium absolute bottom-3 left-[42%] ">
                   <div className="flex">
                     <p> sudah punya akun?</p>
                     <a
@@ -341,7 +358,7 @@ function SignUpPatient() {
                             </div>
                             <div className={form.ttlIn}>
                               <span className={"normal-case "+form.datePlaceholder}> {datePlaceholder} </span>
-                              <input type="date" className="{form.inputStyle} " id="date"  value="" onChange={(e) => handleDate(e.target.value)}/>
+                              <input type="date" className="{form.inputStyle} " id="date" max={dateDef}  value={dateVal} onChange={(e) => handleDate(e.target.value)}/>
                             </div>
                           </div>
                         </div>
@@ -479,7 +496,7 @@ function SignUpPatient() {
                     <div className={"flex justify-between " + form.btn}>
 
                       <button
-                        className="bg-[#324B50] font-medium inline-flex items-center px-3 py-1 rounded-md shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
+                        className="bg-[#324B50] font-medium inline-flex items-center px-3 py-2 rounded-md shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
                         type="submit"
                         onClick={() => backBtn()}
                       >
@@ -488,7 +505,7 @@ function SignUpPatient() {
                       </button>
                        {loading ? (
                           <button
-                            className=" mb-[40px] bg-[#324B50] font-medium inline-flex items-center px-3 py-2 rounded-md shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
+                            className=" bg-[#324B50] font-medium inline-flex items-center px-3 py-2 rounded-md shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
                             type="submit"
                           >
                             Loading
