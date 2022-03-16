@@ -152,7 +152,7 @@ function Index() {
           </div>
         </Dialog>
       </Transition>
-      <Navbar />
+      <Navbar dataPatient={dataPatient ? dataPatient : false} />
 
       {/* profile section */}
       <div className="bg-[#E4F5E9] h-full text-[#356E79]">

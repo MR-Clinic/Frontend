@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import logo from "../assets/logo mrc.svg";
 import Link from "next/link";
@@ -8,12 +8,12 @@ import { Fragment } from "react";
 import { useRouter } from "next/router";
 import swal from "sweetalert";
 
-function Navbar() {
+function Navbar(props) {
   // dropdown func
 
   const getToken =
     typeof window !== "undefined" ? localStorage.getItem("token") : null;
-  const name =
+  let name =
     typeof window !== "undefined" ? localStorage.getItem("name") : null;
   const route = useRouter();
 
@@ -166,14 +166,24 @@ function Navbar() {
           </div>
           <div className="flex justify-start items-center pr-5">
             {getToken ? null : (
-              <Link href="/register" passHref>
-                <button
-                  className=" bg-[#356E79] border-2 border-white font-medium inline-flex items-center px-5 py-1 rounded-2xl shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
-                  type="submit"
-                >
-                  Sign Up
-                </button>
-              </Link>
+              <div className="space-x-5">
+                <Link href="/register" passHref>
+                  <button
+                    className=" bg-[#356E79] border-2 border-white font-medium inline-flex items-center px-5 py-1 rounded-2xl shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
+                    type="submit"
+                  >
+                    Sign Up
+                  </button>
+                </Link>
+                <Link href="/login" passHref>
+                  <button
+                    className=" bg-[#356E79] border-2 border-white font-medium inline-flex items-center px-5 py-1 rounded-2xl shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
+                    type="submit"
+                  >
+                    Login
+                  </button>
+                </Link>
+              </div>
             )}
             <Menu
               as="div"
@@ -182,7 +192,12 @@ function Navbar() {
               {getToken ? (
                 <div>
                   <Menu.Button className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-black rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-                    hello Mr. {name ? name : ""}
+                    hello Mr.{" "}
+                    {name
+                      ? name
+                      : props.dataPatient
+                      ? props.dataPatient.name
+                      : ""}
                     <AiOutlineDown
                       className="w-5 h-5 ml-2 -mr-1 text-violet-200 hover:text-violet-100"
                       aria-hidden="true"

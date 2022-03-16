@@ -20,6 +20,7 @@ function Id() {
   }, [dispatch]);
 
   useEffect(() => {
+    console.log("masuk use effect patient uid");
     if (patient_uid) {
       dispatch(allStore.detailPatient(patient_uid));
     }

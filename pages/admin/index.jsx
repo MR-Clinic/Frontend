@@ -514,7 +514,7 @@ function Index() {
               Tambah Pasien
             </button>
           </div>
-          <div className="pl-4 pb-10">
+          <div className="pl-4 pb-36">
             <table className="table-auto bg-white py-4  rounded-lg drop-shadow-lg w-10/12 mt-5">
               <thead>
                 <tr>
