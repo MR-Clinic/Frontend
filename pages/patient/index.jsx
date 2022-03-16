@@ -218,9 +218,9 @@ function Index() {
           </div>
 
           {/* doctor list */}
-          <div className=" ml-[-100px] pt-8 ">
+          <div className=" ml-[-100px] pt-8  ">
             <p className="font-bold text-xl"> List Dokter</p>
-            <div className=" flex flex-wrap max-h-[75vh] max-w-[60vw] overflow-y-scroll">
+            <div className=" flex flex-wrap max-h-[75vh] max-w-[60vw] overflow-y-scroll z-0">
               {dataDoctor
                 ? dataDoctor.map((el, i) => (
                     <div

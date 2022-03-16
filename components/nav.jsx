@@ -9,10 +9,12 @@ import Router, { useRouter } from "next/router";
 function NavDashboard() {
   const getToken =
     typeof window !== "undefined" ? localStorage.getItem("token") : null;
+  const name =
+    typeof window !== "undefined" ? localStorage.getItem("name") : null;
 
   function Logout() {
     if (getToken) {
-      localStorage.removeItem("token", "dataProfile");
+      localStorage.clear();
       Router.push("/");
     }
   }
@@ -37,8 +39,8 @@ function NavDashboard() {
             <div className="flex justify-between">
               <div className="flex flex-wrap">
                 <div className="flex flex-col ">
-                  <p className="font-bold text-lg"> dr. Awenk</p>
-                  <p className="font-light text-sm text-right"> Dokter Nyell</p>
+                  <p className="font-bold text-lg"> dr. {name ? name : ""} </p>
+                  <p className="font-light text-sm text-right"> Dokter Umum</p>
                 </div>
                 <div className="w-[50px] rounded-full mx-5">
                   <Image src={avatar} alt="doctor-img" />{" "}
