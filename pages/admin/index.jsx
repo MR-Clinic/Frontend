@@ -22,9 +22,13 @@ function Index() {
   const dataTodayVisit = useSelector(
     (data) => data.todayVisitReducer.listTodayVisit
   );
+  const dataPatient = useSelector(
+    (data) => data.patientDetailReducer.listPatientDetail
+  );
 
   useEffect(() => {
     dispatch(allStore.todayVisitList());
+    dispatch(allStore.getPatientDetails());
   }, [dispatch]);
 
   useEffect(() => {
@@ -522,54 +526,26 @@ function Index() {
                 </tr>
               </thead>
               <tbody>
-                <tr className="text-center">
-                  <td className="py-2">12121212121</td>
-                  <td>lidianto</td>
-                  <td>Laki-Laki</td>
-                  <td>22/10/11</td>
-                  <td className="flex justify-center space-x-2 py-2">
-                    <button className="bg-[#E4F5E9] text-xs px-3 py-1 rounded-md hover:opacity-70">
-                      {" "}
-                      Details
-                    </button>
-                    <button className="bg-[#E4F5E9] text-xs px-3 py-1 rounded-md hover:opacity-70">
-                      {" "}
-                      Tambah Kunjungan
-                    </button>
-                  </td>
-                </tr>
-                <tr className="text-center">
-                  <td className="py-2">12121212121</td>
-                  <td>lidianto</td>
-                  <td>Laki-Laki</td>
-                  <td>22/10/11</td>
-                  <td className="flex justify-center space-x-2 ">
-                    <button className="bg-[rgb(228,245,233)] text-xs px-3 py-1 rounded-md hover:opacity-70">
-                      {" "}
-                      Details
-                    </button>
-                    <button className="bg-[#E4F5E9] text-xs px-3 py-1 rounded-md hover:opacity-70">
-                      {" "}
-                      Tambah Kunjungan
-                    </button>
-                  </td>
-                </tr>
-                <tr className="text-center">
-                  <td className="py-2">12121212121</td>
-                  <td>lidianto</td>
-                  <td>Laki-Laki</td>
-                  <td>22/10/11</td>
-                  <td className="flex justify-center space-x-2 ">
-                    <button className="bg-[rgb(228,245,233)] text-xs px-3 py-1 rounded-md hover:opacity-70">
-                      {" "}
-                      Details
-                    </button>
-                    <button className="bg-[#E4F5E9] text-xs px-3 py-1 rounded-md hover:opacity-70">
-                      {" "}
-                      Tambah Kunjungan
-                    </button>
-                  </td>
-                </tr>
+                {dataPatient
+                  ? dataPatient.map((el, i) => (
+                      <tr className="text-center" key={i}>
+                        <td className="py-2">12121212121 {el.nik}</td>
+                        <td>lidianto{el.patientName}</td>
+                        <td>Laki-Laki{el.gender}</td>
+                        <td>22/10/11{el.date}</td>
+                        <td className="flex justify-center space-x-2 py-2">
+                          <button className="bg-[#E4F5E9] text-xs px-3 py-1 rounded-md hover:opacity-70">
+                            {" "}
+                            Details
+                          </button>
+                          <button className="bg-[#E4F5E9] text-xs px-3 py-1 rounded-md hover:opacity-70">
+                            {" "}
+                            Tambah Kunjungan
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  : ""}
               </tbody>
             </table>
           </div>

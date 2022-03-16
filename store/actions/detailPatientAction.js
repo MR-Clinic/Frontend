@@ -5,7 +5,7 @@ const baseUrl = "https://faliqadlan.cloud.okteto.net/patient/profile";
 export const detailPatient = (patient_uid) => {
   return (dispatch) => {
     axios
-      .get(baseUrl + patient_uid)
+      .get(baseUrl + "patient_uid=" + patient_uid)
       .then((response) => {
         dispatch(setDetailPatient(response.data.data));
       })
