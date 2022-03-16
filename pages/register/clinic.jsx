@@ -79,8 +79,7 @@ function SignUpClinic() {
     }else if(total === ""){
       swal("Input Kosong", " Maksimal Kunjungan Tidak Boleh Kosong", "error")
     }else{
-        // doSignUp();
-
+        doSignUp();
     }
   }
   
