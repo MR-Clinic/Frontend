@@ -36,16 +36,16 @@ function VisitList() {
                 {dataVisitList
                   ? dataVisitList.map((el, i) => (
                       <tr className="text-center" key={i}>
-                        <td className="py-2">lindawan {el.patientName}</td>
-                        <td>121212121212{el.nik}</td>
-                        <td>Laki-Laki{el.gender}</td>
+                        <td className="py-2"> {el.patientName}</td>
+                        <td>{el.nik}</td>
+                        <td>{el.gender}</td>
                         <td>
                           <button className="bg-[#E4F5E9] text-xs px-3 py-1 rounded-md hover:opacity-70">
                             {" "}
                             confirm
                           </button>
                         </td>
-                        <td>22 / 01 / 22 {el.date}</td>
+                        <td>{el.date}</td>
                       </tr>
                     ))
                   : null}

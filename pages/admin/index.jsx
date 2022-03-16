@@ -23,12 +23,12 @@ function Index() {
     (data) => data.todayVisitReducer.listTodayVisit
   );
   const dataPatient = useSelector(
-    (data) => data.patientDetailReducer.listPatientDetail
+    (data) => data.patientListReducer.adminPatientList
   );
 
   useEffect(() => {
     dispatch(allStore.todayVisitList());
-    dispatch(allStore.getPatientDetails());
+    dispatch(allStore.getPatientList());
   }, [dispatch]);
 
   useEffect(() => {
@@ -469,12 +469,9 @@ function Index() {
                     className="bg-white rounded-lg p-5 flex flex-col drop-shadow-lg items-start ml-5 w-[220px] mb-5"
                     key={i}
                   >
-                    <p className="text-xl font-bold">
-                      {" "}
-                      John Dorian {el.patientName}{" "}
-                    </p>
-                    <p className=""> Pria {el.gender} </p>
-                    <p className=""> 123456789327372{el.nik} </p>
+                    <p className="text-xl font-bold"> {el.patientName} </p>
+                    <p className="">{el.gender} </p>
+                    <p className=""> {el.nik} </p>
                     <div className="flex text-xs mt-3">
                       <p className="bg-[#E4F5E9] font-semibold drop-shadow-lg rounded-md px-2 py-1 cursor-pointer">
                         pending
@@ -529,10 +526,10 @@ function Index() {
                 {dataPatient
                   ? dataPatient.map((el, i) => (
                       <tr className="text-center" key={i}>
-                        <td className="py-2">12121212121 {el.nik}</td>
-                        <td>lidianto{el.patientName}</td>
-                        <td>Laki-Laki{el.gender}</td>
-                        <td>22/10/11{el.date}</td>
+                        <td className="py-2"> {el.nik}</td>
+                        <td>{el.patientName}</td>
+                        <td>{el.gender}</td>
+                        <td>{el.date}</td>
                         <td className="flex justify-center space-x-2 py-2">
                           <button className="bg-[#E4F5E9] text-xs px-3 py-1 rounded-md hover:opacity-70">
                             {" "}

@@ -40,8 +40,8 @@ function Login() {
       swal("Input Salah", "Username Tidak Boleh  Ada Spasi", "error");
     } else if (password === "") {
       swal("Input Salah", "Password Tidak Boleh Kosong", "error");
-      // } else if (password.length < 8) {
-      //   swal("Input Salah", "Password is less than 8", "error");
+    } else if (password.length < 8) {
+      swal("Input Salah", "Password is less than 8", "error");
     } else {
       doLogin();
     }

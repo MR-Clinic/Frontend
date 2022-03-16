@@ -21,10 +21,13 @@ function AdmPatientList() {
         <div className="ml-[7%]">
           <p className="text-2xl font-bold pt-5 mb-3"> Daftar Pasien</p>
           <div className="flex flex-wrap items-start mt-10">
-            <div className="bg-white rounded-lg p-5 flex flex-col items-start ml-5 w-[220px] mb-5">
-              {dataPatientList
-                ? dataPatientList.map((el, i) => (
-                    <div className="text-[#324B50]" key={i}>
+            {dataPatientList
+              ? dataPatientList.map((el, i) => (
+                  <div
+                    className="bg-white rounded-lg p-5 flex flex-col items-start ml-5 w-[220px] mb-5"
+                    key={i}
+                  >
+                    <div className="text-[#324B50]">
                       <p className="text-xl font-bold"> {el.patientName} </p>
                       <p className=""> {el.gender} </p>
                       <p className=""> {el.nik}</p>
@@ -37,9 +40,9 @@ function AdmPatientList() {
                         </p>
                       </div>
                     </div>
-                  ))
-                : null}
-            </div>
+                  </div>
+                ))
+              : null}
           </div>
         </div>
       </div>

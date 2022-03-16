@@ -38,17 +38,16 @@ function NavDashboard(props) {
             {/* right section */}
             <div className="flex justify-between">
               <div className="flex ">
-                <div className="flex flex-col ">
-                  <p className="font-bold text-lg w-[200px]">
+                <div className="flex flex-col mr-5 ">
+                  <p className="font-bold text-right text-lg w-[200px]">
                     {" "}
-                    dr.{" "}
                     {name
                       ? name
                       : props.dataDoctor
                       ? props.dataDoctor.name
                       : ""}
                   </p>
-                  <p className="font-light text-sm text-left"> Dokter Umum</p>
+                  <p className="font-light text-sm text-right"> Dokter Umum</p>
                 </div>
                 <div className="w-[50px] rounded-full mr-5">
                   <Image src={avatar} alt="doctor-img" />{" "}
