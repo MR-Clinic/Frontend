@@ -1,13 +1,15 @@
 import axios from "axios";
 
-const baseUrl = "https://faliqadlan.cloud.okteto.net/patient/profile?";
+const baseUrl = "https://faliqadlan.cloud.okteto.net";
+const detailUrl = baseUrl + "/patient/profile?";
+const detailDiagnose = baseUrl + "/visit?";
 const getToken =
   typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
 export const detailPatient = (patient_uid) => {
   return (dispatch) => {
     axios
-      .get(baseUrl + "patient_uid=" + patient_uid, {
+      .get(detailUrl + "patient_uid=" + patient_uid, {
         headers: {
           Authorization: "Bearer " + getToken,
         },
@@ -22,9 +24,38 @@ export const detailPatient = (patient_uid) => {
   };
 };
 
+export const patientDiagnose = (patient_uid) => {
+  return (dispatch) => {
+    axios
+      .get(detailDiagnose + "patient_uid=" + patient_uid, {
+        headers: {
+          Authorization: "Bearer " + getToken,
+        },
+        params: {
+          kind: "patient",
+          status: "ready",
+        },
+      })
+
+      .then((response) => {
+        dispatch(setPatientDiagnose(response.data.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
 export const setDetailPatient = (payload) => {
   return {
     type: "SET_DETAIL_PATIENT",
+    payload,
+  };
+};
+
+export const setPatientDiagnose = (payload) => {
+  return {
+    type: "SET_PATIENT_DIAGNOSE",
     payload,
   };
 };

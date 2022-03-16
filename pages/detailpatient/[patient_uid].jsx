@@ -15,8 +15,13 @@ function Id() {
   const dataPatient = useSelector(
     (data) => data.detailPatientReducer.detailPatient
   );
+  const dataDiagnose = useSelector(
+    (data) => data.detailPatientReducer.patientDiagnose
+  );
+
   useEffect(() => {
     dispatch(allStore.getPatientDetails());
+    dispatch(allStore.patientDiagnose());
   }, [dispatch]);
 
   useEffect(() => {
@@ -80,36 +85,20 @@ function Id() {
                 </tr>
               </thead>
               <tbody>
-                <tr className="text-center">
-                  <td className="py-2">2190129</td>
-                  <td>Tekanan Darah</td>
-                  <td>Heart Rate</td>
-                  <td>Respiratory Rate</td>
-                  <td>Saturasi O2</td>
-                  <td>Berat Badan</td>
-                  <td>Tinggi Badan</td>
-                  <td>Body Mass Index</td>
-                </tr>
-                <tr className="text-center">
-                  <td className="py-2">2190129</td>
-                  <td>Tekanan Darah</td>
-                  <td>Heart Rate</td>
-                  <td>Respiratory Rate</td>
-                  <td>Saturasi O2</td>
-                  <td>Berat Badan</td>
-                  <td>Tinggi Badan</td>
-                  <td>Body Mass Index</td>
-                </tr>
-                <tr className="text-center">
-                  <td className="py-2">2190129</td>
-                  <td>Tekanan Darah</td>
-                  <td>Heart Rate</td>
-                  <td>Respiratory Rate</td>
-                  <td>Saturasi O2</td>
-                  <td>Berat Badan</td>
-                  <td>Tinggi Badan</td>
-                  <td>Body Mass Index</td>
-                </tr>
+                {dataDiagnose
+                  ? dataDiagnose.map((el, i) => (
+                      <tr className="text-center" key={i}>
+                        <td className="py-2"> {el.visit_uid}2190129</td>
+                        <td>Tekanan Darah {el.bloodPressuse}</td>
+                        <td>Heart Rate {el.heartRate}</td>
+                        <td>Respiratory Rate {el.respiratoryRate}</td>
+                        <td>Saturasi O2 {el.o2Saturate}</td>
+                        <td>Berat Badan {el.weight}</td>
+                        <td>Tinggi Badan {el.height}</td>
+                        <td>Body Mass Index {el.bmi}</td>
+                      </tr>
+                    ))
+                  : null}
               </tbody>
             </table>
           </div>
@@ -127,30 +116,18 @@ function Id() {
                 </tr>
               </thead>
               <tbody>
-                <tr className="text-center">
-                  <td className="py-2">2190129</td>
-                  <td>Tekanan Darah</td>
-                  <td>Heart Rate</td>
-                  <td>Respiratory rate</td>
-                  <td>Saturasi 02</td>
-                  <td>Resep Obat</td>
-                </tr>
-                <tr className="text-center">
-                  <td className="py-2">2190129</td>
-                  <td>Tekanan Darah</td>
-                  <td>Heart Rate</td>
-                  <td>Respiratory rate</td>
-                  <td>Saturasi 02</td>
-                  <td>Resep Obat</td>
-                </tr>
-                <tr className="text-center">
-                  <td className="py-2">2190129</td>
-                  <td>Tekanan Darah</td>
-                  <td>Heart Rate</td>
-                  <td>Respiratory rate</td>
-                  <td>Saturasi 02</td>
-                  <td>Resep Obat</td>
-                </tr>
+                {dataDiagnose
+                  ? dataDiagnose.map((el, i) => (
+                      <tr className="text-center" key={i}>
+                        <td className="py-2">2190129{el.visit_uid}</td>
+                        <td>Tekanan Darah {el.bloodPressuse} </td>
+                        <td>Heart Rate {el.heartRate} </td>
+                        <td>Respiratory rate {el.respiratoryRate} </td>
+                        <td>Saturasi 02 {el.o2Saturate} </td>
+                        <td>Resep Obat{el.recipe} </td>
+                      </tr>
+                    ))
+                  : null}
               </tbody>
             </table>
           </div>

@@ -26,7 +26,14 @@ function Index() {
   const dataAppointment = useSelector(
     (data) => data.historyVisitReducer.listAllAppointment
   );
-  // console.log(dataHistory, "ini data history");
+  const getType =
+    typeof window !== "undefined" ? localStorage.getItem("profile") : null;
+
+  useEffect(() => {
+    if (getType !== "patient") {
+      router.push("/");
+    }
+  });
 
   useEffect(() => {
     dispatch(allStore.getAllDoctors());

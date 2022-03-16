@@ -6,7 +6,6 @@ import { AiOutlineDown } from "react-icons/ai";
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { useRouter } from "next/router";
-import swal from "sweetalert";
 
 function Navbar(props) {
   // dropdown func
