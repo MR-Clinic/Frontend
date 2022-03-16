@@ -19,6 +19,14 @@ function Index() {
     typeof window !== "undefined" ? localStorage.getItem("token") : null;
   const profile = useSelector((data) => data.doctorProfile);
 
+  const dataTodayVisit = useSelector(
+    (data) => data.todayVisitReducer.listTodayVisit
+  );
+
+  useEffect(() => {
+    dispatch(allStore.todayVisitList());
+  }, [dispatch]);
+
   useEffect(() => {
     dispatch(allStore.getDoctorProfile(token));
     let uid = profile.doctor_uid;
@@ -451,135 +459,33 @@ function Index() {
             </button>
           </div>
           <div className="flex flex-wrap items-start mt-10 mb-5 ">
-            <div className="bg-white rounded-lg p-5 flex flex-col drop-shadow-lg items-start ml-5 w-[220px] mb-5">
-              <p className="text-xl font-bold"> John Dorian </p>
-              <p className=""> Pria </p>
-              <p className=""> 123456789327372 </p>
-              <div className="flex text-xs mt-3">
-                <p className="bg-[#E4F5E9] font-semibold drop-shadow-lg rounded-md px-2 py-1 cursor-pointer">
-                  Ready
-                </p>
-                <p
-                  className="border-2 rounded-md font-semibold ml-10 px-1 py-1 cursor-pointer"
-                  onClick={openModalVisit}
-                >
-                  {" "}
-                  Konfirmasi
-                </p>
-              </div>
-            </div>
-            <div className="bg-white rounded-lg p-5 flex drop-shadow-lg flex-col items-start ml-5 w-[220px] mb-5">
-              <p className="text-xl font-bold"> John Dorian </p>
-              <p className=""> Pria </p>
-              <p className=""> 123456789327372 </p>
-              <div className="flex text-xs mt-3">
-                <p className="bg-yellow-300 font-semibold  rounded-md px-2 py-1">
-                  Pending
-                </p>
-                <p className="border-2 rounded-md font-semibold ml-10 px-1 py-1">
-                  {" "}
-                  Detail Data
-                </p>
-              </div>
-            </div>
-            <div className="bg-white rounded-lg drop-shadow-lg p-5 flex flex-col items-start ml-5 w-[220px] mb-5 ">
-              <p className="text-xl font-bold"> John Dorian </p>
-              <p className=""> Pria </p>
-              <p className=""> 123456789327372 </p>
-              <div className="flex text-xs mt-3">
-                <p className="bg-rose-400 font-semibold drop-shadow-lg  rounded-md px-2 py-1">
-                  canceled
-                </p>
-                <p className="border-2 rounded-md font-semibold ml-10 px-1 py-1">
-                  {" "}
-                  Detail Data
-                </p>
-              </div>
-            </div>
-            <div className="bg-white rounded-lg drop-shadow-lg p-5 flex flex-col items-start ml-5 w-[220px] mb-5">
-              <p className="text-xl font-bold"> John Dorian </p>
-              <p className=""> Pria </p>
-              <p className=""> 123456789327372 </p>
-              <div className="flex text-xs mt-3">
-                <p className="bg-[#E4F5E9] font-semibold drop-shadow-lg rounded-md px-2 py-1">
-                  Ready
-                </p>
-                <p className="border-2 rounded-md font-semibold ml-10 px-1 py-1">
-                  {" "}
-                  Detail Data
-                </p>
-              </div>
-            </div>
-            <div className="bg-white rounded-lg p-5 flex flex-col drop-shadow-lg items-start ml-5 w-[220px] mb-5">
-              <p className="text-xl font-bold"> John Dorian </p>
-              <p className=""> Pria </p>
-              <p className=""> 123456789327372 </p>
-              <div className="flex text-xs mt-3">
-                <p className="bg-[#E4F5E9] font-semibold drop-shadow-lg rounded-md px-2 py-1">
-                  Ready
-                </p>
-                <p className="border-2 rounded-md font-semibold ml-10 px-1 py-1">
-                  {" "}
-                  Detail Data
-                </p>
-              </div>
-            </div>
-            <div className="bg-white rounded-lg p-5 flex flex-col drop-shadow-lg items-start ml-5 w-[220px] mb-5">
-              <p className="text-xl font-bold"> John Dorian </p>
-              <p className=""> Pria </p>
-              <p className=""> 123456789327372 </p>
-              <div className="flex text-xs mt-3">
-                <p className="bg-[#E4F5E9] font-semibold drop-shadow-lg rounded-md px-2 py-1">
-                  Ready
-                </p>
-                <p className="border-2 rounded-md font-semibold ml-10 px-1 py-1">
-                  {" "}
-                  Detail Data
-                </p>
-              </div>
-            </div>
-            <div className="bg-white rounded-lg p-5 flex flex-col drop-shadow-lg items-start ml-5 w-[220px] mb-5">
-              <p className="text-xl font-bold"> John Dorian </p>
-              <p className=""> Pria </p>
-              <p className=""> 123456789327372 </p>
-              <div className="flex text-xs mt-3">
-                <p className="bg-[#E4F5E9] font-semibold drop-shadow-lg rounded-md px-2 py-1">
-                  Ready
-                </p>
-                <p className="border-2 rounded-md font-semibold ml-10 px-1 py-1">
-                  {" "}
-                  Detail Data
-                </p>
-              </div>
-            </div>
-            <div className="bg-white rounded-lg p-5 flex flex-col drop-shadow-lg items-start ml-5 w-[220px] mb-5">
-              <p className="text-xl font-bold"> John Dorian </p>
-              <p className=""> Pria </p>
-              <p className=""> 123456789327372 </p>
-              <div className="flex text-xs mt-3">
-                <p className="bg-[#E4F5E9] font-semibold drop-shadow-lg rounded-md px-2 py-1">
-                  Ready
-                </p>
-                <p className="border-2 rounded-md font-semibold ml-10 px-1 py-1">
-                  {" "}
-                  Detail Data
-                </p>
-              </div>
-            </div>
-            <div className="bg-white rounded-lg p-5 flex flex-col drop-shadow-lg items-start ml-5 w-[220px] mb-5">
-              <p className="text-xl font-bold"> John Dorian </p>
-              <p className=""> Pria </p>
-              <p className=""> 123456789327372 </p>
-              <div className="flex text-xs mt-3">
-                <p className="bg-[#E4F5E9] font-semibold drop-shadow-lg rounded-md px-2 py-1">
-                  Ready
-                </p>
-                <p className="border-2 rounded-md font-semibold ml-10 px-1 py-1">
-                  {" "}
-                  Detail Data
-                </p>
-              </div>
-            </div>
+            {dataTodayVisit
+              ? dataTodayVisit.map((el, i) => (
+                  <div
+                    className="bg-white rounded-lg p-5 flex flex-col drop-shadow-lg items-start ml-5 w-[220px] mb-5"
+                    key={i}
+                  >
+                    <p className="text-xl font-bold">
+                      {" "}
+                      John Dorian {el.patientName}{" "}
+                    </p>
+                    <p className=""> Pria {el.gender} </p>
+                    <p className=""> 123456789327372{el.nik} </p>
+                    <div className="flex text-xs mt-3">
+                      <p className="bg-[#E4F5E9] font-semibold drop-shadow-lg rounded-md px-2 py-1 cursor-pointer">
+                        pending
+                      </p>
+                      <p
+                        className="border-2 rounded-md font-semibold ml-10 px-1 py-1 cursor-pointer"
+                        onClick={openModalVisit}
+                      >
+                        {" "}
+                        Konfirmasi
+                      </p>
+                    </div>
+                  </div>
+                ))
+              : null}
           </div>
           <p className="text-3xl font-bold pl-5"> Search List Pasien</p>{" "}
           <div className="flex justify-between w-10/12">

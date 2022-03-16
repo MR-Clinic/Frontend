@@ -1,8 +1,30 @@
 import React from "react";
 import Nav from "../../components/nav";
 import Sidebar from "../../components/sidebar";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import allStore from "../../store/actions";
 
 function Id() {
+  const router = useRouter();
+  const { patient_uid } = router.query;
+
+  const dispatch = useDispatch();
+
+  const dataPatient = useSelector(
+    (data) => data.patientDetailReducer.listPatientDetail
+  );
+  useEffect(() => {
+    dispatch(allStore.getPatientDetails());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (patient_uid) {
+      dispatch(allStore.detailPatient(patient_uid));
+    }
+  }, [patient_uid]);
+
   return (
     <div>
       <Nav />
@@ -24,16 +46,22 @@ function Id() {
                   <p className="font-bold"> Status </p>
                   <p className="font-bold"> Pekerjaan </p>
                 </div>
-                <div className="grid items-end space-y-2 pl-5 text-sm">
-                  <p> : 121212121212</p>
-                  <p> : Muhammad Rizki Adiwiganda</p>
-                  <p> : Pria</p>
-                  <p> : Jl. ABCD efghjkkk </p>
-                  <p> : Medan, 22 November 1997</p>
-                  <p> : Islam</p>
-                  <p> : Lajang</p>
-                  <p> : Web Developer</p>
-                </div>
+                {dataPatient ? (
+                  <div className="grid items-end space-y-2 pl-5 text-sm">
+                    <p> : 121212121212 {dataPatient.nik}</p>
+                    <p> : Muhammad Rizki Adiwiganda {dataPatient.name} </p>
+                    <p> : Pria {dataPatient.gender}</p>
+                    <p> : Jl. ABCD efghjkkk {dataPatient.address}</p>
+                    <p>
+                      {" "}
+                      : Medan, 22 November 1997 {dataPatient.placeBirth},{" "}
+                      {dataPatient.dob}
+                    </p>
+                    <p> : Islam {dataPatient.religion}</p>
+                    <p> : Lajang {dataPatient.status}</p>
+                    <p> : Web Developer {dataPatient.job}</p>
+                  </div>
+                ) : null}
               </div>
             </div>
           </div>
