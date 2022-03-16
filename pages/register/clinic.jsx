@@ -24,8 +24,8 @@ function SignUpClinic() {
   const [password, setPassword] = useState("");
   const [name, nameSet] = useState("");
   const [address, addressSet] = useState("");
-  const [dari, dariSet] = useState("");
-  const [sampai, sampaiSet] = useState("");
+  const [dari, dariSet] = useState("Senin");
+  const [sampai, sampaiSet] = useState("Jumat");
   const [total, totalSet] = useState("");
 
   //class transformer
@@ -52,6 +52,8 @@ function SignUpClinic() {
       swal("Input Salah", "Username Tidak Boleh Kosong", "error");
     } else if (username.match(/^$|\s+/)) {
       swal("Input Salah", "Username Tidak Boleh  Ada Spasi", "error");
+    } else if (username.length < 6) {
+      swal("Input Salah", "Username Minimal 5 Karakter", "error");
     } else if (email === "") {
       swal("Input Salah", "Email Tidak Boleh Kosong", "error");
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
@@ -68,7 +70,6 @@ function SignUpClinic() {
 
   
   const validatePart2 = () => {
-    console.log(body);
     if(name === ""){
       swal("Input Kosong", "Nama Tidak Boleh Kosong", "error")
     }else if(address === ""){
@@ -78,7 +79,8 @@ function SignUpClinic() {
     }else if(total === ""){
       swal("Input Kosong", " Maksimal Kunjungan Tidak Boleh Kosong", "error")
     }else{
-        doSignUp();
+        // doSignUp();
+
     }
   }
   
@@ -165,7 +167,7 @@ function SignUpClinic() {
                   <div className="relative block w-4/6 m-auto">
                     <input
                       type="text"
-                      className="placeholder-[#324B50] form-control block w-full px-4 py-2 text-lg font-normal text-gray-700 bg-white bg-clip-padding
+                      className="placeholder-[#324B50] form-control block w-full px-4 py-2 pr-[50px] text-lg font-normal text-gray-700 bg-white bg-clip-padding
                      border-2 border-solid border-[#324B50] rounded-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none "
                       id="exampleFormControlInput2"
                       placeholder="Username"
@@ -178,7 +180,7 @@ function SignUpClinic() {
                   <div className="relative block w-4/6 m-auto">
                     <input
                       type="text"
-                      className="placeholder-[#324B50] form-control block w-full px-4 py-2 text-lg font-normal text-gray-700 bg-white bg-clip-padding
+                      className="placeholder-[#324B50] form-control block w-full px-4 py-2 pr-[50px] text-lg font-normal text-gray-700 bg-white bg-clip-padding
                      border-2 border-solid border-[#324B50] rounded-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none "
                       id="exampleFormControlInput2"
                       placeholder="Email"
@@ -191,7 +193,7 @@ function SignUpClinic() {
                   <div className="relative block w-4/6 m-auto">
                     <input
                       type="password"
-                      className=" placeholder-[#324B50] form-control block w-full px-4 py-2 text-lg font-normal text-gray-700 bg-white bg-clip-padding
+                      className=" placeholder-[#324B50] form-control block w-full px-4 py-2 pr-[50px] text-lg font-normal text-gray-700 bg-white bg-clip-padding
                      border-2 border-solid border-[#324B50] rounded-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none "
                       id="exampleFormControlInput2"
                       placeholder="Password"
@@ -203,7 +205,7 @@ function SignUpClinic() {
                   </div>
                   <div className="flex justify-center ">
                     <button
-                      className=" mb-[40px] bg-[#324B50] font-medium inline-flex items-center px-3 py-1 rounded-md shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
+                      className="bg-[#324B50] font-medium inline-flex items-center px-5 py-3 rounded-md shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
                       type="submit"
                       onClick={() => validatePart1()}
                     >
@@ -213,6 +215,16 @@ function SignUpClinic() {
                   </div>
                 </div>
                 {/* direct to register */}
+                <div className="flex justify-center text-xs mt-10 font-medium absolute bottom-3 left-[41%] bottom-8 ">
+                  <p> daftar sebagai pasien?</p>
+                  <a
+                    onClick={() => route.push("/register")}
+                    className="underline cursor-pointer ml-1"
+                  >
+                    {" "}
+                    daftar disini!
+                  </a>
+                </div>
                 <div className="flex justify-center text-xs mt-10 font-medium absolute bottom-3 left-[42%] ">
                   <p> sudah punya akun?</p>
                   <a
@@ -243,7 +255,7 @@ function SignUpClinic() {
                       <div>
                         <span>Nama Lengkap</span>
                         <div className={form.input}>
-                          <input type="text" className="{form.inputStyle} " id="job" placeholder="dr. Nama Lengkap" onChange={(e) => nameSet("dr. "+e.target.value)}/>
+                          <input type="text" className="{form.inputStyle} " id="job" placeholder="Nama Lengkap" onChange={(e) => nameSet("dr. "+e.target.value)}/>
                         </div>
                       </div>
                       <div>
@@ -408,7 +420,7 @@ function SignUpClinic() {
                       <div>
                         <span>Jumlah Maksimal Kunjungan</span>
                         <div className={form.input}>
-                          <input type="number" id="maxs" name="maxs" placeholder="Jumlah" max="99" maxLength="2" onChange={(e)=>{totalSet(e.target.value)}}/>
+                          <input type="number" id="maxs" name="maxs" placeholder="10" step="2" min="1" max="99" maxLength="2"  onInput={(e)=>{e.target.value < 1 || e.target.value > 99 ? swal("Input Kunjungan Tidak Valid","Jumlah Kunjungan harus diatas 1 dan dibawah 99", "error"): totalSet(e.target.value) }}/>
                         </div>
                       </div>
                   </div>
@@ -426,7 +438,7 @@ function SignUpClinic() {
 
                      {loading ? (
                         <button
-                          className=" mb-[40px] bg-[#324B50] font-medium inline-flex items-center px-3 py-2 rounded-md shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
+                          className=" bg-[#324B50] font-medium inline-flex items-center px-3 py-1 rounded-md shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
                           type="submit"
                         >
                           Loading
