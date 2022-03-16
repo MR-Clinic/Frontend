@@ -20,14 +20,10 @@ function Id() {
   );
 
   useEffect(() => {
-    dispatch(allStore.getPatientDetails());
-    dispatch(allStore.patientDiagnose());
-  }, [dispatch]);
-
-  useEffect(() => {
     console.log("masuk use effect patient uid");
     if (patient_uid) {
-      dispatch(allStore.detailPatient(patient_uid));
+      dispatch(allStore.detailPatient(patient_uid)),
+        dispatch(allStore.patientDiagnose(patient_uid));
     }
   }, [patient_uid]);
 
@@ -85,20 +81,18 @@ function Id() {
                 </tr>
               </thead>
               <tbody>
-                {dataDiagnose
-                  ? dataDiagnose.map((el, i) => (
-                      <tr className="text-center" key={i}>
-                        <td className="py-2"> {el.visit_uid}2190129</td>
-                        <td>Tekanan Darah {el.bloodPressuse}</td>
-                        <td>Heart Rate {el.heartRate}</td>
-                        <td>Respiratory Rate {el.respiratoryRate}</td>
-                        <td>Saturasi O2 {el.o2Saturate}</td>
-                        <td>Berat Badan {el.weight}</td>
-                        <td>Tinggi Badan {el.height}</td>
-                        <td>Body Mass Index {el.bmi}</td>
-                      </tr>
-                    ))
-                  : null}
+                {dataDiagnose ? (
+                  <tr className="text-center">
+                    <td className="py-2"> {dataDiagnose.visit_uid}2190129</td>
+                    <td>Tekanan Darah {dataDiagnose.bloodPressuse}</td>
+                    <td>Heart Rate {dataDiagnose.heartRate}</td>
+                    <td>Respiratory Rate {dataDiagnose.respiratoryRate}</td>
+                    <td>Saturasi O2 {dataDiagnose.o2Saturate}</td>
+                    <td>Berat Badan {dataDiagnose.weight}</td>
+                    <td>Tinggi Badan {dataDiagnose.height}</td>
+                    <td>Body Mass Index {dataDiagnose.bmi}</td>
+                  </tr>
+                ) : null}
               </tbody>
             </table>
           </div>
@@ -116,18 +110,16 @@ function Id() {
                 </tr>
               </thead>
               <tbody>
-                {dataDiagnose
-                  ? dataDiagnose.map((el, i) => (
-                      <tr className="text-center" key={i}>
-                        <td className="py-2">2190129{el.visit_uid}</td>
-                        <td>Tekanan Darah {el.bloodPressuse} </td>
-                        <td>Heart Rate {el.heartRate} </td>
-                        <td>Respiratory rate {el.respiratoryRate} </td>
-                        <td>Saturasi 02 {el.o2Saturate} </td>
-                        <td>Resep Obat{el.recipe} </td>
-                      </tr>
-                    ))
-                  : null}
+                {dataDiagnose ? (
+                  <tr className="text-center">
+                    <td className="py-2">2190129{dataDiagnose.visit_uid}</td>
+                    <td>Tekanan Darah {dataDiagnose.bloodPressuse} </td>
+                    <td>Heart Rate {dataDiagnose.heartRate} </td>
+                    <td>Respiratory rate {dataDiagnose.respiratoryRate} </td>
+                    <td>Saturasi 02 {dataDiagnose.o2Saturate} </td>
+                    <td>Resep Obat{dataDiagnose.recipe} </td>
+                  </tr>
+                ) : null}
               </tbody>
             </table>
           </div>
