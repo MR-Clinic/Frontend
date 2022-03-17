@@ -75,6 +75,7 @@ function ListJanjiKunjungan() {
       setIsOpen(true);
       let id = e.target.id
       pasienUidSet(e.target.id);
+      localStorage.setItem("vuid", e.target.attributes.visit_uid.value);
       // console.log(e.target.attributes.visit_uid.value);
       dispatch(allStore.getPatientModal(id))
       .then((e)=>{
@@ -215,7 +216,7 @@ function ListJanjiKunjungan() {
               <p className=""> </p>
               <div className="flex text-xs mt-3">
                 {handleStatus(e.status)}
-                <p className="border-2 rounded-md font-semibold ml-10 px-1 py-1 cursor-pointer" id ={e.patient_uid} onClick={handleModal}>
+                <p className="border-2 rounded-md font-semibold ml-10 px-1 py-1 cursor-pointer" id ={e.patient_uid} visit_uid={e.visit_uid} onClick={handleModal}>
                   {" "}
                   Detail Data
                 </p>

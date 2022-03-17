@@ -26,6 +26,7 @@ export const totalPasien = (uid) =>{
                 })
             .then((data)=>{
                 resolve(data.data)
+                console.log("Total Pasien: ",data.data);
             })
             .catch((response)=>{
                 console.log(response);
@@ -35,7 +36,7 @@ export const totalPasien = (uid) =>{
     }
 }
 
-export const kunjunganSumToday = (uid) =>{
+export const kunjunganTotalToday = (uid) =>{
     return (dispatch) => {
         let date = new Date()
         date = moment(date).format("DD-MM-YYYY")
@@ -56,6 +57,7 @@ export const kunjunganSumToday = (uid) =>{
                 })
             .then((data)=>{
                 resolve(data.data)
+                console.log(data.data);
             })
             .catch((response)=>{
                 console.log(response);
@@ -65,7 +67,7 @@ export const kunjunganSumToday = (uid) =>{
     }
 }
 
-export const kunjunganSum = (uid) =>{
+export const kunjunganTotal = (uid) =>{
     return (dispatch) => {
         return new Promise((resolve, reject)=>{
             axios
@@ -81,6 +83,7 @@ export const kunjunganSum = (uid) =>{
                 })
             .then((data)=>{
                 resolve(data.data)
+                console.log(data.data);
             })
             .catch((response)=>{
                 console.log(response);
@@ -100,7 +103,7 @@ export const getAllListJK = (uid) =>{
             params:{
                 kind: "doctor",
                 uid : uid,
-                date: date,
+                // date: date,
                 status: ""
             }
         })
