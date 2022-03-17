@@ -5,6 +5,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import allStore from "../../store/actions";
+import { useRouter } from "next/router";
 
 function Index() {
   const [isOpenVisit, setIsOpenVisit] = useState(false);
@@ -13,11 +14,31 @@ function Index() {
   const [pasienSum, pasienSumSet] = useState("");
   const [kunjunganSumToday, kunjunganSumTodaySet] = useState("");
   const [kunjunganSum, kunjunganSumSet] = useState("");
-
+  const router = useRouter();
   const dispatch = useDispatch();
   const token =
     typeof window !== "undefined" ? localStorage.getItem("token") : null;
   const profile = useSelector((data) => data.doctorProfile);
+
+  const dataTodayVisit = useSelector(
+    (data) => data.todayVisitReducer.listTodayVisit
+  );
+  const dataPatient = useSelector(
+    (data) => data.patientListReducer.adminPatientList
+  );
+
+  const getType =
+    typeof window !== "undefined" ? localStorage.getItem("profile") : null;
+  useEffect(() => {
+    if (getType !== "doctor") {
+      router.push("/404");
+    }
+  });
+
+  useEffect(() => {
+    dispatch(allStore.todayVisitList());
+    dispatch(allStore.getPatientList());
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(allStore.getDoctorProfile(token));
@@ -451,135 +472,30 @@ function Index() {
             </button>
           </div>
           <div className="flex flex-wrap items-start mt-10 mb-5 ">
-            <div className="bg-white rounded-lg p-5 flex flex-col drop-shadow-lg items-start ml-5 w-[220px] mb-5">
-              <p className="text-xl font-bold"> John Dorian </p>
-              <p className=""> Pria </p>
-              <p className=""> 123456789327372 </p>
-              <div className="flex text-xs mt-3">
-                <p className="bg-[#E4F5E9] font-semibold drop-shadow-lg rounded-md px-2 py-1 cursor-pointer">
-                  Ready
-                </p>
-                <p
-                  className="border-2 rounded-md font-semibold ml-10 px-1 py-1 cursor-pointer"
-                  onClick={openModalVisit}
-                >
-                  {" "}
-                  Konfirmasi
-                </p>
-              </div>
-            </div>
-            <div className="bg-white rounded-lg p-5 flex drop-shadow-lg flex-col items-start ml-5 w-[220px] mb-5">
-              <p className="text-xl font-bold"> John Dorian </p>
-              <p className=""> Pria </p>
-              <p className=""> 123456789327372 </p>
-              <div className="flex text-xs mt-3">
-                <p className="bg-yellow-300 font-semibold  rounded-md px-2 py-1">
-                  Pending
-                </p>
-                <p className="border-2 rounded-md font-semibold ml-10 px-1 py-1">
-                  {" "}
-                  Detail Data
-                </p>
-              </div>
-            </div>
-            <div className="bg-white rounded-lg drop-shadow-lg p-5 flex flex-col items-start ml-5 w-[220px] mb-5 ">
-              <p className="text-xl font-bold"> John Dorian </p>
-              <p className=""> Pria </p>
-              <p className=""> 123456789327372 </p>
-              <div className="flex text-xs mt-3">
-                <p className="bg-rose-400 font-semibold drop-shadow-lg  rounded-md px-2 py-1">
-                  canceled
-                </p>
-                <p className="border-2 rounded-md font-semibold ml-10 px-1 py-1">
-                  {" "}
-                  Detail Data
-                </p>
-              </div>
-            </div>
-            <div className="bg-white rounded-lg drop-shadow-lg p-5 flex flex-col items-start ml-5 w-[220px] mb-5">
-              <p className="text-xl font-bold"> John Dorian </p>
-              <p className=""> Pria </p>
-              <p className=""> 123456789327372 </p>
-              <div className="flex text-xs mt-3">
-                <p className="bg-[#E4F5E9] font-semibold drop-shadow-lg rounded-md px-2 py-1">
-                  Ready
-                </p>
-                <p className="border-2 rounded-md font-semibold ml-10 px-1 py-1">
-                  {" "}
-                  Detail Data
-                </p>
-              </div>
-            </div>
-            <div className="bg-white rounded-lg p-5 flex flex-col drop-shadow-lg items-start ml-5 w-[220px] mb-5">
-              <p className="text-xl font-bold"> John Dorian </p>
-              <p className=""> Pria </p>
-              <p className=""> 123456789327372 </p>
-              <div className="flex text-xs mt-3">
-                <p className="bg-[#E4F5E9] font-semibold drop-shadow-lg rounded-md px-2 py-1">
-                  Ready
-                </p>
-                <p className="border-2 rounded-md font-semibold ml-10 px-1 py-1">
-                  {" "}
-                  Detail Data
-                </p>
-              </div>
-            </div>
-            <div className="bg-white rounded-lg p-5 flex flex-col drop-shadow-lg items-start ml-5 w-[220px] mb-5">
-              <p className="text-xl font-bold"> John Dorian </p>
-              <p className=""> Pria </p>
-              <p className=""> 123456789327372 </p>
-              <div className="flex text-xs mt-3">
-                <p className="bg-[#E4F5E9] font-semibold drop-shadow-lg rounded-md px-2 py-1">
-                  Ready
-                </p>
-                <p className="border-2 rounded-md font-semibold ml-10 px-1 py-1">
-                  {" "}
-                  Detail Data
-                </p>
-              </div>
-            </div>
-            <div className="bg-white rounded-lg p-5 flex flex-col drop-shadow-lg items-start ml-5 w-[220px] mb-5">
-              <p className="text-xl font-bold"> John Dorian </p>
-              <p className=""> Pria </p>
-              <p className=""> 123456789327372 </p>
-              <div className="flex text-xs mt-3">
-                <p className="bg-[#E4F5E9] font-semibold drop-shadow-lg rounded-md px-2 py-1">
-                  Ready
-                </p>
-                <p className="border-2 rounded-md font-semibold ml-10 px-1 py-1">
-                  {" "}
-                  Detail Data
-                </p>
-              </div>
-            </div>
-            <div className="bg-white rounded-lg p-5 flex flex-col drop-shadow-lg items-start ml-5 w-[220px] mb-5">
-              <p className="text-xl font-bold"> John Dorian </p>
-              <p className=""> Pria </p>
-              <p className=""> 123456789327372 </p>
-              <div className="flex text-xs mt-3">
-                <p className="bg-[#E4F5E9] font-semibold drop-shadow-lg rounded-md px-2 py-1">
-                  Ready
-                </p>
-                <p className="border-2 rounded-md font-semibold ml-10 px-1 py-1">
-                  {" "}
-                  Detail Data
-                </p>
-              </div>
-            </div>
-            <div className="bg-white rounded-lg p-5 flex flex-col drop-shadow-lg items-start ml-5 w-[220px] mb-5">
-              <p className="text-xl font-bold"> John Dorian </p>
-              <p className=""> Pria </p>
-              <p className=""> 123456789327372 </p>
-              <div className="flex text-xs mt-3">
-                <p className="bg-[#E4F5E9] font-semibold drop-shadow-lg rounded-md px-2 py-1">
-                  Ready
-                </p>
-                <p className="border-2 rounded-md font-semibold ml-10 px-1 py-1">
-                  {" "}
-                  Detail Data
-                </p>
-              </div>
-            </div>
+            {dataTodayVisit
+              ? dataTodayVisit.map((el, i) => (
+                  <div
+                    className="bg-white rounded-lg p-5 flex flex-col drop-shadow-lg items-start ml-5 w-[220px] mb-5"
+                    key={i}
+                  >
+                    <p className="text-xl font-bold"> {el.patientName} </p>
+                    <p className="">{el.gender} </p>
+                    <p className=""> {el.nik} </p>
+                    <div className="flex text-xs mt-3">
+                      <p className="bg-[#E4F5E9] font-semibold drop-shadow-lg rounded-md px-2 py-1 cursor-pointer">
+                        pending
+                      </p>
+                      <p
+                        className="border-2 rounded-md font-semibold ml-10 px-1 py-1 cursor-pointer"
+                        onClick={openModalVisit}
+                      >
+                        {" "}
+                        Konfirmasi
+                      </p>
+                    </div>
+                  </div>
+                ))
+              : null}
           </div>
           <p className="text-3xl font-bold pl-5"> Search List Pasien</p>{" "}
           <div className="flex justify-between w-10/12">
@@ -604,7 +520,7 @@ function Index() {
               Tambah Pasien
             </button>
           </div>
-          <div className="pl-4 pb-10">
+          <div className="pl-4 pb-36">
             <table className="table-auto bg-white py-4  rounded-lg drop-shadow-lg w-10/12 mt-5">
               <thead>
                 <tr>
@@ -616,54 +532,26 @@ function Index() {
                 </tr>
               </thead>
               <tbody>
-                <tr className="text-center">
-                  <td className="py-2">12121212121</td>
-                  <td>lidianto</td>
-                  <td>Laki-Laki</td>
-                  <td>22/10/11</td>
-                  <td className="flex justify-center space-x-2 py-2">
-                    <button className="bg-[#E4F5E9] text-xs px-3 py-1 rounded-md hover:opacity-70">
-                      {" "}
-                      Details
-                    </button>
-                    <button className="bg-[#E4F5E9] text-xs px-3 py-1 rounded-md hover:opacity-70">
-                      {" "}
-                      Tambah Kunjungan
-                    </button>
-                  </td>
-                </tr>
-                <tr className="text-center">
-                  <td className="py-2">12121212121</td>
-                  <td>lidianto</td>
-                  <td>Laki-Laki</td>
-                  <td>22/10/11</td>
-                  <td className="flex justify-center space-x-2 ">
-                    <button className="bg-[rgb(228,245,233)] text-xs px-3 py-1 rounded-md hover:opacity-70">
-                      {" "}
-                      Details
-                    </button>
-                    <button className="bg-[#E4F5E9] text-xs px-3 py-1 rounded-md hover:opacity-70">
-                      {" "}
-                      Tambah Kunjungan
-                    </button>
-                  </td>
-                </tr>
-                <tr className="text-center">
-                  <td className="py-2">12121212121</td>
-                  <td>lidianto</td>
-                  <td>Laki-Laki</td>
-                  <td>22/10/11</td>
-                  <td className="flex justify-center space-x-2 ">
-                    <button className="bg-[rgb(228,245,233)] text-xs px-3 py-1 rounded-md hover:opacity-70">
-                      {" "}
-                      Details
-                    </button>
-                    <button className="bg-[#E4F5E9] text-xs px-3 py-1 rounded-md hover:opacity-70">
-                      {" "}
-                      Tambah Kunjungan
-                    </button>
-                  </td>
-                </tr>
+                {dataPatient
+                  ? dataPatient.map((el, i) => (
+                      <tr className="text-center" key={i}>
+                        <td className="py-2"> {el.nik}</td>
+                        <td>{el.patientName}</td>
+                        <td>{el.gender}</td>
+                        <td>{el.date}</td>
+                        <td className="flex justify-center space-x-2 py-2">
+                          <button className="bg-[#E4F5E9] text-xs px-3 py-1 rounded-md hover:opacity-70">
+                            {" "}
+                            Details
+                          </button>
+                          <button className="bg-[#E4F5E9] text-xs px-3 py-1 rounded-md hover:opacity-70">
+                            {" "}
+                            Tambah Kunjungan
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  : ""}
               </tbody>
             </table>
           </div>

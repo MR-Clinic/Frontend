@@ -6,11 +6,13 @@ import {
   totalPasien,
   kunjunganSumToday,
   kunjunganSum,
-  getAllListJK, getPatientModal 
+  getAllListJK,
+  getPatientModal,
 } from "./dashboardDoctor";
 import { getPatientList } from "./getPatientList";
 import { getVisitList } from "./getVisitList";
-
+import { todayVisitList } from "./todayVsitAction";
+import { detailPatient, patientDiagnose } from "./detailPatientAction";
 
 const allStore = {
   getAllDoctors,
@@ -23,7 +25,10 @@ const allStore = {
   getPatientList,
   getVisitList,
   getAllListJK,
-  getPatientModal
+  getPatientModal,
+  todayVisitList,
+  detailPatient,
+  patientDiagnose,
 };
 
 export default allStore;

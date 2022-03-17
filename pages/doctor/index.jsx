@@ -7,21 +7,36 @@ import allStore from "../../store/actions";
 import ListJanjiKunjungan from "../../components/dokter/ListJanjiKunjungan";
 
 function Dashboard() {
-  const [pasienSum, pasienSumSet] = useState("0")
-  const [kunjunganSumToday, kunjunganSumTodaySet] = useState("0")
-  const [kunjunganSum, kunjunganSumSet] = useState("0")
+  const [pasienSum, pasienSumSet] = useState("0");
+  const [kunjunganSumToday, kunjunganSumTodaySet] = useState("0");
+  const [kunjunganSum, kunjunganSumSet] = useState("0");
 
   const dispatch = useDispatch();
-  const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
-  const uid = typeof window !== "undefined" ? localStorage.getItem("uid") : null;
-  
-  useEffect(()=>{
-      dispatch(allStore.totalPasien(uid)).then((e)=>{pasienSumSet(e.data.visits.length);})
-      dispatch(allStore.kunjunganSumToday(uid)).then((e)=>{kunjunganSumTodaySet(e.data.visits.length);})
-      dispatch(allStore.kunjunganSum(uid)).then((e)=>{kunjunganSumSet(e.data.visits.length);})
-      dispatch(allStore.getDoctorProfile(token))
-  },[dispatch])
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("token") : null;
+  const uid =
+    typeof window !== "undefined" ? localStorage.getItem("uid") : null;
 
+  const dataDoctor = useSelector(
+    (data) => data.getAllDoctorsReducer.listAllDoctors
+  );
+
+  useEffect(() => {
+    dispatch(allStore.totalPasien(uid)).then((e) => {
+      pasienSumSet(e.data.visits.length);
+    });
+    dispatch(allStore.kunjunganSumToday(uid)).then((e) => {
+      kunjunganSumTodaySet(e.data.visits.length);
+    });
+    dispatch(allStore.kunjunganSum(uid)).then((e) => {
+      kunjunganSumSet(e.data.visits.length);
+    });
+    dispatch(allStore.getDoctorProfile(token));
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(allStore.getAllDoctors());
+  }, [dispatch]);
 
   function closeModal() {
     setIsOpen(false);
@@ -32,7 +47,7 @@ function Dashboard() {
   }
   return (
     <div>
-      <Nav />
+      <Nav dataDoctor={dataDoctor ? dataDoctor : false} />
       <Sidebar />
       {/* dashboard */}
       <div className="bg-[#E4F5E9] min-h-screen text-[#324B50]">
@@ -57,7 +72,7 @@ function Dashboard() {
             {" "}
             List Janji Kunjungan{" "}
           </div>
-          <ListJanjiKunjungan/>
+          <ListJanjiKunjungan />
         </div>
       </div>
     </div>
