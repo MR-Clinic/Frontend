@@ -3,12 +3,22 @@ import Nav from "../../components/nav";
 import Sidebar from "../../components/sidebar";
 import allStore from "../../store/actions";
 import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
 function VisitList() {
   const dispatch = useDispatch();
+  const router = useRouter();
   const dataVisitList = useSelector(
     (data) => data.visitListReducer.adminVisitList
   );
+  const getType =
+    typeof window !== "undefined" ? localStorage.getItem("profile") : null;
+  useEffect(() => {
+    if (getType !== "doctor") {
+      router.push("/404");
+    }
+  });
+
   useEffect(() => {
     console.log("masuk allstore");
     dispatch(allStore.getVisitList());

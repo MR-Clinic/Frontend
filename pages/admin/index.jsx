@@ -5,6 +5,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import allStore from "../../store/actions";
+import { useRouter } from "next/router";
 
 function Index() {
   const [isOpenVisit, setIsOpenVisit] = useState(false);
@@ -13,7 +14,7 @@ function Index() {
   const [pasienSum, pasienSumSet] = useState("");
   const [kunjunganSumToday, kunjunganSumTodaySet] = useState("");
   const [kunjunganSum, kunjunganSumSet] = useState("");
-
+  const router = useRouter();
   const dispatch = useDispatch();
   const token =
     typeof window !== "undefined" ? localStorage.getItem("token") : null;
@@ -25,6 +26,14 @@ function Index() {
   const dataPatient = useSelector(
     (data) => data.patientListReducer.adminPatientList
   );
+
+  const getType =
+    typeof window !== "undefined" ? localStorage.getItem("profile") : null;
+  useEffect(() => {
+    if (getType !== "doctor") {
+      router.push("/404");
+    }
+  });
 
   useEffect(() => {
     dispatch(allStore.todayVisitList());

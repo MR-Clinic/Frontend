@@ -31,7 +31,7 @@ function Index() {
 
   useEffect(() => {
     if (getType !== "patient") {
-      router.push("/");
+      router.push("/404");
     }
   });
 
