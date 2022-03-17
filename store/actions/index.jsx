@@ -4,8 +4,8 @@ import { getHistoryVisit } from "./historyVisitAction";
 import { getDoctorProfile } from "./getDoctorProfile";
 import {
   totalPasien,
-  kunjunganSumToday,
-  kunjunganSum,
+  kunjunganTotalToday,
+  kunjunganTotal,
   getAllListJK,
   getPatientModal,
 } from "./dashboardDoctor";
@@ -20,8 +20,8 @@ const allStore = {
   getHistoryVisit,
   getDoctorProfile,
   totalPasien,
-  kunjunganSumToday,
-  kunjunganSum,
+  kunjunganTotalToday,
+  kunjunganTotal,
   getPatientList,
   getVisitList,
   getAllListJK,

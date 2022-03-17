@@ -8,8 +8,8 @@ import ListJanjiKunjungan from "../../components/dokter/ListJanjiKunjungan";
 
 function Dashboard() {
   const [pasienSum, pasienSumSet] = useState("0");
-  const [kunjunganSumToday, kunjunganSumTodaySet] = useState("0");
-  const [kunjunganSum, kunjunganSumSet] = useState("0");
+  const [kunjunganTotalToday, kunjunganTotalTodaySet] = useState("0");
+  const [kunjunganTotal, kunjunganTotalSet] = useState("0");
 
   const dispatch = useDispatch();
   const token =
@@ -25,13 +25,14 @@ function Dashboard() {
     dispatch(allStore.totalPasien(uid)).then((e) => {
       pasienSumSet(e.data.visits.length);
     });
-    dispatch(allStore.kunjunganSumToday(uid)).then((e) => {
-      kunjunganSumTodaySet(e.data.visits.length);
+    dispatch(allStore.kunjunganTotalToday(uid)).then((e) => {
+      kunjunganTotalTodaySet(e.data.visits.length);
     });
-    dispatch(allStore.kunjunganSum(uid)).then((e) => {
-      kunjunganSumSet(e.data.visits.length);
+    dispatch(allStore.kunjunganTotal(uid)).then((e) => {
+      kunjunganTotalSet(e.data.visits.length);
     });
     dispatch(allStore.getDoctorProfile(token));
+    console.log("run Dispatch");
   }, [dispatch]);
 
   useEffect(() => {
@@ -59,18 +60,17 @@ function Dashboard() {
               <p className="text-xl text-center "> Total Pasien </p>
             </div>
             <div className="bg-white rounded-lg p-5 flex flex-col drop-shadow-lg items-center justify-center ml-5 w-[220px] h-[150px]">
-              <p className="text-5xl font-bold"> {kunjunganSumToday} </p>
+              <p className="text-5xl font-bold"> {kunjunganTotalToday} </p>
               <p className="text-xl text-center "> Total Kunjungan Hari Ini </p>
             </div>
             <div className="bg-white rounded-lg p-5 flex flex-col drop-shadow-lg items-center justify-center ml-5 w-[220px] h-[150px]">
-              <p className="text-5xl font-bold"> {kunjunganSum} </p>
+              <p className="text-5xl font-bold"> {kunjunganTotal} </p>
               <p className="text-xl text-center"> Total Janji Kunjungan </p>
             </div>
           </div>
           {/* list janji kunjungan */}
           <div className="text-3xl font-bold pl-5 pt-16">
-            {" "}
-            List Janji Kunjungan{" "}
+            Janji Kunjungan Hari Ini
           </div>
           <ListJanjiKunjungan />
         </div>
