@@ -77,7 +77,6 @@ export const kunjunganSum = (uid) =>{
                     params:{
                         kind: "doctor",
                         uid: uid,
-                        date: date
                     }
                 })
             .then((data)=>{
@@ -101,7 +100,7 @@ export const getAllListJK = (uid) =>{
             params:{
                 kind: "doctor",
                 uid : uid,
-                // date: date,
+                date: date,
                 status: ""
             }
         })
