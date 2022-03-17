@@ -1,13 +1,37 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Nav from "../../components/nav";
 import Sidebar from "../../components/sidebar";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import allStore from "../../store/actions";
 
 function Index() {
   const [isOpenVisit, setIsOpenVisit] = useState(false);
   const [isOpenAddVisit, setIsOpenAddVisit] = useState(false);
   const [isOpenAddPatient, setIsOpenAddPatient] = useState(false);
+  const [pasienSum, pasienSumSet] = useState("");
+  const [kunjunganSumToday, kunjunganSumTodaySet] = useState("");
+  const [kunjunganSum, kunjunganSumSet] = useState("");
+
+  const dispatch = useDispatch();
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("token") : null;
+  const profile = useSelector((data) => data.doctorProfile);
+
+  useEffect(() => {
+    dispatch(allStore.getDoctorProfile(token));
+    let uid = profile.doctor_uid;
+    dispatch(allStore.totalPasien(uid)).then((e) => {
+      pasienSumSet(e.data.visits.length);
+    });
+    dispatch(allStore.kunjunganSumToday(uid)).then((e) => {
+      kunjunganSumTodaySet(e.data.visits.length);
+    });
+    dispatch(allStore.kunjunganSum(uid)).then((e) => {
+      kunjunganSumSet(e.data.visits.length);
+    });
+  }, []);
 
   function closeModalVisit() {
     setIsOpenVisit(false);
@@ -30,6 +54,7 @@ function Index() {
   function openModalAddPatient() {
     setIsOpenAddPatient(true);
   }
+
   return (
     <div>
       {/* modal konfirmasi kunjungan */}
@@ -257,7 +282,9 @@ function Index() {
           </div>
         </Dialog>
       </Transition>
+
       {/* modal tambah pasien*/}
+
       <Transition appear show={isOpenAddPatient} as={Fragment}>
         <Dialog
           as="div"
@@ -397,15 +424,15 @@ function Index() {
           <div className="text-3xl font-bold pl-5 pt-5"> Dashboard </div>
           <div className="flex flex-wrap justify-start mt-10 mb-10">
             <div className="bg-white rounded-lg p-5 flex flex-col drop-shadow-lg items-center justify-center ml-5 w-[220px] h-[150px]">
-              <p className="text-5xl font-bold"> 50 </p>
+              <p className="text-5xl font-bold"> {pasienSum} </p>
               <p className="text-xl text-center "> Total Pasien </p>
             </div>
             <div className="bg-white rounded-lg p-5 flex flex-col drop-shadow-lg items-center justify-center ml-5 w-[220px] h-[150px]">
-              <p className="text-5xl font-bold"> 50 </p>
+              <p className="text-5xl font-bold"> {kunjunganSumToday}</p>
               <p className="text-xl text-center "> Total Kunjungan Hari Ini </p>
             </div>
             <div className="bg-white rounded-lg p-5 flex flex-col drop-shadow-lg items-center justify-center ml-5 w-[220px] h-[150px]">
-              <p className="text-5xl font-bold"> 50 </p>
+              <p className="text-5xl font-bold"> {kunjunganSum} </p>
               <p className="text-xl text-center"> Total Janji Kunjungan </p>
             </div>
           </div>

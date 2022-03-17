@@ -19,7 +19,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 0px 15px;
-    padding-right: 50px;
+    position: relative;
 }
 
 .input input{
@@ -30,6 +30,11 @@
 .input svg,
 .btn svg{
     font-size: 1.5rem;
+}
+
+.input svg{
+    position: absolute;
+    right: 10px;
 }
 
 .selectForm {
