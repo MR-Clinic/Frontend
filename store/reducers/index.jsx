@@ -6,7 +6,8 @@ import doctorProfile from "./doktorProfile";
 import patientListReducer from "./getPatientListReducer";
 import visitListReducer from "./getVisitListReducer";
 import getListJK from "./getListJK";
-
+import detailPatientReducer from "./detailPatientReducer";
+import todayVisitReducer from "./todayVisitReducers";
 
 const rootReducers = combineReducers({
   patientDetailReducer,
@@ -15,7 +16,9 @@ const rootReducers = combineReducers({
   doctorProfile,
   patientListReducer,
   visitListReducer,
-  getListJK
+  getListJK,
+  detailPatientReducer,
+  todayVisitReducer,
 });
 
 export default rootReducers;

@@ -26,7 +26,14 @@ function Index() {
   const dataAppointment = useSelector(
     (data) => data.historyVisitReducer.listAllAppointment
   );
-  // console.log(dataHistory, "ini data history");
+  const getType =
+    typeof window !== "undefined" ? localStorage.getItem("profile") : null;
+
+  useEffect(() => {
+    if (getType !== "patient") {
+      router.push("/404");
+    }
+  });
 
   useEffect(() => {
     dispatch(allStore.getAllDoctors());
@@ -152,7 +159,7 @@ function Index() {
           </div>
         </Dialog>
       </Transition>
-      <Navbar />
+      <Navbar dataPatient={dataPatient ? dataPatient : false} />
 
       {/* profile section */}
       <div className="bg-[#E4F5E9] h-full text-[#356E79]">
@@ -178,7 +185,7 @@ function Index() {
                       <p> : {dataPatient.nik}</p>
                       <p> : {dataPatient.name}</p>
                       <p> : {dataPatient.gender}</p>
-                      <p> : {dataPatient.address} </p>
+                      <p className="break-all"> : {dataPatient.address} </p>
                       <p>
                         {" "}
                         : {dataPatient.placeBirth}, {dataPatient.dob}
@@ -196,23 +203,24 @@ function Index() {
             <p className="font-bold text-xl mb-5">Janji Kunjungan</p>
             <div className="bg-white border-2  mb-5 rounded-lg px-5 w-[584px] drop-shadow-lg ">
               <div className="flex justify-start py-5 ">
-                {dataAppointment
-                  ? dataAppointment.map((el, i) => (
-                      <div className="grid grid-cols-2 " key={i}>
-                        <div className="grid space-y-2 pl-4">
-                          {" "}
-                          <p className="font-bold"> Dokter </p>
-                          <p className="font-bold"> Hari Kunjungan </p>
-                          <p className="font-bold"> Alamat </p>
-                        </div>
-                        <div className="grid items-end space-y-2 pl-5">
-                          <p> : dr awenk {el.doctorName}</p>
-                          <p> : 22/03/2022 {el.date}</p>
-                          <p> : Jl. ABCD efghjkkk{el.doctorAddress} </p>
-                        </div>
-                      </div>
-                    ))
-                  : null}
+                {dataAppointment ? (
+                  <div className="grid grid-cols-2 ">
+                    <div className="grid space-y-2 pl-4">
+                      {" "}
+                      <p className="font-bold"> Dokter </p>
+                      <p className="font-bold"> Hari Kunjungan </p>
+                      <p className="font-bold"> Alamat </p>
+                    </div>
+                    <div className="grid items-end space-y-2 pl-5">
+                      <p> : dr awenk {dataAppointment.doctorName}</p>
+                      <p> : 22/03/2022 {dataAppointment.date}</p>
+                      <p>
+                        {" "}
+                        : Jl. ABCD efghjkkk{dataAppointment.doctorAddress}{" "}
+                      </p>
+                    </div>
+                  </div>
+                ) : null}
               </div>
             </div>
           </div>
@@ -277,18 +285,18 @@ function Index() {
               </tr>
             </thead>
             <tbody>
-              {dataHistory
-                ? dataHistory.map((el, i) => (
-                    <tr className="text-center" key={i}>
-                      <td className="py-2">05/03/22 {el.date}</td>
-                      <td>dr. lindawati {el.doctorName}</td>
-                      <td>jl. sana sini bisa kemana aja {el.doctorAddress}</td>
-                      <td>flu{el.mainDiagnose}</td>
-                      <td>demam dll{el.addiditionDiagnose}</td>
-                      <td>lihat resep{el.recipe}</td>
-                    </tr>
-                  ))
-                : null}
+              {dataHistory ? (
+                <tr className="text-center">
+                  <td className="py-2">05/03/22 {dataHistory.date}</td>
+                  <td>dr. lindawati {dataHistory.doctorName}</td>
+                  <td>
+                    jl. sana sini bisa kemana aja {dataHistory.doctorAddress}
+                  </td>
+                  <td>flu{dataHistory.mainDiagnose}</td>
+                  <td>demam dll{dataHistory.addiditionDiagnose}</td>
+                  <td>lihat resep{dataHistory.recipe}</td>
+                </tr>
+              ) : null}
             </tbody>
           </table>
         </div>
