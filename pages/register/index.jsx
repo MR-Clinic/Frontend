@@ -74,10 +74,12 @@ function SignUpPatient() {
       swal("Input Kosong", "Silahkan Masukkan Data Yang Sesuai", "error");
     } else if (username === "") {
       swal("Input Salah", "Username Tidak Boleh Kosong", "error");
-    } else if (username.length < 6) {
+    } else if (username.length < 5) {
       swal("Input Salah", "Username Minimal 5 Karakter", "error");
     } else if (username.match(/^$|\s+/)) {
       swal("Input Salah", "Username Tidak Boleh Ada Spasi", "error");
+    } else if (!/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/.test(username)) {
+      swal("Input Salah", "Username Harus Menggunakan Angka dan Huruf", "error");
     } else if (email === "") {
       swal("Input Salah", "Email Tidak Boleh Kosong", "error");
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
@@ -95,7 +97,7 @@ function SignUpPatient() {
   };
 
   const validatePart2 = () => {
-    if (nik.length !== 15){
+    if (nik.length !== 16){
       swal("Input NIK Salah", "Jumlah karakter harus 16", "error");
     } else if (nik.match(/[A-Z]/) || nik.match(/[a-z]/)){
       swal("Input NIK Salah", "NIK Tidak Boleh Ada Huruf", "error");
@@ -325,20 +327,20 @@ function SignUpPatient() {
                               leaveTo="transform opacity-0 scale-95"
                             >
                               <Menu.Items className="origin-top-right  mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 max-h-[200px] overflow-y-scroll focus:outline-none">
-                                <div className="py-2 px-3 hover:bg-slate-200 rounded-md" onClick={()=>{genderSet("pria"); setOptSel("Pria")}}>
                                   <Menu.Item>
+                                    <div className="py-2 px-3 hover:bg-slate-200 rounded-md" onClick={()=>{genderSet("pria"); setOptSel("Pria")}}>
                                       <span className="w-full ">
                                         Pria
                                       </span>
+                                    </div>
                                   </Menu.Item>
-                                </div>
-                                <div className="py-2 px-3 hover:bg-slate-200 rounded-md" onClick={()=>{genderSet("wanita"); setOptSel("Wanita")}}>
                                   <Menu.Item>
+                                    <div className="py-2 px-3 hover:bg-slate-200 rounded-md" onClick={()=>{genderSet("wanita"); setOptSel("Wanita")}}>
                                       <span className="w-full ">
                                         Wanita
                                       </span>
+                                    </div>
                                   </Menu.Item>
-                                </div>
                               </Menu.Items>
                             </Transition>
                           </Menu>
@@ -390,34 +392,34 @@ function SignUpPatient() {
                               leaveTo="transform opacity-0 scale-95"
                             >
                               <Menu.Items className="origin-top-right z-20 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 max-h-[120px] snap-y overflow-y-scroll focus:outline-none ">
-                                <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{statusSet("Belum Kawin"); setOptSel2("Belum Kawin")}}>
                                   <Menu.Item>
+                                    <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{statusSet("Belum Kawin"); setOptSel2("Belum Kawin")}}>
                                       <span className="w-full ">
                                        Belum Kawin
                                       </span>
+                                    </div>
                                   </Menu.Item>
-                                </div>
-                                <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{statusSet("Kawin"); setOptSel2("Kawin")}}>
                                   <Menu.Item>
+                                    <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{statusSet("Kawin"); setOptSel2("Kawin")}}>
                                       <span className="w-full ">
                                         Kawin
                                       </span>
+                                    </div>
                                   </Menu.Item>
-                                </div>
-                                <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{statusSet("Cerai Hidup"); setOptSel2("Cerai Hidup")}}>
                                   <Menu.Item>
+                                    <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{statusSet("Cerai Hidup"); setOptSel2("Cerai Hidup")}}>
                                       <span className="w-full ">
                                         Cerai Hidup
                                       </span>
+                                    </div>
                                   </Menu.Item>
-                                </div>
-                                <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{statusSet("Cerai Mati"); setOptSel2("Cerai Mati")}}>
                                   <Menu.Item>
+                                    <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{statusSet("Cerai Mati"); setOptSel2("Cerai Mati")}}>
                                       <span className="w-full ">
                                         Cerai Mati
                                       </span>
+                                    </div>
                                   </Menu.Item>
-                                </div>
                               </Menu.Items>
                             </Transition>
                           </Menu>
@@ -444,48 +446,48 @@ function SignUpPatient() {
                               leaveTo="transform opacity-0 scale-95"
                             >
                               <Menu.Items className="origin-top-right  mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 max-h-[120px] snap-y overflow-y-scroll focus:outline-none ">
-                                <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{religionSet("Budha"); setOptSel3("Budha")}}>
                                   <Menu.Item>
+                                    <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{religionSet("Budha"); setOptSel3("Budha")}}>
                                       <span className="w-full ">
                                         Budha
                                       </span>
+                                    </div>
                                   </Menu.Item>
-                                </div>
-                                <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{religionSet("Hindu"); setOptSel3("Hindu")}}>
                                   <Menu.Item>
+                                    <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{religionSet("Hindu"); setOptSel3("Hindu")}}>
                                       <span className="w-full ">
                                         Hindu
                                       </span>
+                                    </div>
                                   </Menu.Item>
-                                </div>
-                                <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{religionSet("Islam"); setOptSel3("Islam")}}>
                                   <Menu.Item>
+                                    <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{religionSet("Islam"); setOptSel3("Islam")}}>
                                       <span className="w-full ">
                                         Islam
                                       </span>
+                                    </div>
                                   </Menu.Item>
-                                </div>
-                                <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{religionSet("Katholik"); setOptSel3("Katholik")}}>
                                   <Menu.Item>
+                                    <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{religionSet("Katholik"); setOptSel3("Katholik")}}>
                                       <span className="w-full ">
                                         Katholik
                                       </span>
+                                    </div>
                                   </Menu.Item>
-                                </div>
-                                <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{religionSet("Konghucu"); setOptSel3("Konghucu")}}>
                                   <Menu.Item>
+                                    <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{religionSet("Konghucu"); setOptSel3("Konghucu")}}>
                                       <span className="w-full ">
                                         Konghucu
                                       </span>
+                                    </div>
                                   </Menu.Item>
-                                </div>
-                                <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{religionSet("Protestan"); setOptSel3("Protestan")}}>
                                   <Menu.Item>
+                                    <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{religionSet("Protestan"); setOptSel3("Protestan")}}>
                                       <span className="w-full ">
                                         Protestan
                                       </span>
+                                    </div>
                                   </Menu.Item>
-                                </div>
                               </Menu.Items>
                             </Transition>
                           </Menu>

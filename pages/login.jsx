@@ -126,31 +126,19 @@ function Login() {
                 {/* input button */}
                 <div>
                   <div className={form.inputDiv}>
-                    <div>
-                      <div className={form.input}>
-                        <input
-                          type="text"
-                          className="{form.inputStyle} "
-                          id="nik"
-                          placeholder="Username"
-                          onChange={(e) => setUsername(e.target.value)}
-                        />
-                        <FiUser />
+                      <div>
+                        <div className={form.input}>
+                          <input type="text" className={form.inputStyle + " pr-[30px]"}  id="nik" placeholder="Username" onChange={(e) => setUsername(e.target.value)}/>
+                          <FiUser/>
+                        </div>
+                      </div>
+                      <div>
+                        <div className={form.input}>
+                          <input type="password" className={form.inputStyle + " pr-[30px]"}  id="full_name" placeholder="Password" onChange={(e) => setPassword(e.target.value)}/>
+                          <MdOutlineVpnKey/>
+                        </div>
                       </div>
                     </div>
-                    <div>
-                      <div className={form.input}>
-                        <input
-                          type="password"
-                          className="{form.inputStyle} "
-                          id="full_name"
-                          placeholder="Password"
-                          onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <MdOutlineVpnKey />
-                      </div>
-                    </div>
-                  </div>
                   {loading ? (
                     <div className="flex justify-center ">
                       <button
