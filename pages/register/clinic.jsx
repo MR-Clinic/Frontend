@@ -52,8 +52,10 @@ function SignUpClinic() {
       swal("Input Salah", "Username Tidak Boleh Kosong", "error");
     } else if (username.match(/^$|\s+/)) {
       swal("Input Salah", "Username Tidak Boleh  Ada Spasi", "error");
-    } else if (username.length < 6) {
+    } else if (username.length < 5) {
       swal("Input Salah", "Username Minimal 5 Karakter", "error");
+    } else if (!/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/.test(username)) {
+      swal("Input Salah", "Username Harus Menggunakan Angka dan Huruf", "error");
     } else if (email === "") {
       swal("Input Salah", "Email Tidak Boleh Kosong", "error");
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
@@ -420,7 +422,7 @@ function SignUpClinic() {
                       <div>
                         <span>Jumlah Maksimal Kunjungan</span>
                         <div className={form.input}>
-                          <input type="number" id="maxs" name="maxs" placeholder="10" step="2" min="1" max="99" maxLength="2"  onInput={(e)=>{e.target.value < 1 || e.target.value > 99 ? swal("Input Kunjungan Tidak Valid","Jumlah Kunjungan harus diatas 1 dan dibawah 99", "error"): totalSet(e.target.value) }}/>
+                          <input type="number" id="maxs" name="maxs" placeholder="10" min="1" max="99" maxLength="2"  onInput={(e)=>{e.target.value < 1 || e.target.value > 99 ? swal("Input Kunjungan Tidak Valid","Jumlah Kunjungan harus diatas 1 dan dibawah 99", "error"): totalSet(e.target.value) }}/>
                         </div>
                       </div>
                   </div>
