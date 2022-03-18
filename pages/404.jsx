@@ -19,7 +19,8 @@ function NotFound() {
         router.push("/doctor");
       } else if (getType === "patient") {
         router.push("/patient");
-      } else if (token === null) {
+      }
+      if (token === null) {
         router.push("/login");
       }
     }, 3000);

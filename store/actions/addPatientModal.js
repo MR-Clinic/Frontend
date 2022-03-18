@@ -5,7 +5,7 @@ const getToken =
   typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
 export const getPatientList = () => {
-  return (dispatch) => {
+  return () => {
     console.log("masuk fungsi get detail", getToken);
     const getType =
       typeof window !== "undefined" ? localStorage.getItem("profile") : null;

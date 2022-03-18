@@ -6,6 +6,7 @@ import { Fragment, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import allStore from "../../store/actions";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 function Index() {
   const [isOpenVisit, setIsOpenVisit] = useState(false);
@@ -16,12 +17,6 @@ function Index() {
   const [kunjunganTotal, kunjunganTotalSet] = useState("");
   const router = useRouter();
   const dispatch = useDispatch();
-  const token =
-    typeof window !== "undefined" ? localStorage.getItem("token") : null;
-  const uid =
-    typeof window !== "undefined" ? localStorage.getItem("doctor_uid") : null;
-  const getType =
-    typeof window !== "undefined" ? localStorage.getItem("profile") : null;
 
   const dataTodayVisit = useSelector(
     (data) => data.todayVisitReducer.listTodayVisit
@@ -29,6 +24,13 @@ function Index() {
   const dataPatient = useSelector(
     (data) => data.patientListReducer.adminPatientList
   );
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("token") : null;
+  const uid =
+    typeof window !== "undefined" ? localStorage.getItem("doctor_uid") : null;
+  const getType =
+    typeof window !== "undefined" ? localStorage.getItem("profile") : null;
+  console.log(dataPatient, "ini data patient");
   useEffect(() => {
     if (getType !== "doctor") {
       router.push("/404");
@@ -39,15 +41,15 @@ function Index() {
       dispatch(allStore.totalPasien(uid)).then((e) => {
         pasienSumSet(e.data.visits.length);
       });
-      dispatch(allStore.kunjunganSumToday(uid)).then((e) => {
-        kunjunganSumTodaySet(e.data.visits.length);
+      dispatch(allStore.kunjunganTotalToday(uid)).then((e) => {
+        kunjunganTotalTodaySet(e.data.visits.length);
       });
-      dispatch(allStore.kunjunganSum(uid)).then((e) => {
-        kunjunganSumSet(e.data.visits.length);
+      dispatch(allStore.kunjunganTotal(uid)).then((e) => {
+        kunjunganTotalSet(e.data.visits.length);
       });
     }
-  });
-  
+  }, [dispatch]);
+
   function closeModalVisit() {
     setIsOpenVisit(false);
   }
@@ -459,13 +461,23 @@ function Index() {
               {" "}
               List Kunjungan Hari Ini{" "}
             </div>
-            <button
-              type="button"
-              className=" text-sm font-bold py-2 px-4 text-white bg-[#356E79] border border-transparent rounded-lg hover:opacity-80"
-              onClick={openModalAddVisit}
-            >
-              Tambah Kunjungan
-            </button>
+            <div className="flex gap-5">
+              <button
+                type="button"
+                className=" text-sm font-bold py-2 px-4 text-white bg-[#356E79] border border-transparent rounded-lg hover:opacity-80"
+                onClick={openModalAddVisit}
+              >
+                Tambah Kunjungan
+              </button>
+              <Link href="/admin/visitList" passHref>
+                <button
+                  type="button"
+                  className=" text-sm font-bold py-2 px-4 text-white bg-[#356E79] border border-transparent rounded-lg hover:opacity-80"
+                >
+                  Lihat Riwayat Kunjungan
+                </button>
+              </Link>
+            </div>
           </div>
           <div className="flex flex-wrap items-start mt-10 mb-5 ">
             {dataTodayVisit

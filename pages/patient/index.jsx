@@ -40,7 +40,7 @@ function Index() {
       dispatch(allStore.getHistoryVisit(true, "pending"));
       dispatch(allStore.getHistoryVisit(false, "ready"));
     }
-  });
+  }, [dispatch]);
 
   function closeModal() {
     setIsOpen(false);

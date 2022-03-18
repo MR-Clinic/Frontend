@@ -17,8 +17,8 @@ function Navbar(props) {
   const route = useRouter();
 
   function Logout() {
-    localStorage.clear();
     route.push("/");
+    localStorage.clear();
   }
 
   function EditInactiveIcon(props) {

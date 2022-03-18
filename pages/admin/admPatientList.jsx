@@ -20,11 +20,7 @@ function AdmPatientList() {
     } else {
       dispatch(allStore.getPatientList());
     }
-  });
-
-  // useEffect(() => {
-  //   dispatch(allStore.getPatientList());
-  // }, [dispatch]);
+  }, [dispatch]);
 
   return (
     <>

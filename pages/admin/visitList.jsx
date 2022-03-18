@@ -20,7 +20,7 @@ function VisitList() {
     } else {
       dispatch(allStore.getVisitList());
     }
-  });
+  }, [dispatch]);
 
   return (
     <div>
@@ -36,7 +36,7 @@ function VisitList() {
                   <th className="border-b-2 py-2 ">Nama Pasien</th>
                   <th className="border-b-2 ">NIK</th>
                   <th className="border-b-2 ">Gender </th>
-                  <th className="border-b-2 ">Konfirmasi Kunjungan</th>
+                  <th className="border-b-2 ">Status Kunjungan</th>
                   <th className="border-b-2 ">Tanggal Appointment</th>
                 </tr>
               </thead>
@@ -48,9 +48,9 @@ function VisitList() {
                         <td>{el.nik}</td>
                         <td>{el.gender}</td>
                         <td>
-                          <button className="bg-[#E4F5E9] text-xs px-3 py-1 rounded-md hover:opacity-70">
+                          <button className="bg-[#E4F5E9] text-xs px-3 py-1 rounded-md cursor-default ">
                             {" "}
-                            confirm
+                            confirmed
                           </button>
                         </td>
                         <td>{el.date}</td>

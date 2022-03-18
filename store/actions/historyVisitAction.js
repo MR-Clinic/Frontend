@@ -10,7 +10,7 @@ export const getHistoryVisit = (isJanjiKunjungan, statusParam) => {
     const getType =
       typeof window !== "undefined" ? localStorage.getItem("profile") : null;
     const getUid =
-      typeof window !== "undefined" ? localStorage.getItem("doctor_uid") : null;
+      typeof window !== "undefined" ? localStorage.getItem("uid") : null;
 
     axios
       .get(baseUrl, {
