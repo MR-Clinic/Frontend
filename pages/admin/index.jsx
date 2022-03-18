@@ -12,8 +12,8 @@ function Index() {
   const [isOpenAddVisit, setIsOpenAddVisit] = useState(false);
   const [isOpenAddPatient, setIsOpenAddPatient] = useState(false);
   const [pasienSum, pasienSumSet] = useState("");
-  const [kunjunganSumToday, kunjunganSumTodaySet] = useState("");
-  const [kunjunganSum, kunjunganSumSet] = useState("");
+  const [kunjunganTotalToday, kunjunganTotalTodaySet] = useState("");
+  const [kunjunganTotal, kunjunganTotalSet] = useState("");
   const router = useRouter();
   const dispatch = useDispatch();
   const token =
@@ -47,7 +47,7 @@ function Index() {
       });
     }
   });
-
+  
   function closeModalVisit() {
     setIsOpenVisit(false);
   }
@@ -445,11 +445,11 @@ function Index() {
               <p className="text-xl text-center "> Total Pasien </p>
             </div>
             <div className="bg-white rounded-lg p-5 flex flex-col drop-shadow-lg items-center justify-center ml-5 w-[220px] h-[150px]">
-              <p className="text-5xl font-bold"> {kunjunganSumToday}</p>
+              <p className="text-5xl font-bold"> {kunjunganTotalToday}</p>
               <p className="text-xl text-center "> Total Kunjungan Hari Ini </p>
             </div>
             <div className="bg-white rounded-lg p-5 flex flex-col drop-shadow-lg items-center justify-center ml-5 w-[220px] h-[150px]">
-              <p className="text-5xl font-bold"> {kunjunganSum} </p>
+              <p className="text-5xl font-bold"> {kunjunganTotal} </p>
               <p className="text-xl text-center"> Total Janji Kunjungan </p>
             </div>
           </div>

@@ -4,12 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import allStore from '../../store/actions';
 import ReactLoading from "react-loading";
 import swal from 'sweetalert';
+import { useRouter } from 'next/router';
 
 
 function ListJanjiKunjungan() {
     const [isOpen, setIsOpen] = useState(false);
 
-    const uid = typeof window !== "undefined" ? localStorage.getItem("uid") : null;
+    const uid = typeof window !== "undefined" ? localStorage.getItem("doctor_uid") : null;
     const dispatch = useDispatch()
     const listJK =useSelector(({getListJK})=> getListJK.listJK.visits )
     const [NIK, NIKSet] = useState("~")
@@ -21,11 +22,13 @@ function ListJanjiKunjungan() {
     const [Status, StatusSet] = useState("~")
     const [Pekerjaan, PekerjaanSet] = useState("~")
     const [complaint, complaintSet] = useState("~")
+    const [pasienUid, pasienUidSet] = useState("")
 
+    const route = useRouter();
     
     useEffect(()=>{
       console.log("re",listJK);
-      dispatch(allStore.getAllListJK(uid));
+      dispatch(allStore.getTodayJK(uid));
     },[dispatch])
     
     function closeModal() {
@@ -71,7 +74,9 @@ function ListJanjiKunjungan() {
     function handleModal(e) {
       setIsOpen(true);
       let id = e.target.id
-      console.log(e.target.id);
+      pasienUidSet(e.target.id);
+      localStorage.setItem("vuid", e.target.attributes.visit_uid.value);
+      // console.log(e.target.attributes.visit_uid.value);
       dispatch(allStore.getPatientModal(id))
       .then((e)=>{
         NIKSet(e.nik)
@@ -83,7 +88,6 @@ function ListJanjiKunjungan() {
         StatusSet(e.status)
         PekerjaanSet(e.job)
         complaintSet(e.complaint)
-
       })
       .catch((e)=>{
         setIsOpen(false);
@@ -185,13 +189,15 @@ function ListJanjiKunjungan() {
                 <div className="flex justify-end mt-5 space-x-2 ">
                   <button
                     type="button"
-                    className=" text-xs inline-flex justify-center px-2 py-2  font-medium text-white bg-[#356E79] border border-transparent rounded-lg hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+                    className=" outline-none text-xs inline-flex justify-center px-2 py-2  font-medium text-white bg-[#356E79] border border-transparent rounded-lg hover:bg-green-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+                    onClick={()=>{route.push("/detailpatient/"+pasienUid)}}
                   >
                     Lihat Detail Pasien
                   </button>
                   <button
                     type="button"
-                    className="inline-flex justify-center px-2 py-2 text-xs font-medium text-white bg-[#356E79] border border-transparent rounded-lg hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+                    className="inline-flex justify-center px-2 py-2 text-xs font-medium text-white bg-[#356E79] border border-transparent rounded-lg hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+                    onClick={()=>{route.push("/checkup/"+pasienUid)}}
                   >
                     Periksa Sekarang
                   </button>
@@ -210,7 +216,7 @@ function ListJanjiKunjungan() {
               <p className=""> </p>
               <div className="flex text-xs mt-3">
                 {handleStatus(e.status)}
-                <p className="border-2 rounded-md font-semibold ml-10 px-1 py-1 cursor-pointer" id ={e.patient_uid} onClick={handleModal}>
+                <p className="border-2 rounded-md font-semibold ml-10 px-1 py-1 cursor-pointer" id ={e.patient_uid} visit_uid={e.visit_uid} onClick={handleModal}>
                   {" "}
                   Detail Data
                 </p>
