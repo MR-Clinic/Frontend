@@ -15,14 +15,16 @@ function AdmPatientList() {
     typeof window !== "undefined" ? localStorage.getItem("profile") : null;
 
   useEffect(() => {
-    dispatch(allStore.getPatientList());
-  }, [dispatch]);
-
-  useEffect(() => {
     if (getType !== "doctor") {
       router.push("/404");
+    } else {
+      dispatch(allStore.getPatientList());
     }
   });
+
+  // useEffect(() => {
+  //   dispatch(allStore.getPatientList());
+  // }, [dispatch]);
 
   return (
     <>
