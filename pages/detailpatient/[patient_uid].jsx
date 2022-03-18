@@ -1,8 +1,32 @@
 import React from "react";
 import Nav from "../../components/nav";
 import Sidebar from "../../components/sidebar";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import allStore from "../../store/actions";
 
 function Id() {
+  const router = useRouter();
+  const { patient_uid } = router.query;
+
+  const dispatch = useDispatch();
+
+  const dataPatient = useSelector(
+    (data) => data.detailPatientReducer.detailPatient
+  );
+  const dataDiagnose = useSelector(
+    (data) => data.detailPatientReducer.patientDiagnose
+  );
+
+  useEffect(() => {
+    console.log("masuk use effect patient uid");
+    if (patient_uid) {
+      dispatch(allStore.detailPatient(patient_uid)),
+        dispatch(allStore.patientDiagnose(patient_uid));
+    }
+  }, [patient_uid]);
+
   return (
     <div>
       <Nav />
@@ -24,16 +48,20 @@ function Id() {
                   <p className="font-bold"> Status </p>
                   <p className="font-bold"> Pekerjaan </p>
                 </div>
-                <div className="grid items-end space-y-2 pl-5 text-sm">
-                  <p> : 121212121212</p>
-                  <p> : Muhammad Rizki Adiwiganda</p>
-                  <p> : Pria</p>
-                  <p> : Jl. ABCD efghjkkk </p>
-                  <p> : Medan, 22 November 1997</p>
-                  <p> : Islam</p>
-                  <p> : Lajang</p>
-                  <p> : Web Developer</p>
-                </div>
+                {dataPatient ? (
+                  <div className="grid items-end space-y-2 pl-5 text-sm">
+                    <p> : {dataPatient.nik}</p>
+                    <p> : {dataPatient.name}</p>
+                    <p> : {dataPatient.address}</p>
+                    <p>
+                      {" "}
+                      : {dataPatient.placeBirth}, {dataPatient.dob}
+                    </p>
+                    <p> : {dataPatient.religion}</p>
+                    <p> : {dataPatient.status}</p>
+                    <p> : {dataPatient.job}</p>
+                  </div>
+                ) : null}
               </div>
             </div>
           </div>
@@ -53,36 +81,18 @@ function Id() {
                 </tr>
               </thead>
               <tbody>
-                <tr className="text-center">
-                  <td className="py-2">2190129</td>
-                  <td>Tekanan Darah</td>
-                  <td>Heart Rate</td>
-                  <td>Respiratory Rate</td>
-                  <td>Saturasi O2</td>
-                  <td>Berat Badan</td>
-                  <td>Tinggi Badan</td>
-                  <td>Body Mass Index</td>
-                </tr>
-                <tr className="text-center">
-                  <td className="py-2">2190129</td>
-                  <td>Tekanan Darah</td>
-                  <td>Heart Rate</td>
-                  <td>Respiratory Rate</td>
-                  <td>Saturasi O2</td>
-                  <td>Berat Badan</td>
-                  <td>Tinggi Badan</td>
-                  <td>Body Mass Index</td>
-                </tr>
-                <tr className="text-center">
-                  <td className="py-2">2190129</td>
-                  <td>Tekanan Darah</td>
-                  <td>Heart Rate</td>
-                  <td>Respiratory Rate</td>
-                  <td>Saturasi O2</td>
-                  <td>Berat Badan</td>
-                  <td>Tinggi Badan</td>
-                  <td>Body Mass Index</td>
-                </tr>
+                {dataDiagnose ? (
+                  <tr className="text-center">
+                    <td className="py-2"> {dataDiagnose.visit_uid}2190129</td>
+                    <td>Tekanan Darah {dataDiagnose.bloodPressuse}</td>
+                    <td>Heart Rate {dataDiagnose.heartRate}</td>
+                    <td>Respiratory Rate {dataDiagnose.respiratoryRate}</td>
+                    <td>Saturasi O2 {dataDiagnose.o2Saturate}</td>
+                    <td>Berat Badan {dataDiagnose.weight}</td>
+                    <td>Tinggi Badan {dataDiagnose.height}</td>
+                    <td>Body Mass Index {dataDiagnose.bmi}</td>
+                  </tr>
+                ) : null}
               </tbody>
             </table>
           </div>
@@ -100,30 +110,16 @@ function Id() {
                 </tr>
               </thead>
               <tbody>
-                <tr className="text-center">
-                  <td className="py-2">2190129</td>
-                  <td>Tekanan Darah</td>
-                  <td>Heart Rate</td>
-                  <td>Respiratory rate</td>
-                  <td>Saturasi 02</td>
-                  <td>Resep Obat</td>
-                </tr>
-                <tr className="text-center">
-                  <td className="py-2">2190129</td>
-                  <td>Tekanan Darah</td>
-                  <td>Heart Rate</td>
-                  <td>Respiratory rate</td>
-                  <td>Saturasi 02</td>
-                  <td>Resep Obat</td>
-                </tr>
-                <tr className="text-center">
-                  <td className="py-2">2190129</td>
-                  <td>Tekanan Darah</td>
-                  <td>Heart Rate</td>
-                  <td>Respiratory rate</td>
-                  <td>Saturasi 02</td>
-                  <td>Resep Obat</td>
-                </tr>
+                {dataDiagnose ? (
+                  <tr className="text-center">
+                    <td className="py-2">2190129{dataDiagnose.visit_uid}</td>
+                    <td>Tekanan Darah {dataDiagnose.bloodPressuse} </td>
+                    <td>Heart Rate {dataDiagnose.heartRate} </td>
+                    <td>Respiratory rate {dataDiagnose.respiratoryRate} </td>
+                    <td>Saturasi 02 {dataDiagnose.o2Saturate} </td>
+                    <td>Resep Obat{dataDiagnose.recipe} </td>
+                  </tr>
+                ) : null}
               </tbody>
             </table>
           </div>

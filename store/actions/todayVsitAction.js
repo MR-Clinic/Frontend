@@ -1,15 +1,18 @@
 import axios from "axios";
+import moment from "moment";
 
 const baseUrl = "https://faliqadlan.cloud.okteto.net/visit";
 const getToken =
   typeof window !== "undefined" ? localStorage.getItem("token") : null;
+let date = new Date();
+date = moment(date).format("DD-MM-YYYY");
 
-export const getHistoryVisit = (isJanjiKunjungan, statusParam) => {
+export const todayVisitList = () => {
   return (dispatch) => {
     console.log("masuk fungsi get detail", getToken);
     const getType =
       typeof window !== "undefined" ? localStorage.getItem("profile") : null;
-    const getUid =
+    const getdoctorUid =
       typeof window !== "undefined" ? localStorage.getItem("doctor_uid") : null;
 
     axios
@@ -20,16 +23,13 @@ export const getHistoryVisit = (isJanjiKunjungan, statusParam) => {
 
         params: {
           kind: `${getType}`,
-          uid: `${getUid}`,
-          status: statusParam,
+          uid: `${getdoctorUid}`,
+          status: "pending",
+          date: date,
         },
       })
       .then((response) => {
-        if (isJanjiKunjungan) {
-          dispatch(setListAppointmentVisit(response.data.data.visits));
-        } else {
-          dispatch(setListHistoryVisit(response.data.data.visits));
-        }
+        dispatch(setTodayVisit(response.data.data.visits));
         console.log(response);
       })
       .catch((error) => {
@@ -38,16 +38,9 @@ export const getHistoryVisit = (isJanjiKunjungan, statusParam) => {
   };
 };
 
-export const setListHistoryVisit = (payload) => {
+export const setTodayVisit = (payload) => {
   return {
-    type: "SET_LIST_HISTORY_VISIT",
-    payload,
-  };
-};
-
-export const setListAppointmentVisit = (payload) => {
-  return {
-    type: "SET_LIST_APPOINTMENT_VISIT",
+    type: "SET_TODAY_VISIT",
     payload,
   };
 };

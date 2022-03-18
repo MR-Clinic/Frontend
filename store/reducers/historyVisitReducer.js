@@ -13,7 +13,7 @@ const historyVisitReducer = (state = initialState, action) => {
   } else if (action.type === "SET_LIST_APPOINTMENT_VISIT") {
     return {
       ...state,
-      listAllVisit: action.payload,
+      listAllAppointment: action.payload,
     };
   }
   return state;

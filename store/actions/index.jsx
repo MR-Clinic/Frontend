@@ -4,12 +4,17 @@ import { getHistoryVisit } from "./historyVisitAction";
 import { getDoctorProfile } from "./getDoctorProfile";
 import {
   totalPasien,
-  kunjunganSumToday,
-  kunjunganSum,
-  getAllListJK, getPatientModal 
+  kunjunganTotalToday,
+  kunjunganTotal,
+  getTodayJK,
+  getAllJK,
+  getPatientModal,
 } from "./dashboardDoctor";
 import { getPatientList } from "./getPatientList";
 import { getVisitList } from "./getVisitList";
+import { todayVisitList } from "./todayVsitAction";
+import { detailPatient, patientDiagnose } from "./detailPatientAction";
+import { doDoctorSignUp, doDoctorCompleteForm, doPatientSignUp ,doPatientCompleteForm } from "./loginRegister";
 
 
 const allStore = {
@@ -18,12 +23,21 @@ const allStore = {
   getHistoryVisit,
   getDoctorProfile,
   totalPasien,
-  kunjunganSumToday,
-  kunjunganSum,
+  kunjunganTotalToday,
+  kunjunganTotal,
   getPatientList,
   getVisitList,
-  getAllListJK,
-  getPatientModal
+  getTodayJK,
+  getAllJK,
+  getPatientModal,
+  todayVisitList,
+  detailPatient,
+  patientDiagnose,
+  doDoctorSignUp,
+  doDoctorCompleteForm,
+  doPatientSignUp,
+  doPatientCompleteForm
+
 };
 
 export default allStore;
