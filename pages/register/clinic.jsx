@@ -30,8 +30,8 @@ function SignUpClinic() {
   const [token, tokenSet] = useState("0");
 
   //class transformer
-  const [state, setState] = useState("hidden");
-  const [state2, setState2] = useState("");
+  const [state, setState] = useState("");
+  const [state2, setState2] = useState("hidden");
   const [optSelect, setOptSel]= useState("Senin")
   const [optSelect2, setOptSel2]= useState("Jumat")
   const [loading, setLoading] = useState(false);
