@@ -7,17 +7,20 @@ import { useRouter } from "next/router";
 function NotFound() {
   const getType =
     typeof window !== "undefined" ? localStorage.getItem("profile") : null;
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("token") : null;
   const router = useRouter();
 
   useEffect(() => {
     setTimeout(() => {
       if (getType === "patient") {
         router.push("/patient");
-      }
-      if (getType === "admin") {
+      } else if (getType === "admin") {
         router.push("/admin");
       } else if (getType === "doctor") {
         router.push("/doctor");
+      } else if (token === null) {
+        router.push("/login");
       }
     }, 3000);
   });

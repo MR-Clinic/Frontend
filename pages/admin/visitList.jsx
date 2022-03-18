@@ -13,6 +13,7 @@ function VisitList() {
   );
   const getType =
     typeof window !== "undefined" ? localStorage.getItem("profile") : null;
+
   useEffect(() => {
     if (getType !== "doctor") {
       router.push("/404");

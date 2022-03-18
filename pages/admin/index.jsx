@@ -18,7 +18,10 @@ function Index() {
   const dispatch = useDispatch();
   const token =
     typeof window !== "undefined" ? localStorage.getItem("token") : null;
-  const profile = useSelector((data) => data.doctorProfile);
+  const uid =
+    typeof window !== "undefined" ? localStorage.getItem("doctor_uid") : null;
+  const getType =
+    typeof window !== "undefined" ? localStorage.getItem("profile") : null;
 
   const dataTodayVisit = useSelector(
     (data) => data.todayVisitReducer.listTodayVisit
@@ -26,9 +29,6 @@ function Index() {
   const dataPatient = useSelector(
     (data) => data.patientListReducer.adminPatientList
   );
-
-  const getType =
-    typeof window !== "undefined" ? localStorage.getItem("profile") : null;
   useEffect(() => {
     if (getType !== "doctor") {
       router.push("/404");
@@ -38,11 +38,10 @@ function Index() {
   useEffect(() => {
     dispatch(allStore.todayVisitList());
     dispatch(allStore.getPatientList());
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     dispatch(allStore.getDoctorProfile(token));
-    let uid = profile.doctor_uid;
     dispatch(allStore.totalPasien(uid)).then((e) => {
       pasienSumSet(e.data.visits.length);
     });
@@ -288,6 +287,7 @@ function Index() {
                   <button
                     type="button"
                     className=" text-xs inline-flex justify-center px-2 py-2  font-medium text-white bg-[#356E79] border border-transparent rounded-lg hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+                    onClick={closeModalAddVisit}
                   >
                     cancel
                   </button>
@@ -423,6 +423,7 @@ function Index() {
                   <button
                     type="button"
                     className=" text-xs inline-flex justify-center px-2 py-2  font-medium text-white bg-[#356E79] border border-transparent rounded-lg hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+                    onClick={closeModalAddPatient}
                   >
                     cancel
                   </button>

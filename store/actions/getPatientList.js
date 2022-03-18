@@ -5,7 +5,7 @@ const getToken =
   typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
 export const getPatientList = () => {
-  return (dispatch) => {
+  return () => {
     console.log("masuk fungsi get detail", getToken);
     const getType =
       typeof window !== "undefined" ? localStorage.getItem("profile") : null;
@@ -28,8 +28,8 @@ export const getPatientList = () => {
         dispatch(setPatientList(response.data.data.visits));
         console.log(response);
       })
-      .catch((error) => {
-        console.log("cek error", error);
+      .catch((response) => {
+        console.log(response);
       });
   };
 };

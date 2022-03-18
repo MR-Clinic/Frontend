@@ -28,8 +28,8 @@ export const getVisitList = () => {
         dispatch(setVisitList(response.data.data.visits));
         console.log(response);
       })
-      .catch((error) => {
-        console.log("cek error", error);
+      .catch((response) => {
+        console.log(response);
       });
   };
 };

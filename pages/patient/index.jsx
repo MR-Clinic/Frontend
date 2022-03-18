@@ -7,11 +7,13 @@ import { Fragment, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
 import allStore from "../../store/actions";
+import { useRouter } from "next/router";
 
 function Index() {
   const [isOpen, setIsOpen] = useState(false);
   const [date, setDate] = useState("");
   const dispatch = useDispatch();
+  const router = useRouter();
   const dataDoctor = useSelector(
     (data) => data.getAllDoctorsReducer.listAllDoctors
   );
