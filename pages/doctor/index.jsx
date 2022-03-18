@@ -14,8 +14,7 @@ function Dashboard() {
   const dispatch = useDispatch();
   const token =
     typeof window !== "undefined" ? localStorage.getItem("token") : null;
-  const uid =
-    typeof window !== "undefined" ? localStorage.getItem("uid") : null;
+  const uid = typeof window !== "undefined" ? localStorage.getItem("doctor_uid") : null;
 
   const dataDoctor = useSelector(
     (data) => data.getAllDoctorsReducer.listAllDoctors

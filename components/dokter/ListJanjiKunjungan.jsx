@@ -10,7 +10,7 @@ import { useRouter } from 'next/router';
 function ListJanjiKunjungan() {
     const [isOpen, setIsOpen] = useState(false);
 
-    const uid = typeof window !== "undefined" ? localStorage.getItem("uid") : null;
+    const uid = typeof window !== "undefined" ? localStorage.getItem("doctor_uid") : null;
     const dispatch = useDispatch()
     const listJK =useSelector(({getListJK})=> getListJK.listJK.visits )
     const [NIK, NIKSet] = useState("~")
@@ -28,7 +28,7 @@ function ListJanjiKunjungan() {
     
     useEffect(()=>{
       console.log("re",listJK);
-      dispatch(allStore.getAllListJK(uid));
+      dispatch(allStore.getTodayJK(uid));
     },[dispatch])
     
     function closeModal() {

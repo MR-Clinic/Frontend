@@ -6,7 +6,8 @@ import {
   totalPasien,
   kunjunganTotalToday,
   kunjunganTotal,
-  getAllListJK,
+  getTodayJK,
+  getAllJK,
   getPatientModal,
 } from "./dashboardDoctor";
 import { getPatientList } from "./getPatientList";
@@ -24,7 +25,8 @@ const allStore = {
   kunjunganTotal,
   getPatientList,
   getVisitList,
-  getAllListJK,
+  getTodayJK,
+  getAllJK,
   getPatientModal,
   todayVisitList,
   detailPatient,

@@ -93,7 +93,7 @@ export const kunjunganTotal = (uid) =>{
     }
 }
 
-export const getAllListJK = (uid) =>{
+export const getTodayJK = (uid) =>{
     return (dispatch) => {
         axios
         .get(visitUrl,{
@@ -103,7 +103,29 @@ export const getAllListJK = (uid) =>{
             params:{
                 kind: "doctor",
                 uid : uid,
-                // date: date,
+                date: date,
+                status: ""
+            }
+        })
+        .then(({data})=>{
+            dispatch(setListJK(data.data))
+        })
+        .catch((response)=>{
+            console.log("error getList Kj", response);
+        })
+    }
+}
+
+export const getAllJK = (uid) =>{
+    return (dispatch) => {
+        axios
+        .get(visitUrl,{
+            headers:{
+                Authorization : "Bearer "+Token
+            },
+            params:{
+                kind: "doctor",
+                uid : uid,
                 status: ""
             }
         })
