@@ -42,3 +42,41 @@ export const doDoctorCompleteForm = (formData, token) =>{
         })
     }
 }
+export const doPatientSignUp = (formData) =>{
+    return (dispatch) => {
+        return new Promise((resolve,reject) =>{
+            axios
+            .post(urlPatientSignUp,formData)
+            .then(({data})=>{
+                console.log("Pasien Sign Up success",data.data.token);
+                resolve(data.data.token);
+            })
+            .catch(({response})=>{
+                console.log("Pasien Sign Up error",response.data.message);
+                reject(response.data.message);
+            })
+        })
+    }
+}
+
+export const doPatientCompleteForm = (formData, token) =>{
+    return (dispatch) => {
+        return new Promise((resolve,reject) =>{
+            axios
+            .put(urlPatientSignUp,
+                formData,
+                {headers : {
+                    Authorization : "Bearer "+token,
+                }}
+                )
+            .then(({data})=>{
+                console.log("doDoctorSignUp success",data.data.token);
+                resolve(data.data.token);
+            })
+            .catch(({response})=>{
+                console.log("doDoctorSignUp error",response.data.message);
+                reject(response.data.message);
+            })
+        })
+    }
+}

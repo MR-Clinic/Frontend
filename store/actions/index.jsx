@@ -14,7 +14,7 @@ import { getPatientList } from "./getPatientList";
 import { getVisitList } from "./getVisitList";
 import { todayVisitList } from "./todayVsitAction";
 import { detailPatient, patientDiagnose } from "./detailPatientAction";
-import { doDoctorSignUp, doDoctorCompleteForm } from "./loginRegister";
+import { doDoctorSignUp, doDoctorCompleteForm, doPatientSignUp ,doPatientCompleteForm } from "./loginRegister";
 
 
 const allStore = {
@@ -34,7 +34,9 @@ const allStore = {
   detailPatient,
   patientDiagnose,
   doDoctorSignUp,
-  doDoctorCompleteForm
+  doDoctorCompleteForm,
+  doPatientSignUp,
+  doPatientCompleteForm
 
 };
 

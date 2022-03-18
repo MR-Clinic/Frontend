@@ -141,9 +141,11 @@ function SignUpClinic() {
     dispatch(allStore.doDoctorCompleteForm(formData,token))
     .then((e)=>{
       console.log("dispatch Success DoDoctorSignUp",e);
-      swal("Akun Berhasil Terdaftar","Silahkan Lengkapi Data Anda","success");
-      setState("hidden");
-      setState2("");
+      swal("Akun Berhasil Terdaftar","Anda Akan Diarahkan Ke Halaman Login","success");
+      setTimeout(() => {
+        swal.close();
+        route.push("/login")
+      }, 3000);
     })
     .catch((e)=>{
       console.log("dispatch Error DoDoctorSignUp",e);
@@ -229,7 +231,7 @@ function SignUpClinic() {
                   <div className="flex justify-center ">
                     {loading ? (
                         <button
-                          className=" bg-[#324B50] font-medium inline-flex items-center px-3 py-1 rounded-md shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
+                          className=" bg-[#324B50] font-medium inline-flex items-center px-5 py-3 rounded-md shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
                           type="submit"
                         >
                           Loading
