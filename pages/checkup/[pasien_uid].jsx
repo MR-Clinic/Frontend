@@ -43,7 +43,7 @@ function Check() {
   const [resepList , resepListSet ] = useState([]);
 
 
-  const DoctorUid = typeof window !== "undefined" ? localStorage.getItem("uid") : null;
+  const DoctorUid = typeof window !== "undefined" ? localStorage.getItem("doctor_uid") : null;
   const visitUid = typeof window !== "undefined" ? localStorage.getItem("vuid") : null;
 
   useEffect(()=>{
