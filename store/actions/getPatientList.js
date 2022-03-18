@@ -29,7 +29,7 @@ export const getPatientList = () => {
         console.log(response);
       })
       .catch((response) => {
-        console.log(response);
+        alert(response);
       });
   };
 };

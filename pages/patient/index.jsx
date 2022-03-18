@@ -34,22 +34,13 @@ function Index() {
   useEffect(() => {
     if (getType !== "patient") {
       router.push("/404");
+    } else {
+      dispatch(allStore.getAllDoctors());
+      dispatch(allStore.getPatientDetails());
+      dispatch(allStore.getHistoryVisit(true, "pending"));
+      dispatch(allStore.getHistoryVisit(false, "ready"));
     }
   });
-
-  useEffect(() => {
-    dispatch(allStore.getAllDoctors());
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(allStore.getPatientDetails());
-  }, [dispatch]);
-
-  useEffect(() => {
-    // console.log("masuk use effect", allStore);
-    dispatch(allStore.getHistoryVisit(true, "pending"));
-    dispatch(allStore.getHistoryVisit(false, "ready"));
-  }, [dispatch]);
 
   function closeModal() {
     setIsOpen(false);

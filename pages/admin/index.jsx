@@ -32,26 +32,21 @@ function Index() {
   useEffect(() => {
     if (getType !== "doctor") {
       router.push("/404");
+    } else {
+      dispatch(allStore.todayVisitList());
+      dispatch(allStore.getPatientList());
+      dispatch(allStore.getDoctorProfile(token));
+      dispatch(allStore.totalPasien(uid)).then((e) => {
+        pasienSumSet(e.data.visits.length);
+      });
+      dispatch(allStore.kunjunganSumToday(uid)).then((e) => {
+        kunjunganSumTodaySet(e.data.visits.length);
+      });
+      dispatch(allStore.kunjunganSum(uid)).then((e) => {
+        kunjunganSumSet(e.data.visits.length);
+      });
     }
   });
-
-  useEffect(() => {
-    dispatch(allStore.todayVisitList());
-    dispatch(allStore.getPatientList());
-  }, []);
-
-  useEffect(() => {
-    dispatch(allStore.getDoctorProfile(token));
-    dispatch(allStore.totalPasien(uid)).then((e) => {
-      pasienSumSet(e.data.visits.length);
-    });
-    dispatch(allStore.kunjunganSumToday(uid)).then((e) => {
-      kunjunganSumTodaySet(e.data.visits.length);
-    });
-    dispatch(allStore.kunjunganSum(uid)).then((e) => {
-      kunjunganSumSet(e.data.visits.length);
-    });
-  }, []);
 
   function closeModalVisit() {
     setIsOpenVisit(false);

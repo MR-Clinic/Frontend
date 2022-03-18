@@ -17,10 +17,8 @@ function Navbar(props) {
   const route = useRouter();
 
   function Logout() {
-    if (getToken) {
-      localStorage.clear();
-      route.push("/");
-    }
+    localStorage.clear();
+    route.push("/");
   }
 
   function EditInactiveIcon(props) {

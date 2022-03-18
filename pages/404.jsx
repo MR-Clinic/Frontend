@@ -13,12 +13,12 @@ function NotFound() {
 
   useEffect(() => {
     setTimeout(() => {
-      if (getType === "patient") {
-        router.push("/patient");
-      } else if (getType === "admin") {
+      if (getType === "admin") {
         router.push("/admin");
       } else if (getType === "doctor") {
         router.push("/doctor");
+      } else if (getType === "patient") {
+        router.push("/patient");
       } else if (token === null) {
         router.push("/login");
       }
@@ -28,10 +28,11 @@ function NotFound() {
   return (
     <div>
       <div className="bg-[#E4F5E9] h-screen text-[#324B50] grid place-items-center">
-        <div className="text-2xl capitalize font-bold">
+        <div className="mt-20 text-3xl capitalize font-bold">
           {" "}
-          page not found, back to homepage
+          page not found
         </div>
+
         <div className="w-[30%] animate-bounce">
           <Image src={notfound} />
         </div>

@@ -17,13 +17,10 @@ function VisitList() {
   useEffect(() => {
     if (getType !== "doctor") {
       router.push("/404");
+    } else {
+      dispatch(allStore.getVisitList());
     }
   });
-
-  useEffect(() => {
-    console.log("masuk allstore");
-    dispatch(allStore.getVisitList());
-  }, [dispatch]);
 
   return (
     <div>
