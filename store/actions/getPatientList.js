@@ -19,8 +19,8 @@ export const getPatientList = () => {
         },
 
         params: {
-          kind: `${getType}`,
-          uid: `${getdoctorUid}`,
+          // kind: `${getType}`,
+          // uid: `${getdoctorUid}`,
           grouped: "patient",
         },
       })

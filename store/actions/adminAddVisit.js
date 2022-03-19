@@ -4,8 +4,8 @@ const baseUrl = "https://faliqadlan.cloud.okteto.net/visit";
 const getToken =
   typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
-export const getVisitList = () => {
-  return (dispatch) => {
+export const getPatientList = () => {
+  return () => {
     console.log("masuk fungsi get detail", getToken);
     const getType =
       typeof window !== "undefined" ? localStorage.getItem("profile") : null;
@@ -18,14 +18,14 @@ export const getVisitList = () => {
           Authorization: "Bearer " + getToken,
         },
 
-        // params: {
-        //   kind: `${getType}`,
-        //   uid: `${getdoctorUid}`,
-        //   status: "pending",
-        // },
+        params: {
+          kind: `${getType}`,
+          uid: `${getdoctorUid}`,
+          grouped: "patient",
+        },
       })
       .then((response) => {
-        dispatch(setVisitList(response.data.data.visits));
+        dispatch(setPatientList(response.data.data.visits));
         console.log(response);
       })
       .catch((response) => {
@@ -34,9 +34,9 @@ export const getVisitList = () => {
   };
 };
 
-export const setVisitList = (payload) => {
+export const setPatientList = (payload) => {
   return {
-    type: "SET_VISIT_LIST",
+    type: "SET_PATIENT_LIST",
     payload,
   };
 };

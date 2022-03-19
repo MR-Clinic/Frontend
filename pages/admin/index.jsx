@@ -1,31 +1,23 @@
 import React, { useEffect } from "react";
 import Nav from "../../components/nav";
-import Sidebar from "../../components/sidebar";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import allStore from "../../store/actions";
 import { BsChevronDown } from "react-icons/bs";
-import { CgLogIn, CgLogOut } from "react-icons/cg";
-import { FaSignInAlt, FaRegUser } from "react-icons/fa";
-import { HiOutlineKey } from "react-icons/hi";
-import { FiMail } from "react-icons/fi";
 import moment from "moment";
 import Link from "next/link";
-import { Disclosure } from "@headlessui/react";
-import { AiOutlineDown } from "react-icons/ai";
 import form from "../../styles/Form.module.css";
 import ReactLoading from "react-loading";
+import axios from "axios";
+import { AiOutlineClose } from "react-icons/ai";
+import { useRouter } from "next/router";
+
+const baseUrl = "https://faliqadlan.cloud.okteto.net/patient";
+const urlSubmit = "https://faliqadlan.cloud.okteto.net/visit";
 
 function Index() {
-  const [NIK, NIKSet] = useState("~");
-  const [Nama, NamaSet] = useState("~");
-  const [Jenis, JenisSet] = useState("~");
-  const [Alamat, AlamatSet] = useState("~");
-  const [Tempat, TempatSet] = useState("~");
-  const [Agama, AgamaSet] = useState("~");
-  const [Status, StatusSet] = useState("~");
-  const [Pekerjaan, PekerjaanSet] = useState("~");
+  //counter
   const [loading, setLoading] = useState(false);
   const [isOpenVisit, setIsOpenVisit] = useState(false);
   const [isOpenAddVisit, setIsOpenAddVisit] = useState(false);
@@ -33,18 +25,33 @@ function Index() {
   const [pasienSum, pasienSumSet] = useState("");
   const [kunjunganTotalToday, kunjunganTotalTodaySet] = useState("");
   const [kunjunganTotal, kunjunganTotalSet] = useState("");
+  const [dataDetailPatient, setDataDetailPatient] = useState("");
 
+  //form add patient
+  const [nik, nikSet] = useState("");
+  const [full_name, full_nameSet] = useState("");
+  const [address, addressSet] = useState("");
+  const [gender, genderSet] = useState("");
+  const [job, jobSet] = useState("");
+  const [status, statusSet] = useState("");
+  const [religion, religionSet] = useState("");
+  const [place, placeSet] = useState("");
+  const dateDef = moment(new Date()).format("YYYY-MM-DD");
+  const [date, dateSet] = useState(dateDef);
+  const [complaint, setComplaint] = useState("");
+
+  //form add patient transformer
   const [optSelect, setOptSel] = useState("Jenis Kelamin");
   const [optSelect2, setOptSel2] = useState("Status");
   const [optSelect3, setOptSel3] = useState("Agama");
   const [datePlaceholder, datePlaceholderSet] = useState("Tanggal Lahir");
   const [dateVal, dateValSet] = useState("");
-
-  const dateDef = moment(new Date()).format("YYYY-MM-DD");
-
-  const [dataDetailPatient, setDataDetailPatient] = useState("");
-
-  const dispatch = useDispatch();
+  const handleDate = (e) => {
+    let a = moment(e).format("DD-MM-YYYY");
+    dateSet(a);
+    datePlaceholderSet(a);
+    dateValSet(moment(e).format("YYYY-MM-DD"));
+  };
 
   const dataTodayVisit = useSelector(
     (data) => data.todayVisitReducer.listTodayVisit
@@ -52,13 +59,110 @@ function Index() {
   const dataPatient = useSelector(
     (data) => data.patientListReducer.adminPatientList
   );
+
+  //get item local storage
   const token =
     typeof window !== "undefined" ? localStorage.getItem("token") : null;
   const uid =
     typeof window !== "undefined" ? localStorage.getItem("doctor_uid") : null;
   const getType =
     typeof window !== "undefined" ? localStorage.getItem("profile") : null;
+  const router = useRouter();
 
+  const validateRegist = () => {
+    if (nik.length !== 16) {
+      swal("Input NIK Salah", "Jumlah karakter harus 16", "error");
+    } else if (nik.match(/[A-Z]/) || nik.match(/[a-z]/)) {
+      swal("Input NIK Salah", "NIK Tidak Boleh Ada Huruf", "error");
+    } else if (full_name.match(/^[A-Za-z]+$/)) {
+      swal(
+        "Input Nama Lengkap Salah",
+        "Nama Tidak Boleh Ada Angka Dan Simbol",
+        "error"
+      );
+    } else if (address.length < 15) {
+      swal("Input Alamat Salah", "Alamat Kurang Panjang", "error");
+    } else if (
+      nik === "" ||
+      full_name === "" ||
+      address === "" ||
+      job === "" ||
+      status === "" ||
+      religion === ""
+    ) {
+      swal(
+        "Form Masih Kosong",
+        "Silahkan Masukkan Data Sesuai KTP Anda",
+        "error"
+      );
+    } else {
+      addPatient();
+    }
+  };
+
+  const addPatient = () => {
+    const formData = new FormData();
+    formData.append("nik", nik);
+    formData.append("name", full_name);
+    formData.append("address", address);
+    formData.append("gender", gender);
+    formData.append("job", job);
+    formData.append("status", status);
+    formData.append("religion", religion);
+    formData.append("placeBirth", place);
+    formData.append("dob", date);
+
+    axios
+      .post(baseUrl, formData)
+      .then((response) => {
+        swal(
+          "Selamat register berhasil !",
+          "Pasien Berhasil Ditambahkan",
+          "success"
+        );
+        setTimeout(() => {
+          swal.close();
+        }, 3000);
+      })
+      .catch((error) => {
+        console.log(error);
+        swal(
+          "sorry!",
+          "register gagal, email sudah digunakan atau user sudah terdaftar",
+          "error"
+        );
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  const submitVisit = () => {
+    setLoading(true);
+    const body = {
+      complaint: complaint,
+      date: "19-03-2022",
+      doctor_uid: uid,
+    };
+
+    axios
+      .post(urlSubmit, body)
+      .then((response) => {
+        console.log(response);
+        swal("Selamat!", "Complain Berhasil Ditambahkan", "success");
+        setTimeout(() => {
+          swal.close();
+        }, 3000);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  const dispatch = useDispatch();
   useEffect(() => {
     if (getType !== "doctor") {
       router.push("/404");
@@ -81,7 +185,6 @@ function Index() {
 
   function handleModal(patient_uid) {
     setLoading(true);
-
     let id = patient_uid;
     dispatch(allStore.getPatientModal(id))
       .then((response) => {
@@ -98,6 +201,8 @@ function Index() {
         setLoading(false);
       });
   }
+
+  //modal open close function
   function closeModalVisit() {
     setIsOpenVisit(false);
   }
@@ -221,6 +326,7 @@ function Index() {
           </div>
         </Dialog>
       </Transition>
+
       {/* modal tambah kunjungan */}
       <Transition appear show={isOpenAddVisit} as={Fragment}>
         <Dialog
@@ -257,6 +363,15 @@ function Index() {
               leaveTo="opacity-0 scale-95"
             >
               <div className=" text-[#356E79] inline-block w-full max-w-lg p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                <div className="flex justify-end mt-5 space-x-2 ">
+                  <button
+                    type="button"
+                    className=" text-xs inline-flex justify-center px-2 py-2  font-medium text-white bg-[#356E79] border border-transparent rounded-lg hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+                    onClick={closeModalAddVisit}
+                  >
+                    <AiOutlineClose size={15} />
+                  </button>
+                </div>
                 <Dialog.Title
                   as="h3"
                   className=" text-[#356E79] flex justify-start text-xl font-bold leading-6  border-b-2 py-3 border-gray-500"
@@ -367,6 +482,12 @@ function Index() {
                         {dataDetailPatient ? dataDetailPatient.job : "~"}
                       </p>
                     </div>
+                    <p className="font-bold">Complain </p>
+                    <textarea
+                      className="px-2  py-1 border-2 w-full min-h-[100px] border-gray-700 rounded-lg"
+                      type="text"
+                      onChange={(e) => setComplaint(e.target.value)}
+                    />
                     <div className="flex justify-end mt-5 space-x-2 ">
                       <button
                         type="button"
@@ -375,24 +496,16 @@ function Index() {
                       >
                         close detail
                       </button>
+                      <button
+                        type="button"
+                        className="inline-flex justify-center px-2 py-2 text-xs font-medium text-white bg-[#356E79] border border-transparent rounded-lg hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+                        onClick={() => submitVisit()}
+                      >
+                        Tambah Kunjungan
+                      </button>
                     </div>
                   </div>
                 ) : null}
-                <div className="flex justify-end mt-5 space-x-2 ">
-                  <button
-                    type="button"
-                    className=" text-xs inline-flex justify-center px-2 py-2  font-medium text-white bg-[#356E79] border border-transparent rounded-lg hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                    onClick={closeModalAddVisit}
-                  >
-                    cancel
-                  </button>
-                  <button
-                    type="button"
-                    className="inline-flex justify-center px-2 py-2 text-xs font-medium text-white bg-[#356E79] border border-transparent rounded-lg hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                  >
-                    Tambah Kunjungan
-                  </button>
-                </div>
               </div>
             </Transition.Child>
           </div>
@@ -400,12 +513,11 @@ function Index() {
       </Transition>
 
       {/* modal tambah pasien*/}
-
       <Transition appear show={isOpenAddPatient} as={Fragment}>
         <Dialog
           as="div"
           className="fixed inset-0 z-10 overflow-y-auto"
-          onClose={closeModalAddPatient}
+          onClose={openModalAddPatient}
         >
           <div className="min-h-screen px-4 text-center">
             <Transition.Child
@@ -451,6 +563,7 @@ function Index() {
                       <span>NIK</span>
                       <div className={form.input}>
                         <input
+                          autocomplete="off"
                           type="text"
                           className="{form.inputStyle} "
                           id="nik"
@@ -622,8 +735,8 @@ function Index() {
                                 <div
                                   className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md"
                                   onClick={() => {
-                                    statusSet("Kawin");
-                                    setOptSel2("Kawin");
+                                    statusSet("kawin");
+                                    setOptSel2("kawin");
                                   }}
                                 >
                                   <span className="w-full ">Kawin</span>
@@ -706,8 +819,8 @@ function Index() {
                                 <div
                                   className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md"
                                   onClick={() => {
-                                    religionSet("Islam");
-                                    setOptSel3("Islam");
+                                    religionSet("islam");
+                                    setOptSel3("islam");
                                   }}
                                 >
                                   <span className="w-full ">Islam</span>
@@ -764,6 +877,7 @@ function Index() {
                   <button
                     type="button"
                     className="inline-flex justify-center px-2 py-2 text-xs font-medium text-white bg-[#356E79] border border-transparent rounded-lg hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+                    onClick={() => validateRegist()}
                   >
                     Tambah Pasien
                   </button>
@@ -774,7 +888,7 @@ function Index() {
         </Dialog>
       </Transition>
       <Nav />
-      <Sidebar />
+
       <div className="bg-[#E4F5E9] h-full text-[#324B50]">
         <div className="ml-[7%]">
           <div className="text-3xl font-bold pl-5 pt-5"> Dashboard </div>
