@@ -121,35 +121,23 @@ function SignUpPatient() {
 
   const signUpPart1 = () => {
     setLoading(true);
-    const formData = new FormData();
-    
-    formData.append("userName",username)
-    formData.append("email",email)
-    formData.append("password",password)
-    formData.append("nik",nik)
-    formData.append("name",full_name)
-    formData.append("address",address)
-    formData.append("gender",gender)
-    formData.append("job",job)
-    formData.append("status",status)
-    formData.append("religion",religion)
-    formData.append("placeBirth",place)
-    formData.append("dob","01-01-1990")
-
-    dispatch(allStore.doPatientSignUp(formData))
+    dispatch(allStore.checkPatientUsername(username))
     .then((e)=>{
       console.log("dispatch Sicces Sign Up", e);
-      swal("Akun Berhasil Terdaftar","Silahkan Lengkapi Data Anda","success");
-      tokenSet(e);
-      setTimeout(() => {
-        swal.close();
-      }, 3000);
-      setState("hidden");
-      setState2("");
+      dispatch(allStore.checkPatientEmail(email))
+      .then((e)=>{
+        console.log("dispatch Sicces Sign Up", e);
+        setState("hidden");
+        setState2("");
+      })
+      .catch((e)=>{
+        console.log("dispatch Error checkPatientEmail",e);
+        swal("Pendaftaran Gagal","Email Sudah Digunakan.","error");
+      })
     })
     .catch((e)=>{
-      console.log("dispatch Error DoDoctorSignUp",e);
-      swal("Pendaftaran Gagal",e,"error");
+      console.log("dispatch Error checkDoctorUsername",e);
+      swal("Pendaftaran Gagal","Username Sudah Digunakan.","error");
     })
     .finally(() => {
       setLoading(false);
@@ -180,7 +168,7 @@ function SignUpPatient() {
       }, 3000);
     })
     .catch((e)=>{
-      console.log("dispatch Error DoDoctorSignUp",e);
+      console.log("dispatch Error checkDoctorUsername",e);
       swal("Pendaftaran Gagal",e,"error");
     })
     .finally(() => {
