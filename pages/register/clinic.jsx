@@ -94,6 +94,37 @@ function SignUpClinic() {
 
   const signUpPart1 = () => {
     setLoading(true);
+  
+    dispatch(allStore.checkDoctorUsername(username))
+    .then((e)=>{
+      console.log("dispatch Success checkDoctorUsername",e);
+      dispatch(allStore.checkDoctorEmail(email))
+      .then((e)=>{
+        console.log("dispatch Success checkDoctorEmail",e);
+        setState("hidden");
+        setState2("");
+        setTimeout(() => {
+          swal.close();
+        }, 3000);
+      })
+      .catch((e)=>{
+        console.log("dispatch Error checkDoctorEmail",e);
+        swal("Pendaftaran Gagal","Email Sudah Digunakan","error");
+      })
+
+    })
+    .catch((e)=>{
+      console.log("dispatch Error checkDoctorUsername",e);
+      swal("Pendaftaran Gagal","Username Sudah Digunakan","error");
+    })
+    .finally(()=>{
+      setLoading(false);
+    })
+  }
+
+  const signUpPart2 = () => {
+    setLoading(true);
+    console.log("Form 2 ");
     const formData = new FormData();
     formData.append("userName", username);
     formData.append("email", email);
@@ -106,41 +137,9 @@ function SignUpClinic() {
     formData.append("capacity", total);
     console.log(formData, "cek form data");
 
-    dispatch(allStore.doDoctorSignUp(formData))
+    dispatch(allStore.doDoctorCompleteForm(formData))
     .then((e)=>{
-      console.log("dispatch Success DoDoctorSignUp",e);
-      swal("Akun Berhasil Terdaftar","Silahkan Lengkapi Data Anda","success");
-      tokenSet(e);
-      setState("hidden");
-      setState2("");
-      setTimeout(() => {
-        swal.close();
-      }, 3000);
-    })
-    .catch((e)=>{
-      console.log("dispatch Error DoDoctorSignUp",e);
-      swal("Pendaftaran Gagal",e,"error");
-    })
-    .finally(()=>{
-      setLoading(false);
-    })
-  }
-
-  const signUpPart2 = () => {
-    setLoading(true);
-    console.log("Form 2 ");
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("address", address);
-    formData.append("status", "available");
-    formData.append("openDay", dari);
-    formData.append("closeDay", sampai);
-    formData.append("capacity", total);
-    console.log(formData, "cek form data");
-
-    dispatch(allStore.doDoctorCompleteForm(formData,token))
-    .then((e)=>{
-      console.log("dispatch Success DoDoctorSignUp",e);
+      console.log("dispatch Success checkDoctorUsername",e);
       swal("Akun Berhasil Terdaftar","Anda Akan Diarahkan Ke Halaman Login","success");
       setTimeout(() => {
         swal.close();
@@ -148,12 +147,13 @@ function SignUpClinic() {
       }, 3000);
     })
     .catch((e)=>{
-      console.log("dispatch Error DoDoctorSignUp",e);
+      console.log("dispatch Error checkDoctorUsername",e);
       swal("Pendaftaran Gagal",e,"error");
     })
     .finally(()=>{
       setLoading(false);
     })
+    console.log("Not SKipped");
   }
   return (
     <>
