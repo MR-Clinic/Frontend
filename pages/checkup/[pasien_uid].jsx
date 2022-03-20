@@ -8,8 +8,10 @@ import allStore from "../../store/actions";
 import { Menu, Transition } from "@headlessui/react";
 import { BsChevronDown } from "react-icons/bs"
 import swal from "sweetalert";
+import moment from "moment";
 function Check() {
 
+  const date =moment(new Date).format("YYYY")
   const route = useRouter();
   const dispatch = useDispatch()
   const pasienUid = route.query.pasien_uid
@@ -21,8 +23,10 @@ function Check() {
   const [Agama, AgamaSet] = useState("~")
   const [Status, StatusSet] = useState("~")
   const [Pekerjaan, PekerjaanSet] = useState("~")
-  const [complaint, complaintSet] = useState("~")
+  const complaint = typeof window !== "undefined" ? localStorage.getItem("complaint") : null;
   const [noMR, noMRSet] = useState("~")
+  const [age, ageSet] = useState("");
+  
 
   //Input var
 
@@ -61,16 +65,15 @@ function Check() {
         AgamaSet(e.religion)
         StatusSet(e.status)
         PekerjaanSet(e.job)
-        complaintSet(e.complaint)
-        console.log(e.complaint);
+        ageSet(moment(e.dob).format("YYYY"))
       })
     }
     console.log('run');
-  })
-
-  useEffect(()=>{
-
   },[])
+
+  // useEffect(()=>{
+  //   ageSet(date - age)
+  // },[age])
 
   function handleSubmit(){
     let recipe = ""
@@ -114,9 +117,8 @@ function Check() {
 
   function deleteList(e){
     let list = resepList;
-    let el = document.getElementById('obat-'+e);
-    el.remove();
-    console.log(el);
+    swal("Resep Terhapus","","success")
+    namaObatSet("");
     list.splice(e,1);
     resepListSet(list);
   }
@@ -125,7 +127,7 @@ function Check() {
     <>
       <Nav />
       <Sidebar />
-      <div className="bg-[#E4F5E9] h-full text-[#324B50]">
+      <div className="bg-[#E4F5E9] h-full text-[#324B50] pb-5">
         <div className="ml-[7%] mr-[calc(9%-70px)]">
           <div className="px-5 flex justify-between border-b-2 border-gray-600 ">
             <div className="flex flex-col justify-start">
@@ -161,7 +163,7 @@ function Check() {
                     </div>
                     <div className="capitalize">
                       <p className="py-1"> : {Jenis}</p>
-                      <p className="py-1"> : 25</p>
+                      <p className="py-1"> : {date - age} Tahun</p>
                       <p className="py-1"> : {Agama}</p>
                       <p className="py-1"> : {Pekerjaan}</p>
                       <p className="py-1"> : {Status}</p>
