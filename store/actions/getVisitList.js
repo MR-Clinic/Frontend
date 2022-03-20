@@ -18,11 +18,11 @@ export const getVisitList = () => {
           Authorization: "Bearer " + getToken,
         },
 
-        // params: {
-        //   kind: `${getType}`,
-        //   uid: `${getdoctorUid}`,
-        //   status: "pending",
-        // },
+        params: {
+          kind: `${getType}`,
+          uid: `${getdoctorUid}`,
+          status: "pending",
+        },
       })
       .then((response) => {
         dispatch(setVisitList(response.data.data.visits));

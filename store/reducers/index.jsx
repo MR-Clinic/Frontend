@@ -8,6 +8,7 @@ import visitListReducer from "./getVisitListReducer";
 import getListJK from "./getListJK";
 import detailPatientReducer from "./detailPatientReducer";
 import todayVisitReducer from "./todayVisitReducers";
+import getAllPatientReducer from "./getAllPatientReducer";
 
 const rootReducers = combineReducers({
   patientDetailReducer,
@@ -19,6 +20,7 @@ const rootReducers = combineReducers({
   getListJK,
   detailPatientReducer,
   todayVisitReducer,
+  getAllPatientReducer,
 });
 
 export default rootReducers;

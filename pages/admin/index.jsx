@@ -56,8 +56,9 @@ function Index() {
   const dataTodayVisit = useSelector(
     (data) => data.todayVisitReducer.listTodayVisit
   );
-  const dataPatient = useSelector(
-    (data) => data.patientListReducer.adminPatientList
+
+  const getAllPatient = useSelector(
+    (data) => data.getAllPatientReducer.listAllPatients
   );
 
   //get item local storage
@@ -123,6 +124,7 @@ function Index() {
         setTimeout(() => {
           swal.close();
         }, 3000);
+        closeModalAddPatient();
       })
       .catch((error) => {
         console.log(error);
@@ -169,6 +171,7 @@ function Index() {
     } else {
       dispatch(allStore.todayVisitList());
       dispatch(allStore.getPatientList());
+      dispatch(allStore.getAllPatient());
       dispatch(allStore.getPatientDetails());
       dispatch(allStore.getDoctorProfile(token));
       dispatch(allStore.totalPasien(uid)).then((e) => {
@@ -183,7 +186,28 @@ function Index() {
     }
   }, [dispatch]);
 
-  function handleModal(patient_uid) {
+  // function handleModal(patient_uid) {
+  //   openModalAddVisit();
+  //   setLoading(true);
+  //   let id = patient_uid;
+  //   dispatch(allStore.getPatientModal(id))
+  //     .then((response) => {
+  //       setDataDetailPatient(response);
+  //     })
+  //     .catch((e) => {
+  //       swal(
+  //         "Maaf Data Bermasalah",
+  //         "Data tidak tersedia pada server",
+  //         "error"
+  //       );
+  //     })
+  //     .finally(() => {
+  //       setLoading(false);
+  //     });
+  // }
+
+  function openModalAddVisit(patient_uid) {
+    setIsOpenAddVisit(true);
     setLoading(true);
     let id = patient_uid;
     dispatch(allStore.getPatientModal(id))
@@ -218,11 +242,9 @@ function Index() {
     setDataDetailPatient("");
   }
 
-  function openModalAddVisit() {
-    setIsOpenAddVisit(true);
-  }
   function closeModalAddPatient() {
     setIsOpenAddPatient(false);
+    setDataDetailPatient("");
   }
 
   function openModalAddPatient() {
@@ -363,64 +385,6 @@ function Index() {
               leaveTo="opacity-0 scale-95"
             >
               <div className=" text-[#356E79] inline-block w-full max-w-lg p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
-                <div className="flex justify-end mt-5 space-x-2 ">
-                  <button
-                    type="button"
-                    className=" text-xs inline-flex justify-center px-2 py-2  font-medium text-white bg-[#356E79] border border-transparent rounded-lg hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                    onClick={closeModalAddVisit}
-                  >
-                    <AiOutlineClose size={15} />
-                  </button>
-                </div>
-                <Dialog.Title
-                  as="h3"
-                  className=" text-[#356E79] flex justify-start text-xl font-bold leading-6  border-b-2 py-3 border-gray-500"
-                >
-                  Cari Pasien
-                </Dialog.Title>
-                <div className="mt-5">
-                  <label> Search By NIK : </label>
-                  <input
-                    className="border-2 w-[250px] h-[35px] border-gray-700 rounded-md"
-                    type="text"
-                  />
-                  <div className="pb-10">
-                    <table className="table-auto  bg-white py-4 text-xs rounded-lg drop-shadow-lg w-full mt-5">
-                      <thead>
-                        <tr>
-                          <th className="border-b-2 py-4 text-center">NIK</th>
-                          <th className="border-b-2 text-center ">Nama</th>
-                          <th className="border-b-2 text-center ">Gender </th>
-                          <th className="border-b-2 text-center">
-                            Tanggal Masuk
-                          </th>
-                          <th className="border-b-2 text-center">Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {dataPatient
-                          ? dataPatient.map((el, i) => (
-                              <tr className="text-center" key={i}>
-                                <td className="py-2">{el.nik} </td>
-                                <td>{el.patientName}</td>
-                                <td>{el.gender}</td>
-                                <td>{el.date}</td>
-                                <td className="flex justify-center space-x-2 py-2">
-                                  <button
-                                    className="bg-[#E4F5E9] text-[8px] px-2 selection:py-1 rounded-md hover:opacity-70"
-                                    onClick={() => handleModal(el.patient_uid)}
-                                  >
-                                    {" "}
-                                    details
-                                  </button>
-                                </td>
-                              </tr>
-                            ))
-                          : null}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
                 {loading ? (
                   <div className="flex justify-center ">
                     <p className="font-bold"> Loading</p>
@@ -433,7 +397,7 @@ function Index() {
                     ></ReactLoading>
                   </div>
                 ) : dataDetailPatient ? (
-                  <div className=" text-[#356E79] inline-block w-full max-w-lg p-6 mb-5 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                  <div className=" text-[#356E79] inline-block w-full max-w-lg p-6 mb-5 overflow-hidden text-left align-middle transition-all transform ">
                     <Dialog.Title
                       as="h3"
                       className=" text-[#356E79] flex justify-start text-xl font-bold leading-6  border-b-2 py-3 border-gray-500"
@@ -492,7 +456,7 @@ function Index() {
                       <button
                         type="button"
                         className=" text-xs inline-flex justify-center px-2 py-2  font-medium text-white bg-[#356E79] border border-transparent rounded-lg hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                        onClick={closeDetail}
+                        onClick={closeModalAddVisit}
                       >
                         close detail
                       </button>
@@ -913,13 +877,6 @@ function Index() {
               List Kunjungan Hari Ini{" "}
             </div>
             <div className="flex gap-5">
-              <button
-                type="button"
-                className=" text-sm font-bold py-2 px-4 text-white bg-[#356E79] border border-transparent rounded-lg hover:opacity-80"
-                onClick={openModalAddVisit}
-              >
-                Tambah Kunjungan
-              </button>
               <Link href="/admin/visitList" passHref>
                 <button
                   type="button"
@@ -986,26 +943,25 @@ function Index() {
                   <th className="border-b-2 py-4">NIK</th>
                   <th className="border-b-2 ">Nama</th>
                   <th className="border-b-2 ">Gender </th>
-                  <th className="border-b-2 ">Tanggal Masuk</th>
+
                   <th className="border-b-2 ">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {dataPatient
-                  ? dataPatient.map((el, i) => (
+                {getAllPatient
+                  ? getAllPatient.map((el, i) => (
                       <tr className="text-center" key={i}>
                         <td className="py-2"> {el.nik}</td>
-                        <td>{el.patientName}</td>
+                        <td>{el.name}</td>
                         <td>{el.gender}</td>
-                        <td>{el.date}</td>
+
                         <td className="flex justify-center space-x-2 py-2">
-                          <button className="bg-[#E4F5E9] text-xs px-3 py-1 rounded-md hover:opacity-70">
+                          <button
+                            className="bg-[#E4F5E9] text-xs px-3 py-1 rounded-md hover:opacity-70"
+                            onClick={() => openModalAddVisit(el.patient_uid)}
+                          >
                             {" "}
                             Details
-                          </button>
-                          <button className="bg-[#E4F5E9] text-xs px-3 py-1 rounded-md hover:opacity-70">
-                            {" "}
-                            Tambah Kunjungan
                           </button>
                         </td>
                       </tr>

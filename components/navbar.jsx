@@ -15,6 +15,8 @@ function Navbar(props) {
   let name =
     typeof window !== "undefined" ? localStorage.getItem("name") : null;
   const route = useRouter();
+  const getType =
+    typeof window !== "undefined" ? localStorage.getItem("profile") : null;
 
   function Logout() {
     route.push("/");
@@ -113,53 +115,33 @@ function Navbar(props) {
             <Image src={logo} alt="logo-navbar" />
           </div>
           <div className="flex items-center px-2 font-semibold text-white cursor-pointer ">
-            {getToken ? (
-              <div className="flex items-center px-2">
-                <Link href="/" passHref>
-                  <p className="px-7 hover:bg-[#356E79] rounded-lg p-2">
-                    {" "}
-                    Homepage{" "}
-                  </p>
-                </Link>
-                <Link href="/patient" passHref>
-                  <p className="px-7 hover:bg-[#356E79] rounded-lg p-2">
-                    {" "}
-                    Dashboard{" "}
-                  </p>
-                </Link>
-              </div>
-            ) : (
-              <div className="flex items-center px-2">
-                <a
-                  href="#feature"
-                  className="px-7 hover:bg-[#356E79] rounded-lg p-2 "
-                >
-                  {" "}
-                  Feature{" "}
-                </a>
-                <a
-                  href="#about"
-                  className="px-7 hover:bg-[#356E79] rounded-lg p-2"
-                >
-                  {" "}
-                  About{" "}
-                </a>
-                <a
-                  href="#contact"
-                  className="px-7 hover:bg-[#356E79] rounded-lg p-2"
-                >
-                  {" "}
-                  Contact{" "}
-                </a>
-                <a
-                  href="#faq"
-                  className="px-7 hover:bg-[#356E79] rounded-lg p-2"
-                >
-                  {" "}
-                  FAQ{" "}
-                </a>
-              </div>
-            )}
+            <div className="flex items-center px-2">
+              <a
+                href="#feature"
+                className="px-7 hover:bg-[#356E79] rounded-lg p-2 "
+              >
+                {" "}
+                Feature{" "}
+              </a>
+              <a
+                href="#about"
+                className="px-7 hover:bg-[#356E79] rounded-lg p-2"
+              >
+                {" "}
+                About{" "}
+              </a>
+              <a
+                href="#contact"
+                className="px-7 hover:bg-[#356E79] rounded-lg p-2"
+              >
+                {" "}
+                Contact{" "}
+              </a>
+              <a href="#faq" className="px-7 hover:bg-[#356E79] rounded-lg p-2">
+                {" "}
+                FAQ{" "}
+              </a>
+            </div>
           </div>
           <div className="flex justify-start items-center pr-5">
             {getToken ? null : (
@@ -238,7 +220,7 @@ function Navbar(props) {
                                 aria-hidden="true"
                               />
                             )}
-                            Profile
+                            dashboard
                           </button>
                         </Link>
                       )}
