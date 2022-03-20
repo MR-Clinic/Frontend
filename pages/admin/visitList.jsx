@@ -25,7 +25,7 @@ function VisitList() {
   return (
     <div>
       <Nav />
-      <Sidebar />
+
       <div className="bg-[#E4F5E9] text-[#356E79] h-screen">
         <div className="ml-[7%]">
           <div className="grid justify-start pt-5 text-sm ">

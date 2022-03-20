@@ -25,7 +25,7 @@ function AdmPatientList() {
   return (
     <>
       <Nav />
-      <Sidebar />
+
       <div className="bg-[#E4F5E9] h-screen text-[#324B50]">
         <div className="ml-[7%]">
           <p className="text-2xl font-bold pt-5 mb-3"> Daftar Pasien</p>

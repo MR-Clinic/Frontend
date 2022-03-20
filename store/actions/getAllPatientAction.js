@@ -14,6 +14,7 @@ export const getAllPatient = () => {
       })
       .then((response) => {
         dispatch(allPatient(response.data.data.patients));
+        return response.data.data.patients;
         console.log(response);
       })
       .catch((response) => {

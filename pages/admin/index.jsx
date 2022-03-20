@@ -14,7 +14,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { useRouter } from "next/router";
 
 const baseUrl = "https://faliqadlan.cloud.okteto.net/patient";
-const urlSubmit = "https://faliqadlan.cloud.okteto.net/visit";
+const urlSubmit = "https://faliqadlan.cloud.okteto.net/visit?";
 
 function Index() {
   //counter
@@ -26,6 +26,9 @@ function Index() {
   const [kunjunganTotalToday, kunjunganTotalTodaySet] = useState("");
   const [kunjunganTotal, kunjunganTotalSet] = useState("");
   const [dataDetailPatient, setDataDetailPatient] = useState("");
+  const [inputSearch, setInputSearch] = useState("");
+  const [dataForSearch, setDataForSearch] = useState("");
+  const [showListPatient, setShowListPatient] = useState([]);
 
   //form add patient
   const [nik, nikSet] = useState("");
@@ -37,6 +40,7 @@ function Index() {
   const [religion, religionSet] = useState("");
   const [place, placeSet] = useState("");
   const dateDef = moment(new Date()).format("YYYY-MM-DD");
+  const dateSubmit = moment(new Date()).format("DD-MM-YYYY");
   const [date, dateSet] = useState(dateDef);
   const [complaint, setComplaint] = useState("");
 
@@ -56,7 +60,6 @@ function Index() {
   const dataTodayVisit = useSelector(
     (data) => data.todayVisitReducer.listTodayVisit
   );
-
   const getAllPatient = useSelector(
     (data) => data.getAllPatientReducer.listAllPatients
   );
@@ -70,6 +73,7 @@ function Index() {
     typeof window !== "undefined" ? localStorage.getItem("profile") : null;
   const router = useRouter();
 
+  //regist new patient
   const validateRegist = () => {
     if (nik.length !== 16) {
       swal("Input NIK Salah", "Jumlah karakter harus 16", "error");
@@ -139,19 +143,49 @@ function Index() {
       });
   };
 
-  const submitVisit = () => {
+  //get detail patient all
+  const openModalAddVisit = (patient_uid) => {
+    setIsOpenAddVisit(true);
+    setLoading(true);
+    let id = patient_uid;
+    dispatch(allStore.getPatientModal(id))
+      .then((response) => {
+        setDataDetailPatient(response);
+      })
+      .catch((e) => {
+        swal(
+          "Maaf Data Bermasalah",
+          "Data tidak tersedia pada server",
+          "error"
+        );
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  //visit regist
+  const submitVisit = (patient_uid) => {
     setLoading(true);
     const body = {
       complaint: complaint,
-      date: "19-03-2022",
+      date: dateSubmit,
       doctor_uid: uid,
     };
 
     axios
-      .post(urlSubmit, body)
+      .post(urlSubmit, body, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+        params: {
+          patient_uid: patient_uid,
+        },
+      })
       .then((response) => {
-        console.log(response);
+        console.log(response, "respon submit");
         swal("Selamat!", "Complain Berhasil Ditambahkan", "success");
+        dispatch(setVisitList);
         setTimeout(() => {
           swal.close();
         }, 3000);
@@ -186,45 +220,9 @@ function Index() {
     }
   }, [dispatch]);
 
-  // function handleModal(patient_uid) {
-  //   openModalAddVisit();
-  //   setLoading(true);
-  //   let id = patient_uid;
-  //   dispatch(allStore.getPatientModal(id))
-  //     .then((response) => {
-  //       setDataDetailPatient(response);
-  //     })
-  //     .catch((e) => {
-  //       swal(
-  //         "Maaf Data Bermasalah",
-  //         "Data tidak tersedia pada server",
-  //         "error"
-  //       );
-  //     })
-  //     .finally(() => {
-  //       setLoading(false);
-  //     });
-  // }
-
-  function openModalAddVisit(patient_uid) {
-    setIsOpenAddVisit(true);
-    setLoading(true);
-    let id = patient_uid;
-    dispatch(allStore.getPatientModal(id))
-      .then((response) => {
-        setDataDetailPatient(response);
-      })
-      .catch((e) => {
-        swal(
-          "Maaf Data Bermasalah",
-          "Data tidak tersedia pada server",
-          "error"
-        );
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }
+  useEffect(() => {
+    setDataListPatient();
+  }, [getAllPatient]);
 
   //modal open close function
   function closeModalVisit() {
@@ -238,9 +236,6 @@ function Index() {
     setIsOpenAddVisit(false);
     setDataDetailPatient("");
   }
-  function closeDetail() {
-    setDataDetailPatient("");
-  }
 
   function closeModalAddPatient() {
     setIsOpenAddPatient(false);
@@ -250,6 +245,33 @@ function Index() {
   function openModalAddPatient() {
     setIsOpenAddPatient(true);
   }
+
+  // function for search
+  const setDataListPatient = () => {
+    setDataForSearch(getAllPatient);
+    setShowListPatient(getAllPatient);
+  };
+
+  const seacrhByNik = () => {
+    if (dataForSearch) {
+      console.warn("Cek data search", dataForSearch);
+      const resultSearch = dataForSearch.filter(
+        (data) =>
+          data.nik.toLowerCase().match(inputSearch.toLowerCase()) ||
+          data.name.toLowerCase().match(inputSearch.toLowerCase())
+      );
+      if (resultSearch.length > 0) {
+        setShowListPatient(resultSearch);
+      } else {
+        swal("Pencarian tidak ditemukan", "coba keyword yang lain ya", "error");
+      }
+    }
+  };
+
+  const clearSearch = () => {
+    setDataListPatient();
+    setInputSearch("");
+  };
 
   return (
     <div>
@@ -463,7 +485,9 @@ function Index() {
                       <button
                         type="button"
                         className="inline-flex justify-center px-2 py-2 text-xs font-medium text-white bg-[#356E79] border border-transparent rounded-lg hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                        onClick={() => submitVisit()}
+                        onClick={() =>
+                          submitVisit(dataDetailPatient.patient_uid)
+                        }
                       >
                         Tambah Kunjungan
                       </button>
@@ -887,7 +911,7 @@ function Index() {
               </Link>
             </div>
           </div>
-          <div className="flex flex-wrap items-start mt-10 mb-5 ">
+          <div className="flex flex-wrap items-start mt-10 mb-5 max-h-[60vh] max-w-[80vw] overflow-y-scroll ">
             {dataTodayVisit
               ? dataTodayVisit.map((el, i) => (
                   <div
@@ -898,12 +922,12 @@ function Index() {
                     <p className="">{el.gender} </p>
                     <p className=""> {el.nik} </p>
                     <div className="flex text-xs mt-3">
-                      <p className="bg-[#E4F5E9] font-semibold drop-shadow-lg rounded-md px-2 py-1 cursor-pointer">
+                      <p className="bg-yellow-300 font-semibold drop-shadow-lg rounded-md px-2 py-1">
                         pending
                       </p>
                       <p
-                        className="border-2 rounded-md font-semibold ml-10 px-1 py-1 cursor-pointer"
-                        onClick={openModalVisit}
+                        className="border-2 rounded-md font-semibold ml-10 px-2 py-1 cursor-pointer hover:bg-[#324B50] hover:text-white"
+                        onClick={() => openModalAddVisit(el.patient_uid)}
                       >
                         {" "}
                         Konfirmasi
@@ -914,17 +938,29 @@ function Index() {
               : null}
           </div>
           <p className="text-3xl font-bold pl-5"> Search List Pasien</p>{" "}
-          <div className="flex justify-between w-10/12">
+          <div className="flex justify-between w-10/12 ">
             <div>
               <div className="flex justify-between space-x-2 pt-4 pl-5">
                 <p className="font-bold"> Search By NIK : </p>
                 <input
                   className="border-2 w-[250px] h-[35px] border-gray-700 rounded-md"
                   type="text"
+                  value={inputSearch}
+                  onChange={(e) => setInputSearch(e.target.value)}
                 />
-                <button className="bg-[#356E79] text-sm  font-bold text-white px-3 py-1 rounded-md hover:opacity-70">
+                <button
+                  className="bg-[#356E79] text-sm  font-bold text-white px-3 py-1 rounded-md hover:opacity-70"
+                  onClick={() => seacrhByNik()}
+                >
                   {" "}
                   Search
+                </button>
+                <button
+                  className="bg-[#356E79] text-sm  font-bold text-white px-3 py-1 rounded-md hover:opacity-70"
+                  onClick={() => clearSearch()}
+                >
+                  {" "}
+                  Clear search
                 </button>
               </div>
             </div>
@@ -936,8 +972,8 @@ function Index() {
               Tambah Pasien
             </button>
           </div>
-          <div className="pl-4 pb-36">
-            <table className="table-auto bg-white py-4  rounded-lg drop-shadow-lg w-10/12 mt-5">
+          <div className="mt-10 pl-4 pb-20 max-h-[60vh] max-w-[80vw] overflow-y-scroll">
+            <table className="table-auto bg-white py-4  rounded-lg drop-shadow-lg w-11/12 mt-5  ">
               <thead>
                 <tr>
                   <th className="border-b-2 py-4">NIK</th>
@@ -948,8 +984,8 @@ function Index() {
                 </tr>
               </thead>
               <tbody>
-                {getAllPatient
-                  ? getAllPatient.map((el, i) => (
+                {showListPatient
+                  ? showListPatient.map((el, i) => (
                       <tr className="text-center" key={i}>
                         <td className="py-2"> {el.nik}</td>
                         <td>{el.name}</td>
