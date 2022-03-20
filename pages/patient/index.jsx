@@ -2,32 +2,50 @@ import React, { useEffect } from "react";
 import Image from "next/image";
 import avatar from "../../assets/avatar1.png";
 import Navbar from "../../components/navbar";
+import { BsCalendar2Event } from "react-icons/bs"
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
 import allStore from "../../store/actions";
 import { useRouter } from "next/router";
+import moment from "moment";
+import ReactLoading from "react-loading"
 
 function Index() {
   const [isOpen, setIsOpen] = useState(false);
-  const [date, setDate] = useState("");
+  const [load, setLoad] = useState(true);
   const dispatch = useDispatch();
   const router = useRouter();
+  
   const dataDoctor = useSelector(
     (data) => data.getAllDoctorsReducer.listAllDoctors
-  );
+    );
   const dataPatient = useSelector(
     (data) => data.patientDetailReducer.listPatientDetail
-  );
-
+    );
+    
   const dataHistory = useSelector(
     (data) => data.historyVisitReducer.listAllVisit
-  );
-
+    );
+    
   const dataAppointment = useSelector(
     (data) => data.historyVisitReducer.listAllAppointment
   );
+
+  const [doctor_name, doctor_nameSet] = useState("");
+  const [doctor_address, doctor_addressSet] = useState("");
+  const [doctor_uid, doctor_uidSet] = useState("");
+  const [doctor_cap, doctor_capSet] = useState("");
+  const [cap,capSet] = useState("~");
+          
+  //Placeholder Date
+  const today = moment(new Date()).format("YYYY-MM-DD");
+  const [date, setDate] = useState("");
+  const [datePh,datePhset] = useState("Tanggal");
+
+
+
   const getType =
     typeof window !== "undefined" ? localStorage.getItem("profile") : null;
 
@@ -38,9 +56,18 @@ function Index() {
       dispatch(allStore.getAllDoctors());
       dispatch(allStore.getPatientDetails());
       dispatch(allStore.getHistoryVisit(true, "pending"));
-      dispatch(allStore.getHistoryVisit(false, "ready"));
+      dispatch(allStore.getAllHistoryVisit());
     }
-  });
+    const interval = setInterval(() => {
+        console.log("da",dataHistory);
+
+        dispatch(allStore.getHistoryVisit(true, "pending"));
+        dispatch(allStore.getAllHistoryVisit());
+        console.log("getKJ",dataAppointment.length);
+    }, 10000);
+    
+    return () => clearInterval(interval);
+  },[dispatch]);
 
   function closeModal() {
     setIsOpen(false);
@@ -48,6 +75,49 @@ function Index() {
 
   function openModal() {
     setIsOpen(true);
+  }
+
+  function handleDate(e){
+    console.log("this date",e);
+    datePhset(moment(e).format("DD-MM-YYYY"));
+    setDate(moment(e).format("DD-MM-YYYY"));
+    dispatch(allStore.getJKByDate(doctor_uid, date))
+    .then((el)=>{
+      let totalCap = doctor_cap - el.visits.length;
+      console.log("total CAp:", totalCap);
+      capSet(totalCap);
+    })
+    .catch((el)=>{
+      console.log("getjkDate Failed: ",el);
+    })
+  }
+
+  function handleModal(e){
+    console.log(e);
+    doctor_nameSet(e.name);
+    doctor_addressSet(e.address);
+    doctor_uidSet(e.doctor_uid);
+    doctor_capSet(e.capacity);
+    setDate("")
+    datePhset("Tanggal")
+    capSet("~")
+    openModal();
+  }
+
+  function cancelJK(e) {
+    swal({
+      title: "Anda yakin ingin batalkan janji kunjungan ?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        dispatch(allStore.deleteVisit(e))
+        swal("Janji Berhasil Dibatalkan!", {
+          icon: "success",
+        });
+      }
+    });
   }
 
   return (
@@ -59,7 +129,7 @@ function Index() {
           className="fixed inset-0 z-10 overflow-y-auto"
           onClose={closeModal}
         >
-          <div className="min-h-screen px-4 text-center">
+          <div className="min-h-screen bg-[#00000066] text-center">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -87,7 +157,7 @@ function Index() {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className=" text-[#356E79] inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+              <div className=" text-[#356E79] inline-block w-full max-w-md px-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-lg">
                 <Dialog.Title
                   as="h3"
                   className=" text-[#356E79] flex justify-center text-lg font-bold leading-6  border-b-2 py-3"
@@ -95,55 +165,73 @@ function Index() {
                   Konfirmasi Janji Kunjungan
                 </Dialog.Title>
 
-                <div className=" text-medium">
+                <div className="flex  text-medium">
                   <div className="mt-5 flex justify-center">
                     <div className="w-[100px] rounded-full ">
-                      <Image src={avatar} alt="logo dokter" />
+                      <Image src={avatar} className="rounded-full" alt="logo dokter" />
                     </div>
                     <div className="pl-10 items-center text-lg">
-                      <p className="font-semibold">dr. Rizki Awenk</p>
-                      <p className="font-light text-sm">
-                        {" "}
-                        jl depan rumah aspal bolong-bolong banyakk batunya
-                        waaawwww
+                      <p className="text-2xl font-semibold">{doctor_name}</p>
+                      <p className="font-light text-md">
+                        {doctor_address}
                       </p>
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center justify-between">
-                  <div className="grid font-bold mt-5  ">
-                    <div className="flex ">
-                      <p className="text-sm text-left"> pilih tanggal : </p>
-                      <input
-                        className=" mx-2 w-[50px] border-[#324B50]"
-                        type="date"
-                        onChange={(e) => setDate(e.target.value)}
-                      />
-                    </div>
-                    <div className="flex font-bold">
-                      <p className="text-sm"> kuota kunjungan : </p>
-                      <p className="font-bold px-2"> 50</p>
-                    </div>
+                <div className="grid grid-cols-1 my-4 capitalize">
+                  <div className="grid grid-cols-2 font-bold gap-2 items-center">
+                      <p className="text-sm text-left"> pilih tanggal  </p>
+                      <div className="relative  before:content-[':'] before:mr-3 py-2 before:font-bold">
+                        <span className="normal-case border-2 border-green-900 rounded py-2 px-3 w-8/12"> {datePh} <BsCalendar2Event className="inline-block ml-3"/></span>
+                        <input className=" opacity-0 left-3 absolute" min={today}  type="date" onChange={(e) => handleDate(e.target.value)}/>
+                      </div>
+                      <p className="text-sm"> kuota kunjungan  </p>
+                      <p className="font-bold before:content-[':'] before:mr-3"> {cap}</p>
                   </div>
 
-                  <div className="mt-4 flex justify-center">
+                  <div className="mt-4 flex justify-start">
                     <button
                       type="button"
-                      className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-[#356E79] border border-transparent rounded-lg hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+                      className="inline-flex justify-center px-4 capitalize py-2 text-sm font-medium text-white bg-[#356E79] border border-transparent rounded-lg hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
                       onClick={() => {
-                        if (date === "") {
-                          swal("maaf", "isi tanggal terlebih dahulu", "error");
+                        if (date === "" ) {
+                          swal("Isi Tanggal Janji Kunjungan ","", "error");
+                          setTimeout(() => {
+                            swal.close();
+                          }, 2000);
+                        } else if (cap < 1){
+                          swal("Janji Kunjungan Sudah Penuh","Coba ditanggal Lain", "error");
+                          setTimeout(() => {
+                            swal.close();
+                          }, 2000);
                         } else {
-                          swal(
-                            "selamat!",
-                            "anda berhasil menambahkan hari!",
-                            "success"
-                          );
+                          dispatch(allStore.createVisit(doctor_uid, date))
+                          .then((e)=>{
+                            console.log("Created: ",e);
+                            swal(
+                              "Janji Kunjungan Berhasil Ditambah ","",
+                              "success"
+                            );
+                            closeModal();
+                          })
+                          .catch((e)=>{
+                            console.log(e.status);
+                            if (e.status === 500){
+                              swal("Anda Sudah Ada Janji Kunjungan","Batalkan Janji Kunjungan Untuk Menambahkan Janji Baru" , "error");
+                              setTimeout(() => {
+                                swal.close();
+                              }, 5000);
+                            } else{
+                              swal("Janji Kunjungan Sudah Penuh",e.data.message , "error");
+                              setTimeout(() => {
+                                swal.close();
+                              }, 2000);
+                            }
+                          })
                         }
-                        closeModal();
                       }}
                     >
-                      buat janji
+                      tambah janji
                     </button>
                   </div>
                 </div>
@@ -156,10 +244,10 @@ function Index() {
 
       {/* profile section */}
       <div className="bg-[#E4F5E9] h-full text-[#356E79]">
-        <div className="grid grid-cols-2">
-          <div className="pl-8 pt-8">
+        <div className="grid grid-cols-5 py-5 mx-[4%] gap-5">
+          <div className="col-span-2">
             <p className="font-bold text-xl mb-5"> Profile Data</p>
-            <div className="bg-white border-2  mb-5 rounded-lg px-5 w-[80%] drop-shadow-lg">
+            <div className="bg-white border-2  mb-5 rounded-lg px-5  drop-shadow-lg">
               <div className="flex justify-start py-5 ">
                 <div className="grid grid-cols-2 ">
                   <div className="space-y-2 pl-2 text-sm">
@@ -194,69 +282,57 @@ function Index() {
 
             {/* appointment section */}
             <p className="font-bold text-xl mb-5">Janji Kunjungan</p>
-            <div className="bg-white border-2  mb-5 rounded-lg px-5 w-[584px] drop-shadow-lg ">
-              <div className="flex justify-start py-5 ">
-                {dataAppointment ? (
-                  <div className="grid grid-cols-2 ">
-                    <div className="grid space-y-2 pl-4">
-                      {" "}
+            <div className="bg-white border-2  mb-5 rounded-lg px-5 drop-shadow-lg ">
+              <div className="flex justify-end flex-col py-5 ">
+                {dataAppointment.length !== 0 ? (
+                  <>
+                  <div className="grid grid-cols-3 justify-between w-full">
                       <p className="font-bold"> Dokter </p>
+                      <p className="col-span-2 before:content-[':'] before:mr-2">{dataAppointment[0].doctorName}</p>
                       <p className="font-bold"> Hari Kunjungan </p>
+                      <p className="col-span-2 before:content-[':'] before:mr-2">{dataAppointment[0].date}</p>
                       <p className="font-bold"> Alamat </p>
-                    </div>
-                    <div className="grid items-end space-y-2 pl-5">
-                      <p> : dr awenk {dataAppointment.doctorName}</p>
-                      <p> : 22/03/2022 {dataAppointment.date}</p>
-                      <p>
-                        {" "}
-                        : Jl. ABCD efghjkkk{dataAppointment.doctorAddress}{" "}
-                      </p>
-                    </div>
+                      <p className="col-span-2 before:content-[':'] before:mr-2">{dataAppointment[0].doctorAddress}</p>
                   </div>
-                ) : null}
+                  
+                  <button className="w-3/12 border-red-500 border-2 col-span-1 mt-5 px-2 py-2 rounded-[5px] text-red-700 capitalize text-sm font-bold" onClick={()=>cancelJK(dataAppointment[0].visit_uid)}>
+                    Batalkan Janji
+                  </button>
+                  </>
+                ) : (
+                    <p className="text-xl text-center w-full">Anda Belum Ada Janji Kunjungan</p>
+                )}
               </div>
             </div>
           </div>
 
           {/* doctor list */}
-          <div className=" ml-[-100px] pt-8  ">
+          <div className="col-span-3">
             <p className="font-bold text-xl"> List Dokter</p>
-            <div className=" flex flex-wrap max-h-[75vh] max-w-[60vw] overflow-y-scroll z-0">
+            <div className="pb-5  grid grid-cols-3 max-h-[74vh] max-w-[60vw] overflow-y-scroll z-0">
               {dataDoctor
                 ? dataDoctor.map((el, i) => (
-                    <div
-                      className="bg-[#324B50] w-[250px] h-[170px] pt-8 mt-5 rounded-lg mr-4  drop-shadow-lg"
-                      key={i}
-                    >
-                      <div className="bg-white h-full text-[10px]">
-                        <div className="flex justify-center ">
-                          <div className="w-[60px] rounded-full pt-4 pl-1">
-                            <Image src={avatar} alt="doctor-img" />{" "}
+                    el.name !== "" ?
+                    <div className="bg-[#324B50] min-h-[150px] pt-3 mt-5 rounded-lg mr-4  drop-shadow-md" key={i}>
+                      <div className="flex flex-col justify-between items-center bg-white h-full text-[10px] rounded-b-lg py-3 px-2">
+                        <div className="flex justify-start w-full">
+                          <div className="w-[60px] rounded-full mr-3">
+                            <Image src={avatar} className="rounded-full w-full h-full" alt="doctor-img" layout="responsive" />{" "}
                           </div>
-                          <div className="ml-6 pt-2">
-                            {" "}
-                            <p className="font-semibold text-sm ">{el.name}</p>
-                            <p className="w-[140px]"> {el.address}</p>
-                            <p>
-                              {" "}
-                              <span className="font-bold">
-                                {" "}
-                                Left Capacity :{" "}
-                              </span>
-                              {el.leftCapacity}{" "}
-                            </p>
+                          <div className="pr-1 max-w-[calc(100% - 60px)]">
+                            <p className="font-semibold text-lg ">{el.name}</p>
+                            <p > {el.address}</p>
                           </div>
                         </div>
-                        <div className="flex justify-start px-3">
-                          <div className="bg-[#E4F5E9] px-2 py-1 rounded-lg">
-                            <button className=" w-[50px]" onClick={openModal}>
-                              {" "}
-                              buat janji{" "}
-                            </button>
-                          </div>
+                        <div className="flex px-3">
+                          <button className="bg-[#324B50] px-3 py-2 rounded-[5px] text-green-100 capitalize text-md font-bold" onClick={(e)=>{handleModal(el)}}>
+                            {" "}
+                            tambah janji{" "}
+                          </button>
                         </div>
                       </div>
                     </div>
+                    : null
                   ))
                 : null}
             </div>
@@ -278,17 +354,21 @@ function Index() {
               </tr>
             </thead>
             <tbody>
-              {dataHistory ? (
-                <tr className="text-center">
-                  <td className="py-2">05/03/22 {dataHistory.date}</td>
-                  <td>dr. lindawati {dataHistory.doctorName}</td>
-                  <td>
-                    jl. sana sini bisa kemana aja {dataHistory.doctorAddress}
+              {dataHistory.length !== 0  ? (
+                dataHistory.map((el, i) => (
+                  el.status !== "cancelled" ?
+                <tr className="text-center border-b-2 ">
+                  <td className="w-1/12 p-2">{el.date}</td>
+                  <td className="w-2/12">{el.doctorName}</td>
+                  <td className="w-3/12">
+                    {el.doctorAddress}
                   </td>
-                  <td>flu{dataHistory.mainDiagnose}</td>
-                  <td>demam dll{dataHistory.addiditionDiagnose}</td>
-                  <td>lihat resep{dataHistory.recipe}</td>
+                  <td className="w-2/12">{el.mainDiagnose}</td>
+                  <td className="w-2/12">{el.addiditionDiagnose}</td>
+                  <td className="w-2/12">{el.recipe}</td>
                 </tr>
+                : null
+                ))
               ) : null}
             </tbody>
           </table>

@@ -9,7 +9,7 @@ date = moment(date).format("DD-MM-YYYY");
 
 export const todayVisitList = () => {
   return (dispatch) => {
-    console.log("masuk fungsi get detail", getToken);
+    
     const getType =
       typeof window !== "undefined" ? localStorage.getItem("profile") : null;
     const getdoctorUid =
