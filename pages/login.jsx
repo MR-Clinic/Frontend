@@ -27,6 +27,8 @@ function Login() {
         route.push("/doctor");
       } else if (profile === "patient") {
         route.push("/patient");
+      } else if (profile === "admin") {
+        route.push("/admin");
       }
     }
   });
@@ -73,6 +75,8 @@ function Login() {
           route.push("/doctor");
         } else if (typeProfile === "patient") {
           route.push("/patient");
+        } else if (typeProfile === "admin") {
+          route.push("/admin");
         }
       })
       .catch((error) => {

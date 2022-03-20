@@ -48,14 +48,12 @@ export const doDoctorCompleteForm = (formData) =>{
     return (dispatch) => {
         return new Promise((resolve,reject) =>{
             axios
-            .push(urlDoctorSignUp,
+            .post(urlDoctorSignUp,
                 formData,)
             .then(({data})=>{
-                console.log("checkDoctorUsername success",data.data.token);
                 resolve(data.data.token);
             })
             .catch(({response})=>{
-                console.log("checkDoctorUsername error",response.data.message);
                 reject(response.data.message);
             })
         })
