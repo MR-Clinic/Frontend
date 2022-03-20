@@ -6,7 +6,7 @@ const getToken =
 
 export const getPatientDetails = () => {
   return (dispatch) => {
-    console.log("masuk fungsi get detail", getToken);
+    
     axios
       .get(baseUrl, {
         headers: {
@@ -18,7 +18,6 @@ export const getPatientDetails = () => {
         localStorage.setItem("name", response.data.data.name);
         localStorage.setItem("uid", response.data.data.nik);
         localStorage.setItem("patient_uid", response.data.data.patient_uid);
-        console.log(response);
       })
       .catch((error) => {
         console.log("cek error", error);

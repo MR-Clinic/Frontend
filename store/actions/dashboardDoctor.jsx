@@ -26,7 +26,6 @@ export const totalPasien = (uid) =>{
                 })
             .then((data)=>{
                 resolve(data.data)
-                console.log("Total Pasien: ",data.data);
             })
             .catch((response)=>{
                 console.log(response);
@@ -159,6 +158,32 @@ export const getPatientModal = (id) =>{
                 console.log(response.data);
                 reject(response)
             })
+        })
+    }
+}
+
+export const getJKByDate = (uid, date) =>{
+    return (dispatch) => {
+        return new Promise((resolve,reject)=>{
+            axios
+            .get(visitUrl,
+                {
+                    headers:{
+                        Authorization: "Bearer "+Token
+                    },
+                    params:{
+                        kind: "doctor",
+                        uid: uid,
+                        date: date
+                    }
+                })
+            .then(({data})=>{
+                resolve(data.data);
+            })
+            .catch(({response})=>{
+                reject(response)
+            })
+                
         })
     }
 }

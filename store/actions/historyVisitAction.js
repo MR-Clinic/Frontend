@@ -6,11 +6,11 @@ const getToken =
 
 export const getHistoryVisit = (isJanjiKunjungan, statusParam) => {
   return (dispatch) => {
-    console.log("masuk fungsi get detail", getToken);
+    
     const getType =
       typeof window !== "undefined" ? localStorage.getItem("profile") : null;
     const getUid =
-      typeof window !== "undefined" ? localStorage.getItem("doctor_uid") : null;
+      typeof window !== "undefined" ? localStorage.getItem("uid") : null;
 
     axios
       .get(baseUrl, {
@@ -30,13 +30,30 @@ export const getHistoryVisit = (isJanjiKunjungan, statusParam) => {
         } else {
           dispatch(setListHistoryVisit(response.data.data.visits));
         }
-        console.log(response);
       })
       .catch((error) => {
         console.log("cek error", error);
       });
   };
 };
+
+export const getAllHistoryVisit = () => {
+  return (dispatch)=>{
+    axios
+    .get(baseUrl,{
+      headers:{
+        Authorization: "Bearer " + getToken,
+      },
+    })
+    .then((response) => {
+      console.log("all",response);
+        dispatch(setListHistoryVisit(response.data.data.visits));
+    })
+    .catch((error) => {
+      console.log("cek error", error);
+    });
+  }
+}
 
 export const setListHistoryVisit = (payload) => {
   return {

@@ -30,7 +30,7 @@ function Home1() {
               </span>
             </div>
             <div className="capitalize mt-5">
-              buat manajemen data anda menjadi lebih baik, agar kualitas
+              tambah manajemen data anda menjadi lebih baik, agar kualitas
               pelayanan anda
               <br />
               semakin maksimal, yuk gabung bersama kami !
