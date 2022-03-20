@@ -59,11 +59,8 @@ function Index() {
       dispatch(allStore.getAllHistoryVisit());
     }
     const interval = setInterval(() => {
-        console.log("da",dataHistory);
-
         dispatch(allStore.getHistoryVisit(true, "pending"));
         dispatch(allStore.getAllHistoryVisit());
-        console.log("getKJ",dataAppointment.length);
     }, 10000);
     
     return () => clearInterval(interval);
@@ -78,7 +75,7 @@ function Index() {
   }
 
   function handleDate(e){
-    console.log("this date",e);
+    capSet("~");
     datePhset(moment(e).format("DD-MM-YYYY"));
     setDate(moment(e).format("DD-MM-YYYY"));
     dispatch(allStore.getJKByDate(doctor_uid, date))
@@ -113,9 +110,13 @@ function Index() {
     }).then((willDelete) => {
       if (willDelete) {
         dispatch(allStore.deleteVisit(e))
-        swal("Janji Berhasil Dibatalkan!", {
-          icon: "success",
-        });
+        .then(()=>{
+          swal("Janji Berhasil Dibatalkan!", "", "success");
+          window.location.reload();
+        })
+        .catch((error)=>{
+          swal("Janji Gagal Dibatalkan!", error, "error");
+        })
       }
     });
   }
@@ -207,7 +208,6 @@ function Index() {
                         } else {
                           dispatch(allStore.createVisit(doctor_uid, date))
                           .then((e)=>{
-                            console.log("Created: ",e);
                             swal(
                               "Janji Kunjungan Berhasil Ditambah ","",
                               "success"
@@ -215,7 +215,6 @@ function Index() {
                             closeModal();
                           })
                           .catch((e)=>{
-                            console.log(e.status);
                             if (e.status === 500){
                               swal("Anda Sudah Ada Janji Kunjungan","Batalkan Janji Kunjungan Untuk Menambahkan Janji Baru" , "error");
                               setTimeout(() => {
@@ -354,9 +353,11 @@ function Index() {
               </tr>
             </thead>
             <tbody>
-              {dataHistory.length !== 0  ? (
+              {
+              dataHistory.length !== 0 || dataHistory !== undefined ? (
                 dataHistory.map((el, i) => (
-                  el.status !== "cancelled" ?
+              
+                  el.status === "completed" ?
                 <tr className="text-center border-b-2 ">
                   <td className="w-1/12 p-2">{el.date}</td>
                   <td className="w-2/12">{el.doctorName}</td>
@@ -367,9 +368,11 @@ function Index() {
                   <td className="w-2/12">{el.addiditionDiagnose}</td>
                   <td className="w-2/12">{el.recipe}</td>
                 </tr>
-                : null
+                : 
+                  null
                 ))
-              ) : null}
+              ) : null
+              }
             </tbody>
           </table>
         </div>

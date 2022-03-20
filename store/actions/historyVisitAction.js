@@ -3,6 +3,8 @@ import axios from "axios";
 const baseUrl = "https://faliqadlan.cloud.okteto.net/visit";
 const getToken =
   typeof window !== "undefined" ? localStorage.getItem("token") : null;
+const nik = typeof window !== "undefined" ? localStorage.getItem("uid") : null;
+
 
 export const getHistoryVisit = (isJanjiKunjungan, statusParam) => {
   return (dispatch) => {
@@ -44,9 +46,13 @@ export const getAllHistoryVisit = () => {
       headers:{
         Authorization: "Bearer " + getToken,
       },
+      params:{
+        kind:"patient",
+        uid: nik
+      }
     })
     .then((response) => {
-      console.log("all",response);
+      console.log("all",response.data.data.visits, nik);
         dispatch(setListHistoryVisit(response.data.data.visits));
     })
     .catch((error) => {
