@@ -17,7 +17,7 @@ import { getVisitList } from "./getVisitList";
 import { todayVisitList } from "./todayVsitAction";
 import { detailPatient, patientDiagnose } from "./detailPatientAction";
 import { checkDoctorEmail, checkPatientEmail, checkDoctorUsername, doDoctorCompleteForm, checkPatientUsername ,doPatientCompleteForm } from "./loginRegister";
-import { createVisit, deleteVisit } from "./visitCommand";
+import { createVisit, deleteVisit, putVisit } from "./visitCommand";
 
 const allStore = {
   getAllDoctors,
@@ -45,7 +45,8 @@ const allStore = {
   getJKByDate,
   createVisit,
   deleteVisit,
-  getVisitPatient
+  getVisitPatient,
+  putVisit
   
 };
 

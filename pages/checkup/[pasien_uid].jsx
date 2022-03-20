@@ -71,10 +71,6 @@ function Check() {
     console.log('run');
   },[])
 
-  // useEffect(()=>{
-  //   ageSet(date - age)
-  // },[age])
-
   function handleSubmit(){
     let recipe = ""
     for (let i = 0; i < resepList.length; i++) {
@@ -92,9 +88,19 @@ function Check() {
     data.append("addiditonDiagnose",addiditonDiagnose)
     data.append("action",action)
     data.append("recipe",recipe)
-    data.append("status" , "ready")
 
-    console.log(...data,"asdasd");
+    dispatch(allStore.putVisit(data))
+    .then((e)=>{
+      swal("Data Tersimpan","","Success");
+      setTimeout(() => {
+        swal.close();
+        route.push("/doctor")
+      }, 50000);
+    })
+    .catch((e)=>{
+      swal("Data Belum Tersimpan", e+" ,Coba dalam beberapa saat", "error")
+    })
+
   }
 
   function addObatList(){

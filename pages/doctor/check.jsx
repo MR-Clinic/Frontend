@@ -4,11 +4,12 @@ import Sidebar from "../../components/sidebar";
 import { FaTrashAlt } from "react-icons/fa";
 
 function Check() {
+  
   return (
     <>
       <Nav />
       <Sidebar />
-      <div className="bg-[#E4F5E9] h-full text-[#324B50]">
+      {/* <div className="bg-[#E4F5E9] h-full text-[#324B50]">
         <div className="ml-[7%] mr-[5%]">
           <div className=" flex justify-between border-b-2 border-gray-600">
             <div className="flex flex-col justify-start">
@@ -192,7 +193,7 @@ function Check() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }
