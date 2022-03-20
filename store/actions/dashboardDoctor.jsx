@@ -103,7 +103,7 @@ export const getTodayJK = (uid) =>{
                 kind: "doctor",
                 uid : uid,
                 date: date,
-                status: ""
+                grouped: "patient"
             }
         })
         .then(({data})=>{

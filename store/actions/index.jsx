@@ -9,7 +9,8 @@ import {
   getTodayJK,
   getAllJK,
   getPatientModal,
-  getJKByDate
+  getJKByDate,
+  getVisitPatient
 } from "./dashboardDoctor";
 import { getPatientList } from "./getPatientList";
 import { getVisitList } from "./getVisitList";
@@ -43,7 +44,8 @@ const allStore = {
   doPatientCompleteForm,
   getJKByDate,
   createVisit,
-  deleteVisit
+  deleteVisit,
+  getVisitPatient
   
 };
 
