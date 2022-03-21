@@ -1,6 +1,6 @@
 import { getAllDoctors } from "./getAllDoctorAction";
 import { getPatientDetails } from "./patientDetailAction";
-import { getHistoryVisit } from "./historyVisitAction";
+import { getHistoryVisit, getAllHistoryVisit } from "./historyVisitAction";
 import { getDoctorProfile } from "./getDoctorProfile";
 import {
   totalPasien,
@@ -9,18 +9,22 @@ import {
   getTodayJK,
   getAllJK,
   getPatientModal,
+  getJKByDate,
+  getVisitPatient
 } from "./dashboardDoctor";
 import { getPatientList } from "./getPatientList";
 import { getVisitList } from "./getVisitList";
 import { todayVisitList } from "./todayVsitAction";
 import { detailPatient, patientDiagnose } from "./detailPatientAction";
 import { getAllPatient } from "./getAllPatientAction";
-import { addConfirmVisit } from "./adminConfirmedVisit";
+import { checkDoctorEmail, checkPatientEmail, checkDoctorUsername, doDoctorCompleteForm, checkPatientUsername ,doPatientCompleteForm } from "./loginRegister";
+import { createVisit, deleteVisit, putVisit } from "./visitCommand";
 
 const allStore = {
   getAllDoctors,
   getPatientDetails,
   getHistoryVisit,
+  getAllHistoryVisit,
   getDoctorProfile,
   totalPasien,
   kunjunganTotalToday,
@@ -35,6 +39,17 @@ const allStore = {
   patientDiagnose,
   getAllPatient,
   addConfirmVisit,
+  checkDoctorUsername,
+  checkDoctorEmail,
+  doDoctorCompleteForm,
+  checkPatientUsername,
+  checkPatientEmail,
+  doPatientCompleteForm,
+  getJKByDate,
+  createVisit,
+  deleteVisit,
+  getVisitPatient,
+  putVisit
 };
 
 export default allStore;

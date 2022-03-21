@@ -6,7 +6,6 @@ const getToken =
 
 export const getPatientList = () => {
   return (dispatch) => {
-    console.log("masuk fungsi get detail", getToken);
     const getType =
       typeof window !== "undefined" ? localStorage.getItem("profile") : null;
     const getdoctorUid =

@@ -15,6 +15,8 @@ import { Menu, Transition } from "@headlessui/react";
 import moment from "moment";
 import axios from "axios";
 import ReactLoading from "react-loading";
+import { useDispatch } from "react-redux";
+import allStore from "../../store/actions";
 
 const urlRegisterPatient = "https://faliqadlan.cloud.okteto.net/patient";
 
@@ -36,6 +38,7 @@ function SignUpPatient() {
   const [place, placeSet] = useState("");
   const dateDef = moment(new Date()).format("YYYY-MM-DD");
   const [date, dateSet] = useState(dateDef);
+  const [token, tokenSet] = useState(dateDef);
 
   //class transformer
   const [state, setState] = useState("");
@@ -46,6 +49,8 @@ function SignUpPatient() {
   const [datePlaceholder, datePlaceholderSet] =useState("Tanggal Lahir")
   const [dateVal, dateValSet] =useState("")
   const [loading, setLoading] = useState(false);
+
+  const dispatch = useDispatch();
 
   useEffect(()=>{
     if(localStorage.getItem('token')){
@@ -89,10 +94,7 @@ function SignUpPatient() {
     } else if (password.length < 8) {
       swal("Input Salah", "Password Kurang Dari 8 Karakter", "error");
     } else {
-      setTimeout(() => {
-        setState("hidden")
-        setState2("")
-      }, 1000);
+      signUpPart1();
     }
   };
 
@@ -108,7 +110,7 @@ function SignUpPatient() {
     } else if (nik === "" || full_name === "" || address === "" || job === "" || status === "" || religion ===""){
       swal("Form Masih Kosong", "Silahkan Masukkan Data Sesuai KTP Anda", "error");
     } else {
-      registerPatient();
+      signUpPart2();
     }
   }
 
@@ -117,10 +119,35 @@ function SignUpPatient() {
     setState2("hidden")
   }
 
-  const registerPatient = () => {
+  const signUpPart1 = () => {
+    setLoading(true);
+    dispatch(allStore.checkPatientUsername(username))
+    .then((e)=>{
+      console.log("dispatch Sicces Sign Up", e);
+      dispatch(allStore.checkPatientEmail(email))
+      .then((e)=>{
+        console.log("dispatch Sicces Sign Up", e);
+        setState("hidden");
+        setState2("");
+      })
+      .catch((e)=>{
+        console.log("dispatch Error checkPatientEmail",e);
+        swal("Pendaftaran Gagal","Email Sudah Digunakan.","error");
+      })
+    })
+    .catch((e)=>{
+      console.log("dispatch Error checkDoctorUsername",e);
+      swal("Pendaftaran Gagal","Username Sudah Digunakan.","error");
+    })
+    .finally(() => {
+      setLoading(false);
+    });
+  };
+
+  const signUpPart2 = () => {
     setLoading(true);
     const formData = new FormData();
-    
+        
     formData.append("userName",username)
     formData.append("email",email)
     formData.append("password",password)
@@ -134,29 +161,22 @@ function SignUpPatient() {
     formData.append("placeBirth",place)
     formData.append("dob",date)
 
-    axios
-      .post(urlRegisterPatient, formData)
-      .then(() => {
-        swal(
-          "Selamat register berhasil !",
-          "Anda akan diarahkan ke halaman login",
-          "success"
-        );
-        setTimeout(() => {
-          swal.close();
-        }, 3000);
-        route.push("/login");
-      })
-      .catch(() => {
-        swal(
-          "sorry!",
-          "register gagal, email sudah digunakan atau user sudah terdaftar",
-          "error"
-        );
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    dispatch(allStore.doPatientCompleteForm(formData,token))
+    .then((e)=>{
+      console.log("dispatch Success Sign Up", e);
+      swal("Akun Berhasil Terdaftar","Anda Akan Diarahkan Ke Halaman Login","success");
+      setTimeout(() => {
+        swal.close();
+        route.push("/login")
+      }, 3000);
+    })
+    .catch((e)=>{
+      console.log("dispatch Error checkDoctorUsername",e);
+      swal("Pendaftaran Gagal",e,"error");
+    })
+    .finally(() => {
+      setLoading(false);
+    });
   };
 
   return (
@@ -234,6 +254,21 @@ function SignUpPatient() {
                     </div>
                   </div>
                   <div className="flex justify-center ">
+                  {loading ? (
+                        <button
+                          className=" bg-[#324B50] font-medium inline-flex items-center px-4 py-2 rounded-md shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
+                          type="submit"
+                        >
+                          Loading
+                          <ReactLoading
+                            className="ml-2 mb-2"
+                            type={"spin"}
+                            color={"#ffffff"}
+                            height={"20px"}
+                            width={"30px"}
+                          />
+                        </button>
+                    ) :(
                     <button
                       className=" bg-[#324B50] font-medium inline-flex items-center px-5 py-3 rounded-md shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
                       type="submit"
@@ -242,6 +277,7 @@ function SignUpPatient() {
                       Register
                       <FaSignInAlt className="ml-2" />
                     </button>
+                  )}
                   </div>
                     
                 </div>
@@ -393,28 +429,28 @@ function SignUpPatient() {
                             >
                               <Menu.Items className="origin-top-right z-20 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 max-h-[120px] snap-y overflow-y-scroll focus:outline-none ">
                                   <Menu.Item>
-                                    <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{statusSet("Belum Kawin"); setOptSel2("Belum Kawin")}}>
+                                    <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{statusSet("belumKawin"); setOptSel2("Belum Kawin")}}>
                                       <span className="w-full ">
                                        Belum Kawin
                                       </span>
                                     </div>
                                   </Menu.Item>
                                   <Menu.Item>
-                                    <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{statusSet("Kawin"); setOptSel2("Kawin")}}>
+                                    <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{statusSet("kawin"); setOptSel2("Kawin")}}>
                                       <span className="w-full ">
                                         Kawin
                                       </span>
                                     </div>
                                   </Menu.Item>
                                   <Menu.Item>
-                                    <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{statusSet("Cerai Hidup"); setOptSel2("Cerai Hidup")}}>
+                                    <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{statusSet("ceraiHidup"); setOptSel2("Cerai Hidup")}}>
                                       <span className="w-full ">
                                         Cerai Hidup
                                       </span>
                                     </div>
                                   </Menu.Item>
                                   <Menu.Item>
-                                    <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{statusSet("Cerai Mati"); setOptSel2("Cerai Mati")}}>
+                                    <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{statusSet("ceraiMati"); setOptSel2("Cerai Mati")}}>
                                       <span className="w-full ">
                                         Cerai Mati
                                       </span>
@@ -447,42 +483,42 @@ function SignUpPatient() {
                             >
                               <Menu.Items className="origin-top-right  mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 max-h-[120px] snap-y overflow-y-scroll focus:outline-none ">
                                   <Menu.Item>
-                                    <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{religionSet("Budha"); setOptSel3("Budha")}}>
+                                    <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{religionSet("budha"); setOptSel3("Budha")}}>
                                       <span className="w-full ">
                                         Budha
                                       </span>
                                     </div>
                                   </Menu.Item>
                                   <Menu.Item>
-                                    <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{religionSet("Hindu"); setOptSel3("Hindu")}}>
+                                    <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{religionSet("hindu"); setOptSel3("Hindu")}}>
                                       <span className="w-full ">
                                         Hindu
                                       </span>
                                     </div>
                                   </Menu.Item>
                                   <Menu.Item>
-                                    <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{religionSet("Islam"); setOptSel3("Islam")}}>
+                                    <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{religionSet("islam"); setOptSel3("Islam")}}>
                                       <span className="w-full ">
                                         Islam
                                       </span>
                                     </div>
                                   </Menu.Item>
                                   <Menu.Item>
-                                    <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{religionSet("Katholik"); setOptSel3("Katholik")}}>
+                                    <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{religionSet("katolik"); setOptSel3("Katholik")}}>
                                       <span className="w-full ">
                                         Katholik
                                       </span>
                                     </div>
                                   </Menu.Item>
                                   <Menu.Item>
-                                    <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{religionSet("Konghucu"); setOptSel3("Konghucu")}}>
+                                    <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{religionSet("konghucu"); setOptSel3("Konghucu")}}>
                                       <span className="w-full ">
                                         Konghucu
                                       </span>
                                     </div>
                                   </Menu.Item>
                                   <Menu.Item>
-                                    <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{religionSet("Protestan"); setOptSel3("Protestan")}}>
+                                    <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{religionSet("protestan"); setOptSel3("Protestan")}}>
                                       <span className="w-full ">
                                         Protestan
                                       </span>

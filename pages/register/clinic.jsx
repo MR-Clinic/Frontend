@@ -14,8 +14,8 @@ import form from "../../styles/Form.module.css"
 import { Menu, Transition } from "@headlessui/react";
 import axios from "axios";
 import ReactLoading from "react-loading";
-
-const urlRegisterClinic = "https://faliqadlan.cloud.okteto.net/doctor";
+import { useDispatch } from "react-redux";
+import allStore from "../../store/actions";
 
 function SignUpClinic() {
   const route = useRouter();
@@ -24,9 +24,10 @@ function SignUpClinic() {
   const [password, setPassword] = useState("");
   const [name, nameSet] = useState("");
   const [address, addressSet] = useState("");
-  const [dari, dariSet] = useState("Senin");
-  const [sampai, sampaiSet] = useState("Jumat");
-  const [total, totalSet] = useState("");
+  const [dari, dariSet] = useState("senin");
+  const [sampai, sampaiSet] = useState("jumat");
+  const [total, totalSet] = useState("0");
+  const [token, tokenSet] = useState("0");
 
   //class transformer
   const [state, setState] = useState("");
@@ -34,6 +35,8 @@ function SignUpClinic() {
   const [optSelect, setOptSel]= useState("Senin")
   const [optSelect2, setOptSel2]= useState("Jumat")
   const [loading, setLoading] = useState(false);
+
+  const dispatch = useDispatch();
 
   useEffect(()=>{
     if(localStorage.getItem('token')){
@@ -48,9 +51,9 @@ function SignUpClinic() {
 
   const validatePart1 = () => {
     console.log("cek validate");
-    if (username.trim() < 0) {
+    if (username.trim() === "" ) {
       swal("Input Salah", "Username Tidak Boleh Kosong", "error");
-    } else if (username.match(/^$|\s+/)) {
+    } else if (username.trim().match(/^$|\s+/)) {
       swal("Input Salah", "Username Tidak Boleh  Ada Spasi", "error");
     } else if (username.length < 5) {
       swal("Input Salah", "Username Minimal 5 Karakter", "error");
@@ -65,8 +68,7 @@ function SignUpClinic() {
     } else if (password.length < 8) {
       swal("Input Salah", "Password Kurang Dari 8 Karakter", "error");
     } else {
-      setState("hidden")
-      setState2("")
+      signUpPart1();
     }
   };
 
@@ -81,7 +83,7 @@ function SignUpClinic() {
     }else if(total === ""){
       swal("Input Kosong", " Maksimal Kunjungan Tidak Boleh Kosong", "error")
     }else{
-        doSignUp();
+        signUpPart2();
     }
   }
   
@@ -90,10 +92,39 @@ function SignUpClinic() {
     setState2("hidden")
   }
 
-  const doSignUp = () => {
+  const signUpPart1 = () => {
     setLoading(true);
-    username, email, password, name, address, dari, sampai, total
+  
+    dispatch(allStore.checkDoctorUsername(username))
+    .then((e)=>{
+      console.log("dispatch Success checkDoctorUsername",e);
+      dispatch(allStore.checkDoctorEmail(email))
+      .then((e)=>{
+        console.log("dispatch Success checkDoctorEmail",e);
+        setState("hidden");
+        setState2("");
+        setTimeout(() => {
+          swal.close();
+        }, 3000);
+      })
+      .catch((e)=>{
+        console.log("dispatch Error checkDoctorEmail",e);
+        swal("Pendaftaran Gagal","Email Sudah Digunakan","error");
+      })
 
+    })
+    .catch((e)=>{
+      console.log("dispatch Error checkDoctorUsername",e);
+      swal("Pendaftaran Gagal","Username Sudah Digunakan","error");
+    })
+    .finally(()=>{
+      setLoading(false);
+    })
+  }
+
+  const signUpPart2 = () => {
+    setLoading(true);
+    console.log("Form 2 ");
     const formData = new FormData();
     formData.append("userName", username);
     formData.append("email", email);
@@ -106,32 +137,24 @@ function SignUpClinic() {
     formData.append("capacity", total);
     console.log(formData, "cek form data");
 
-    axios
-      .post(urlRegisterClinic, formData)
-      .then(() => {
-        swal(
-          "Register berhasil !",
-          "Anda akan diarahkan ke halaman login",
-          "success"
-        );
-        setTimeout(() => {
-          swal.close();
-        }, 3000);
-        route.push("/login");
-      })
-      .catch((e) => {
-        console.log(e.response);
-        swal(
-          "Sorry..!",
-          "register gagal, email sudah digunakan atau user sudah terdaftar",
-          "error"
-        );
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  };
-
+    dispatch(allStore.doDoctorCompleteForm(formData))
+    .then((e)=>{
+      console.log("dispatch Success checkDoctorUsername",e);
+      swal("Akun Berhasil Terdaftar","Anda Akan Diarahkan Ke Halaman Login","success");
+      setTimeout(() => {
+        swal.close();
+        route.push("/login")
+      }, 3000);
+    })
+    .catch((e)=>{
+      console.log("dispatch Error checkDoctorUsername",e);
+      swal("Pendaftaran Gagal",e,"error");
+    })
+    .finally(()=>{
+      setLoading(false);
+    })
+    console.log("Not SKipped");
+  }
   return (
     <>
       <div className="bg-[#324B50] p-20 text-[#324B50] font-redhat min-h-screen flex">
@@ -171,7 +194,7 @@ function SignUpClinic() {
                       type="text"
                       className="placeholder-[#324B50] form-control block w-full px-4 py-2 pr-[50px] text-lg font-normal text-gray-700 bg-white bg-clip-padding
                      border-2 border-solid border-[#324B50] rounded-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none "
-                      id="exampleFormControlInput2"
+                      id="Username"
                       placeholder="Username"
                       onChange={(e) => setUserName(e.target.value)}
                     />
@@ -184,7 +207,7 @@ function SignUpClinic() {
                       type="text"
                       className="placeholder-[#324B50] form-control block w-full px-4 py-2 pr-[50px] text-lg font-normal text-gray-700 bg-white bg-clip-padding
                      border-2 border-solid border-[#324B50] rounded-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none "
-                      id="exampleFormControlInput2"
+                      id="Email"
                       placeholder="Email"
                       onChange={(e) => setEmail(e.target.value)}
                     />
@@ -197,7 +220,7 @@ function SignUpClinic() {
                       type="password"
                       className=" placeholder-[#324B50] form-control block w-full px-4 py-2 pr-[50px] text-lg font-normal text-gray-700 bg-white bg-clip-padding
                      border-2 border-solid border-[#324B50] rounded-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none "
-                      id="exampleFormControlInput2"
+                      id="Password"
                       placeholder="Password"
                       onChange={(e) => setPassword(e.target.value)}
                     />
@@ -206,14 +229,30 @@ function SignUpClinic() {
                     </div>
                   </div>
                   <div className="flex justify-center ">
-                    <button
-                      className="bg-[#324B50] font-medium inline-flex items-center px-5 py-3 rounded-md shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
-                      type="submit"
-                      onClick={() => validatePart1()}
-                    >
-                      Register
-                      <FaSignInAlt className="ml-2" />
-                    </button>
+                    {loading ? (
+                        <button
+                          className=" bg-[#324B50] font-medium inline-flex items-center px-5 py-3 rounded-md shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
+                          type="submit"
+                        >
+                          Loading
+                          <ReactLoading
+                            className="ml-2 mb-2"
+                            type={"spin"}
+                            color={"#ffffff"}
+                            height={"20px"}
+                            width={"30px"}
+                          />
+                        </button>
+                    ) : (
+                      <button
+                        className="bg-[#324B50] font-medium inline-flex items-center px-5 py-3 rounded-md shadow-md text-white transition hover:bg-[#E4F5E9] hover:text-[#324B50]"
+                        type="submit"
+                        onClick={() => validatePart1()}
+                      >
+                        Register
+                        <FaSignInAlt className="ml-2" />
+                      </button>
+                    )}
                   </div>
                 </div>
                 {/* direct to register */}
@@ -257,23 +296,23 @@ function SignUpClinic() {
                       <div>
                         <span>Nama Lengkap</span>
                         <div className={form.input}>
-                          <input type="text" className="{form.inputStyle} " id="job" placeholder="Nama Lengkap" onChange={(e) => nameSet(e.target.value)}/>
+                          <input type="text" className="{form.inputStyle} " id="Name" placeholder="Nama Lengkap" onChange={(e) => nameSet(e.target.value)}/>
                         </div>
                       </div>
                       <div>
                         <span>Alamat Klinik</span>
                         <div className={form.input}>
-                          <input type="text" className="{form.inputStyle} " id="job" placeholder="Alamat Klinik" onChange={(e) => addressSet(e.target.value)}/>
+                          <input type="text" className="{form.inputStyle} " id="Address" placeholder="Alamat Klinik" onChange={(e) => addressSet(e.target.value)}/>
                         </div>
                       </div>
                       <div>
                         <span>Jadwal Buka Klinik</span>
                         <div className={form.input+' '+form.ttl}>
                           <div className="flex justify-between gap-2 capitalize w-full">
-                            <div className={form.ttlIn+" "}>
+                            <div className={form.ttlIn+" w-3/6 px-2"}>
                               <Menu as="div" className="relative inline-block w-full h-full text-left z-20">
                               <div className="h-full">
-                                <Menu.Button className="inline-flex items-center px-3 justify-between w-full h-full text-slate-500">
+                                <Menu.Button className="inline-flex items-center px-3 justify-between  h-full text-slate-500">
                                   {optSelect}
                                   <BsChevronDown className="ml-3"/>
                                 </Menu.Button>
@@ -289,49 +328,49 @@ function SignUpClinic() {
                                 leaveTo="transform opacity-0 scale-95"
                               >
                                 <Menu.Items className="origin-top-right z-20 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 max-h-[120px] snap-y overflow-y-scroll focus:outline-none ">
-                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{dariSet("Senin"); setOptSel("Senin")}}>
+                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{dariSet("senin"); setOptSel("Senin")}}>
                                     <Menu.Item>
                                         <span className="w-full ">
                                         Senin
                                         </span>
                                     </Menu.Item>
                                   </div>
-                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{dariSet("Selasa"); setOptSel("Selasa")}}>
+                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{dariSet("selasa"); setOptSel("Selasa")}}>
                                     <Menu.Item>
                                         <span className="w-full ">
                                           Selasa
                                         </span>
                                     </Menu.Item>
                                   </div>
-                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{dariSet("Rabu"); setOptSel("Rabu")}}>
+                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{dariSet("rabu"); setOptSel("Rabu")}}>
                                     <Menu.Item>
                                         <span className="w-full ">
                                           Rabu
                                         </span>
                                     </Menu.Item>
                                   </div>
-                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{dariSet("Kamis"); setOptSel("Kamis")}}>
+                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{dariSet("kamis"); setOptSel("Kamis")}}>
                                     <Menu.Item>
                                         <span className="w-full ">
                                           Kamis
                                         </span>
                                     </Menu.Item>
                                   </div>
-                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{dariSet("Jumat"); setOptSel("Jumat")}}>
+                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{dariSet("jumat"); setOptSel("Jumat")}}>
                                     <Menu.Item>
                                         <span className="w-full ">
                                           Jumat
                                         </span>
                                     </Menu.Item>
                                   </div>
-                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{dariSet("Sabtu"); setOptSel("Sabtu")}}>
+                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{dariSet("sabtu"); setOptSel("Sabtu")}}>
                                     <Menu.Item>
                                         <span className="w-full ">
                                           Sabtu
                                         </span>
                                     </Menu.Item>
                                   </div>
-                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{dariSet("Minggu"); setOptSel("Minggu")}}>
+                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{dariSet("minggu"); setOptSel("Minggu")}}>
                                     <Menu.Item>
                                         <span className="w-full ">
                                           Minggu
@@ -344,7 +383,7 @@ function SignUpClinic() {
                             </div>
                             <span className="px-2 py-2">S/D</span>
 
-                            <div className={form.ttlIn+" "}>
+                            <div className={form.ttlIn+" w-3/6 px-2"}>
                               <Menu as="div" className="relative inline-block w-full h-full text-left z-20">
                               <div className="h-full">
                                 <Menu.Button className="inline-flex items-center px-3 justify-between w-full h-full text-slate-500">
@@ -363,49 +402,49 @@ function SignUpClinic() {
                                 leaveTo="transform opacity-0 scale-95"
                               >
                                 <Menu.Items className="origin-top-right z-20 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 max-h-[120px] snap-y overflow-y-scroll focus:outline-none ">
-                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{sampaiSet("Senin"); setOptSel2("Senin")}}>
+                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{sampaiSet("senin"); setOptSel2("Senin")}}>
                                     <Menu.Item>
                                         <span className="w-full ">
                                         Senin
                                         </span>
                                     </Menu.Item>
                                   </div>
-                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{sampaiSet("Selasa"); setOptSel2("Selasa")}}>
+                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{sampaiSet("selasa"); setOptSel2("Selasa")}}>
                                     <Menu.Item>
                                         <span className="w-full ">
                                           Selasa
                                         </span>
                                     </Menu.Item>
                                   </div>
-                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{sampaiSet("Rabu"); setOptSel2("Rabu")}}>
+                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{sampaiSet("rabu"); setOptSel2("Rabu")}}>
                                     <Menu.Item>
                                         <span className="w-full ">
                                           Rabu
                                         </span>
                                     </Menu.Item>
                                   </div>
-                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{sampaiSet("Kamis"); setOptSel2("Kamis")}}>
+                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{sampaiSet("kamis"); setOptSel2("Kamis")}}>
                                     <Menu.Item>
                                         <span className="w-full ">
                                           Kamis
                                         </span>
                                     </Menu.Item>
                                   </div>
-                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{sampaiSet("Jumat"); setOptSel2("Jumat")}}>
+                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{sampaiSet("jumat"); setOptSel2("Jumat")}}>
                                     <Menu.Item>
                                         <span className="w-full ">
                                           Jumat
                                         </span>
                                     </Menu.Item>
                                   </div>
-                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{sampaiSet("Sabtu"); setOptSel2("Sabtu")}}>
+                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{sampaiSet("sabtu"); setOptSel2("Sabtu")}}>
                                     <Menu.Item>
                                         <span className="w-full ">
                                           Sabtu
                                         </span>
                                     </Menu.Item>
                                   </div>
-                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{sampaiSet("Minggu"); setOptSel2("Minggu")}}>
+                                  <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{sampaiSet("minggu"); setOptSel2("Minggu")}}>
                                     <Menu.Item>
                                         <span className="w-full ">
                                           Minggu
@@ -422,7 +461,7 @@ function SignUpClinic() {
                       <div>
                         <span>Jumlah Maksimal Kunjungan</span>
                         <div className={form.input}>
-                          <input type="number" id="maxs" name="maxs" placeholder="10" min="1" max="99" maxLength="2"  onInput={(e)=>{e.target.value < 1 || e.target.value > 99 ? swal("Input Kunjungan Tidak Valid","Jumlah Kunjungan harus diatas 1 dan dibawah 99", "error"): totalSet(e.target.value) }}/>
+                          <input type="number" id="MaxJK" name="maxs" placeholder="10" min="1" max="99" maxLength="2"  onInput={(e)=>{e.target.value < 1 || e.target.value > 99 ? swal("Input Kunjungan Tidak Valid","Jumlah Kunjungan harus diatas 1 dan dibawah 99", "error"): totalSet(e.target.value) }}/>
                         </div>
                       </div>
                   </div>
