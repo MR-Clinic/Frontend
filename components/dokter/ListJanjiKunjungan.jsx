@@ -199,7 +199,7 @@ function ListJanjiKunjungan() {
                   <button
                     type="button"
                     className=" outline-none text-xs inline-flex justify-center px-2 py-2  font-medium text-white bg-[#356E79] border border-transparent rounded-lg hover:bg-green-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                    onClick={()=>{route.push("/detailpatient/"+pasienUid); }}
+                    onClick={()=>{localStorage.setItem("pasienUid",pasienUid); route.push("/detailpatient/"+pasienUid); }}
                   >
                     Lihat Detail Pasien
                   </button>
