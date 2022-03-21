@@ -24,7 +24,7 @@ export const todayVisitList = () => {
         params: {
           kind: `${getType}`,
           uid: `${getdoctorUid}`,
-          status: "pending",
+          // status: "pending",
           date: date,
         },
       })

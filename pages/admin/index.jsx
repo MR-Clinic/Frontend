@@ -10,7 +10,6 @@ import Link from "next/link";
 import form from "../../styles/Form.module.css";
 import ReactLoading from "react-loading";
 import axios from "axios";
-import { AiOutlineClose } from "react-icons/ai";
 import { useRouter } from "next/router";
 
 const baseUrl = "https://faliqadlan.cloud.okteto.net/patient";
@@ -22,10 +21,12 @@ function Index() {
   const [isOpenVisit, setIsOpenVisit] = useState(false);
   const [isOpenAddVisit, setIsOpenAddVisit] = useState(false);
   const [isOpenAddPatient, setIsOpenAddPatient] = useState(false);
+  const [isOpenConfirmed, setIsOpenConfirmed] = useState(false);
   const [pasienSum, pasienSumSet] = useState("");
   const [kunjunganTotalToday, kunjunganTotalTodaySet] = useState("");
   const [kunjunganTotal, kunjunganTotalSet] = useState("");
   const [dataDetailPatient, setDataDetailPatient] = useState("");
+  const [dataDetailVisit, setDataDetailVisit] = useState("");
   const [inputSearch, setInputSearch] = useState("");
   const [dataForSearch, setDataForSearch] = useState("");
   const [showListPatient, setShowListPatient] = useState([]);
@@ -63,6 +64,11 @@ function Index() {
   const getAllPatient = useSelector(
     (data) => data.getAllPatientReducer.listAllPatients
   );
+  const adminVisit = useSelector(
+    (data) => data.adminConfirmedReducer.adminVisitList
+  );
+
+  console.log("ini data admin visit", adminVisit);
 
   //get item local storage
   const token =
@@ -119,12 +125,13 @@ function Index() {
 
     axios
       .post(baseUrl, formData)
-      .then((response) => {
+      .then(() => {
         swal(
           "Selamat register berhasil !",
           "Pasien Berhasil Ditambahkan",
           "success"
         );
+        dispatch(allStore.getAllPatient());
         setTimeout(() => {
           swal.close();
         }, 3000);
@@ -145,6 +152,7 @@ function Index() {
 
   //get detail patient all
   const openModalAddVisit = (patient_uid) => {
+    console.log("ini detail pasien");
     setIsOpenAddVisit(true);
     setLoading(true);
     let id = patient_uid;
@@ -152,7 +160,7 @@ function Index() {
       .then((response) => {
         setDataDetailPatient(response);
       })
-      .catch((e) => {
+      .catch(() => {
         swal(
           "Maaf Data Bermasalah",
           "Data tidak tersedia pada server",
@@ -164,9 +172,28 @@ function Index() {
       });
   };
 
+  //konfirmasi kunjungan
+  const openModalConfirmedVisit = (nik) => {
+    console.log("confirmed");
+    setIsOpenConfirmed(true);
+    setLoading(true);
+    dispatch(allStore.addConfirmVisit(nik));
+    setLoading(false);
+    // .then((response) => {
+    //   setDataDetailVisit(response);
+    // })
+    // .catch((error) => {
+    //   console.log(error);
+    // })
+    // .finally(() => {
+    //   setLoading(false);
+    // });
+  };
+
   //visit regist
   const submitVisit = (patient_uid) => {
     setLoading(true);
+    alert("masuk");
     const body = {
       complaint: complaint,
       date: dateSubmit,
@@ -183,9 +210,10 @@ function Index() {
         },
       })
       .then((response) => {
+        alert("masuk then");
         console.log(response, "respon submit");
         swal("Selamat!", "Complain Berhasil Ditambahkan", "success");
-        dispatch(setVisitList);
+        dispatch(allStore.todayVisitList());
         setTimeout(() => {
           swal.close();
         }, 3000);
@@ -198,13 +226,47 @@ function Index() {
       });
   };
 
+  //edit complain
+  const putComplain = () => {
+    setLoading(true);
+    const body = {
+      complaint: complaint,
+      date: dateSubmit,
+      doctor_uid: uid,
+    };
+    axios
+      .post(baseUrl, formData)
+      .then(() => {
+        swal(
+          "Selamat register berhasil !",
+          "Pasien Berhasil Ditambahkan",
+          "success"
+        );
+        dispatch(allStore.getAllPatient());
+        setTimeout(() => {
+          swal.close();
+        }, 3000);
+        closeModalAddPatient();
+      })
+      .catch((error) => {
+        console.log(error);
+        swal(
+          "sorry!",
+          "register gagal, email sudah digunakan atau user sudah terdaftar",
+          "error"
+        );
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   const dispatch = useDispatch();
   useEffect(() => {
     if (getType !== "doctor") {
       router.push("/404");
     } else {
       dispatch(allStore.todayVisitList());
-      dispatch(allStore.getPatientList());
       dispatch(allStore.getAllPatient());
       dispatch(allStore.getPatientDetails());
       dispatch(allStore.getDoctorProfile(token));
@@ -224,13 +286,21 @@ function Index() {
     setDataListPatient();
   }, [getAllPatient]);
 
+  useEffect(() => {
+    setDataDetailVisit();
+  }, [getAllPatient]);
+
   //modal open close function
   function closeModalVisit() {
     setIsOpenVisit(false);
   }
+  function closeModaladdConfirmed() {
+    setIsOpenConfirmed(false);
+  }
 
-  function openModalVisit() {
-    setIsOpenVisit(true);
+  function closeModalConfirmed() {
+    setIsOpenConfirmed(false);
+    setComplaint("");
   }
   function closeModalAddVisit() {
     setIsOpenAddVisit(false);
@@ -244,6 +314,29 @@ function Index() {
 
   function openModalAddPatient() {
     setIsOpenAddPatient(true);
+  }
+
+  //handle status
+  function handleStatus(el) {
+    if (el === "pending") {
+      return (
+        <p className="bg-yellow-200 text-yellow-800 font-semibold drop-shadow-lg rounded-md px-2 py-1">
+          Pending
+        </p>
+      );
+    } else if (el === "ready") {
+      return (
+        <p className="bg-green-200 text-green-800 font-semibold drop-shadow-lg rounded-md px-2 py-1 ">
+          Ready
+        </p>
+      );
+    } else {
+      return (
+        <p className="bg-red-200 text-red-800 font-semibold drop-shadow-lg rounded-md px-2 py-1 ">
+          Canceled
+        </p>
+      );
+    }
   }
 
   // function for search
@@ -365,6 +458,119 @@ function Index() {
                     Konfirmasi Kunjungan
                   </button>
                 </div>
+              </div>
+            </Transition.Child>
+          </div>
+        </Dialog>
+      </Transition>
+
+      {/* modal konfirmasi kunjungan */}
+      <Transition appear show={isOpenConfirmed} as={Fragment}>
+        <Dialog
+          as="div"
+          className="fixed inset-0 z-10 overflow-y-auto"
+          onClose={closeModaladdConfirmed}
+        >
+          <div className="min-h-screen px-4 text-center">
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <Dialog.Overlay className="fixed inset-0" />
+            </Transition.Child>
+
+            <span
+              className="inline-block h-screen align-middle"
+              aria-hidden="true"
+            >
+              &#8203;
+            </span>
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0 scale-95"
+              enterTo="opacity-100 scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 scale-100"
+              leaveTo="opacity-0 scale-95"
+            >
+              <div className=" text-[#356E79] inline-block w-full max-w-lg p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                {loading ? (
+                  <div className="flex justify-center ">
+                    <p className="font-bold"> Loading</p>
+                    <ReactLoading
+                      className="ml-4 "
+                      type={"spin"}
+                      color={"#356E79"}
+                      height={"20px"}
+                      width={"30px"}
+                    ></ReactLoading>
+                  </div>
+                ) : adminVisit.length > 0 ? (
+                  <div className=" text-[#356E79] inline-block w-full max-w-lg p-6 mb-5 overflow-hidden text-left align-middle transition-all transform ">
+                    <Dialog.Title
+                      as="h3"
+                      className=" text-[#356E79] flex justify-start text-xl font-bold leading-6  border-b-2 py-3 border-gray-500"
+                    >
+                      Data Pasien
+                    </Dialog.Title>
+                    <div className=" grid grid-cols-2 text-medium w-full mt-5 text-[#356E79] ">
+                      <p className="font-bold">NIK</p>
+                      <p className=' px-1 py-1 font-normal relative before:content-[":"] before:absolute before:left-[-10px]'>
+                        {" "}
+                        {adminVisit[0] ? adminVisit[0].nik : "~"}
+                      </p>
+                      <p className="font-bold">Nama Lengkap</p>
+                      <p className=' px-1 py-1 font-normal relative before:content-[":"] before:absolute before:left-[-10px]'>
+                        {" "}
+                        {adminVisit[0] ? adminVisit[0].patientName : "~"}
+                      </p>
+                      <p className="font-bold">Jenis Kelamin</p>
+                      <p className=' px-1 py-1 font-normal relative before:content-[":"] before:absolute before:left-[-10px]'>
+                        {" "}
+                        {adminVisit[0] ? adminVisit[0].gender : "~"}
+                      </p>
+                      <p className="font-bold">Waktu Kunjungan</p>
+                      <p className=' px-1 py-1 font-normal relative before:content-[":"] before:absolute before:left-[-10px]'>
+                        {" "}
+                        {adminVisit[0] ? adminVisit[0].date : "~"}
+                      </p>
+                      <p className="font-bold">Complain</p>
+                      <p className=' px-1 py-1 font-normal relative before:content-[":"] before:absolute before:left-[-10px]'>
+                        {adminVisit[0] ? adminVisit[0].complaint : "~"}
+                      </p>
+                    </div>
+                    <p className="font-bold">Complain </p>
+                    <textarea
+                      className="px-2  py-1 border-2 w-full min-h-[100px] border-gray-700 rounded-lg"
+                      type="text"
+                      onChange={(e) => setComplaint(e.target.value)}
+                    />
+                    <div className="flex justify-end mt-5 space-x-2 ">
+                      <button
+                        type="button"
+                        className=" text-xs inline-flex justify-center px-2 py-2  font-medium text-white bg-[#356E79] border border-transparent rounded-lg hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+                        onClick={closeModalAddVisit}
+                      >
+                        close detail
+                      </button>
+                      <button
+                        type="button"
+                        className="inline-flex justify-center px-2 py-2 text-xs font-medium text-white bg-[#356E79] border border-transparent rounded-lg hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+                        onClick={() =>
+                          submitVisit(dataDetailPatient.patient_uid)
+                        }
+                      >
+                        Tambah Kunjungan
+                      </button>
+                    </div>
+                  </div>
+                ) : null}
               </div>
             </Transition.Child>
           </div>
@@ -922,16 +1128,16 @@ function Index() {
                     <p className="">{el.gender} </p>
                     <p className=""> {el.nik} </p>
                     <div className="flex text-xs mt-3">
-                      <p className="bg-yellow-300 font-semibold drop-shadow-lg rounded-md px-2 py-1">
-                        pending
-                      </p>
-                      <p
-                        className="border-2 rounded-md font-semibold ml-10 px-2 py-1 cursor-pointer hover:bg-[#324B50] hover:text-white"
-                        onClick={() => openModalAddVisit(el.patient_uid)}
-                      >
-                        {" "}
-                        Konfirmasi
-                      </p>
+                      {handleStatus(el.status)}
+                      {el.status === "ready" || el.status === "pending" ? (
+                        <p
+                          className="border-2 rounded-md font-semibold ml-10 px-2 py-1 cursor-pointer hover:bg-[#324B50] hover:text-white"
+                          onClick={() => openModalConfirmedVisit(el.nik)}
+                        >
+                          {" "}
+                          Konfirmasi
+                        </p>
+                      ) : null}
                     </div>
                   </div>
                 ))

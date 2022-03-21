@@ -15,6 +15,7 @@ import { getVisitList } from "./getVisitList";
 import { todayVisitList } from "./todayVsitAction";
 import { detailPatient, patientDiagnose } from "./detailPatientAction";
 import { getAllPatient } from "./getAllPatientAction";
+import { addConfirmVisit } from "./adminConfirmedVisit";
 
 const allStore = {
   getAllDoctors,
@@ -33,6 +34,7 @@ const allStore = {
   detailPatient,
   patientDiagnose,
   getAllPatient,
+  addConfirmVisit,
 };
 
 export default allStore;
