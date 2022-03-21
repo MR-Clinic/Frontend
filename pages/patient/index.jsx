@@ -242,7 +242,7 @@ function Index() {
       <Navbar dataPatient={dataPatient ? dataPatient : false} />
 
       {/* profile section */}
-      <div className="bg-[#E4F5E9] h-full text-[#356E79]">
+      <div className="bg-[#E4F5E9] min-h-screen text-[#356E79]">
         <div className="grid grid-cols-5 py-5 mx-[4%] gap-5">
           <div className="col-span-2">
             <p className="font-bold text-xl mb-5"> Profile Data</p>
