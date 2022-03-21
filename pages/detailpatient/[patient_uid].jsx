@@ -8,7 +8,7 @@ import allStore from "../../store/actions";
 
 function Id() {
   const router = useRouter();
-  const { patient_uid } = router.query;
+  const patient_uid  = typeof window !== "undefined" ? localStorage.getItem("pasienUid") : null;;
 
   const dispatch = useDispatch();
 
@@ -16,14 +16,17 @@ function Id() {
     (data) => data.detailPatientReducer.detailPatient
   );
   const dataDiagnose = useSelector(
-    (data) => data.detailPatientReducer.patientDiagnose
+    (data) => data.detailPatientReducer.patientDiagnose.visits
   );
 
   useEffect(() => {
-    console.log("masuk use effect patient uid");
+    console.log("masuk use effect patient uid", dataDiagnose);
     if (patient_uid) {
-      dispatch(allStore.detailPatient(patient_uid)),
-        dispatch(allStore.patientDiagnose(patient_uid));
+      dispatch(allStore.detailPatient(patient_uid))
+      .then((el)=>{
+        console.log("then detail",el);
+        dispatch(allStore.patientDiagnose(el.nik));
+      })
     }
   }, [patient_uid]);
 
@@ -31,7 +34,7 @@ function Id() {
     <div>
       <Nav />
       <Sidebar />
-      <div className="bg-[#E4F5E9] text-[#356E79] h-full">
+      <div className="bg-[#E4F5E9] text-[#356E79] min-h-screen">
         <div className="ml-[7%]">
           <p className="font-bold text-xl mb-5 pt-5"> Data Pasien</p>
           <div className="bg-white border-2  mb-5 rounded-lg px-5 w-[40%] drop-shadow-lg">
@@ -82,16 +85,21 @@ function Id() {
               </thead>
               <tbody>
                 {dataDiagnose ? (
-                  <tr className="text-center">
-                    <td className="py-2"> {dataDiagnose.visit_uid}2190129</td>
-                    <td>Tekanan Darah {dataDiagnose.bloodPressuse}</td>
-                    <td>Heart Rate {dataDiagnose.heartRate}</td>
-                    <td>Respiratory Rate {dataDiagnose.respiratoryRate}</td>
-                    <td>Saturasi O2 {dataDiagnose.o2Saturate}</td>
-                    <td>Berat Badan {dataDiagnose.weight}</td>
-                    <td>Tinggi Badan {dataDiagnose.height}</td>
-                    <td>Body Mass Index {dataDiagnose.bmi}</td>
-                  </tr>
+                  dataDiagnose.map((el,i)=>(
+                    el.status === "completed" ?
+                    <tr className="text-center">
+                    <td className="py-2"> {el.visit_uid}</td>
+                    <td>{el.bloodPressuse}</td>
+                    <td>{el.heartRate}</td>
+                    <td>{el.respiratoryRate}</td>
+                    <td>{el.o2Saturate}</td>
+                    <td>{el.weight}</td>
+                    <td>{el.height}</td>
+                    <td>{el.bmi}</td>
+                    </tr>
+                    :
+                    null
+                  ))
                 ) : null}
               </tbody>
             </table>
@@ -111,14 +119,19 @@ function Id() {
               </thead>
               <tbody>
                 {dataDiagnose ? (
+                  dataDiagnose.map((el,i)=>(
+                  el.status === "completed" ?
                   <tr className="text-center">
-                    <td className="py-2">2190129{dataDiagnose.visit_uid}</td>
-                    <td>Tekanan Darah {dataDiagnose.bloodPressuse} </td>
-                    <td>Heart Rate {dataDiagnose.heartRate} </td>
-                    <td>Respiratory rate {dataDiagnose.respiratoryRate} </td>
-                    <td>Saturasi 02 {dataDiagnose.o2Saturate} </td>
-                    <td>Resep Obat{dataDiagnose.recipe} </td>
+                    <td className="py-2">{el.visit_uid}</td>
+                    <td>{el.bloodPressuse} </td>
+                    <td>{el.heartRate} </td>
+                    <td>{el.respiratoryRate} </td>
+                    <td>{el.o2Saturate} </td>
+                    <td>{el.recipe} </td>
                   </tr>
+                  :
+                    null
+                  ))
                 ) : null}
               </tbody>
             </table>
