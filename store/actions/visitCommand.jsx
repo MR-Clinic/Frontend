@@ -3,6 +3,7 @@ import axios from "axios";
 const baseUrl = "https://faliqadlan.cloud.okteto.net/"
 const visitUrl = baseUrl+"visit"
 const Token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+const Vuid = typeof window !== "undefined" ? localStorage.getItem("vuid") : null;
 
 
 export const createVisit = (uid , date)=>{
@@ -51,6 +52,48 @@ export const deleteVisit = (uid) =>{
             .catch(({response})=>{
                 console.log("delete",response.data.message);
                 reject(response.data.message)
+            })
+        })
+    }
+}
+
+export const putVisit = (data) =>{
+    return (dispatch) => {
+        return new Promise((resolve,reject)=>{
+            axios
+            .put(visitUrl+"/"+Vuid, data, {
+                headers:{
+                    Authorization:"Bearer "+Token
+                }
+            })
+            .then(({data})=>{
+                console.log("put :", data);
+                resolve(data)
+            })
+            .catch(({response})=>{
+                console.log("put :",data);
+                reject(response.data.message);
+            })
+        })
+    }
+}
+
+export const visitConfirmed = (data, vUid) =>{
+    return (dispatch) => {
+        return new Promise((resolve,reject)=>{
+            axios
+            .put(visitUrl+"/"+vUid, data, {
+                headers:{
+                    Authorization:"Bearer "+Token
+                }
+            })
+            .then(({data})=>{
+                console.log("put :", data);
+                resolve(data)
+            })
+            .catch(({response})=>{
+                console.log("put :",data);
+                reject(response.data.message);
             })
         })
     }

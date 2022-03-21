@@ -147,7 +147,10 @@ function SignUpPatient() {
   const signUpPart2 = () => {
     setLoading(true);
     const formData = new FormData();
-    
+        
+    formData.append("userName",username)
+    formData.append("email",email)
+    formData.append("password",password)
     formData.append("nik",nik)
     formData.append("name",full_name)
     formData.append("address",address)
@@ -501,7 +504,7 @@ function SignUpPatient() {
                                     </div>
                                   </Menu.Item>
                                   <Menu.Item>
-                                    <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{religionSet("katholik"); setOptSel3("Katholik")}}>
+                                    <div className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md" onClick={()=>{religionSet("katolik"); setOptSel3("Katholik")}}>
                                       <span className="w-full ">
                                         Katholik
                                       </span>

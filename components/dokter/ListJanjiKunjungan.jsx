@@ -23,6 +23,7 @@ function ListJanjiKunjungan() {
     const [Pekerjaan, PekerjaanSet] = useState("~")
     const [complaint, complaintSet] = useState("~")
     const [pasienUid, pasienUidSet] = useState("")
+    const [before, beforeSet] = useState("")
 
     const route = useRouter();
     
@@ -62,6 +63,12 @@ function ListJanjiKunjungan() {
             Ready
           </p>
         )
+      } else if(e === "completed"){
+        return (
+          <p className="bg-green-200 text-green-800 font-semibold drop-shadow-lg rounded-md px-2 py-1 ">
+            Completed
+          </p>
+        )
       } else {
         return (
           <p className="bg-red-200 text-red-800 font-semibold drop-shadow-lg rounded-md px-2 py-1 ">
@@ -73,21 +80,23 @@ function ListJanjiKunjungan() {
 
     function handleModal(e) {
       setIsOpen(true);
-      let id = e.target.id
-      pasienUidSet(e.target.id);
-      localStorage.setItem("vuid", e.target.attributes.visit_uid.value);
+      let id = e.patient_uid;
+      let vuid = e.visit_uid;
+      console.log("modal ",id, vuid);
+      pasienUidSet(id);
+      localStorage.setItem("vuid", vuid);
       // console.log(e.target.attributes.visit_uid.value);
       dispatch(allStore.getPatientModal(id))
-      .then((e)=>{
-        NIKSet(e.nik)
-        NamaSet(e.name)
-        JenisSet(e.gender)
-        AlamatSet(e.address)
-        TempatSet(e.placeBirth+", "+e.dob)
-        AgamaSet(e.religion)
-        StatusSet(e.status)
-        PekerjaanSet(e.job)
-        complaintSet(e.complaint)
+      .then((el)=>{
+        NIKSet(el.nik)
+        NamaSet(el.name)
+        JenisSet(el.gender)
+        AlamatSet(el.address)
+        TempatSet(el.placeBirth+", "+el.dob)
+        AgamaSet(el.religion)
+        StatusSet(el.status)
+        PekerjaanSet(el.job)
+        complaintSet(e.complaint);
       })
       .catch((e)=>{
         setIsOpen(false);
@@ -197,7 +206,7 @@ function ListJanjiKunjungan() {
                   <button
                     type="button"
                     className="inline-flex justify-center px-2 py-2 text-xs font-medium text-white bg-[#356E79] border border-transparent rounded-lg hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                    onClick={()=>{route.push("/checkup/"+pasienUid)}}
+                    onClick={()=>{localStorage.setItem("complaint", complaint);route.push("/checkup/"+pasienUid)}}
                   >
                     Periksa Sekarang
                   </button>
@@ -210,18 +219,21 @@ function ListJanjiKunjungan() {
       <div className="flex flex-wrap items-start mt-10">
         {listJK ?
           listJK.map((e,i)=>(
-            <div key={i} className="bg-white rounded-lg p-5 flex flex-col drop-shadow-lg items-start ml-5 w-[220px] mb-5">
+            e.status !== "completed" ? 
+            <div key={i} className="bg-white rounded-lg p-5 flex flex-col drop-shadow-lg items-start ml-5 w-[220px] mb-5 capitalize">
               <p className="text-xl font-bold"> {e.patientName} </p>
               <p className=""> {e.gender} </p>
               <p className=""> </p>
               <div className="flex text-xs mt-3">
                 {handleStatus(e.status)}
-                <p className="border-2 rounded-md font-semibold ml-10 px-1 py-1 cursor-pointer" id ={e.patient_uid} visit_uid={e.visit_uid} onClick={handleModal}>
+                <p className="border-2 rounded-md font-semibold ml-10 px-1 py-1 cursor-pointer"  onClick={(el)=>handleModal(e)}>
                   {" "}
                   Detail Data
                 </p>
               </div>
             </div>
+            :
+            null
           )) 
           :
           null

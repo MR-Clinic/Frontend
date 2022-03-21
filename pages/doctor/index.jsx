@@ -21,17 +21,29 @@ function Dashboard() {
   );
 
   useEffect(() => {
-    dispatch(allStore.totalPasien(uid)).then((e) => {
-      pasienSumSet(e.data.visits.length);
-    });
-    dispatch(allStore.kunjunganTotalToday(uid)).then((e) => {
-      kunjunganTotalTodaySet(e.data.visits.length);
-    });
-    dispatch(allStore.kunjunganTotal(uid)).then((e) => {
-      kunjunganTotalSet(e.data.visits.length);
-    });
-    dispatch(allStore.getDoctorProfile(token));
-    console.log("run Dispatch");
+      dispatch(allStore.totalPasien(uid)).then((e) => {
+        pasienSumSet(e.data.visits.length);
+      });
+      dispatch(allStore.kunjunganTotalToday(uid)).then((e) => {
+        kunjunganTotalTodaySet(e.data.visits.length);
+      });
+      dispatch(allStore.kunjunganTotal(uid)).then((e) => {
+        kunjunganTotalSet(e.data.visits.length);
+      });
+      dispatch(allStore.getDoctorProfile(token));    
+    const interval = setInterval(() => {
+      dispatch(allStore.totalPasien(uid)).then((e) => {
+        pasienSumSet(e.data.visits.length);
+      });
+      dispatch(allStore.kunjunganTotalToday(uid)).then((e) => {
+        kunjunganTotalTodaySet(e.data.visits.length);
+      });
+      dispatch(allStore.kunjunganTotal(uid)).then((e) => {
+        kunjunganTotalSet(e.data.visits.length);
+      });
+      dispatch(allStore.getDoctorProfile(token));    
+    }, 10000);
+    return () => clearInterval(interval);
   }, [dispatch]);
 
   useEffect(() => {

@@ -5,8 +5,7 @@ const getToken =
   typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
 export const getPatientList = () => {
-  return () => {
-    
+  return (dispatch) => {
     const getType =
       typeof window !== "undefined" ? localStorage.getItem("profile") : null;
     const getdoctorUid =
@@ -19,8 +18,8 @@ export const getPatientList = () => {
         },
 
         params: {
-          kind: `${getType}`,
-          uid: `${getdoctorUid}`,
+          // kind: `${getType}`,
+          // uid: `${getdoctorUid}`,
           grouped: "patient",
         },
       })
@@ -29,7 +28,7 @@ export const getPatientList = () => {
         console.log(response);
       })
       .catch((response) => {
-        alert(response);
+        console.log(response);
       });
   };
 };

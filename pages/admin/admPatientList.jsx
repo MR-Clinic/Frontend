@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import Nav from "../../components/nav";
-import Sidebar from "../../components/sidebar";
 import allStore from "../../store/actions";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,27 +8,24 @@ function AdmPatientList() {
   const router = useRouter();
   const dispatch = useDispatch();
   const dataPatientList = useSelector(
-    (data) => data.patientListReducer.adminPatientList
+    (data) => data.getPatientListReducer.listPatient
   );
+
   const getType =
     typeof window !== "undefined" ? localStorage.getItem("profile") : null;
 
   useEffect(() => {
-    if (getType !== "doctor") {
+    if (getType !== "admin") {
       router.push("/404");
     } else {
       dispatch(allStore.getPatientList());
     }
-  });
-
-  // useEffect(() => {
-  //   dispatch(allStore.getPatientList());
-  // }, [dispatch]);
+  }, [dispatch]);
 
   return (
     <>
       <Nav />
-      <Sidebar />
+
       <div className="bg-[#E4F5E9] h-screen text-[#324B50]">
         <div className="ml-[7%]">
           <p className="text-2xl font-bold pt-5 mb-3"> Daftar Pasien</p>
