@@ -71,6 +71,7 @@ function Login() {
         }, 3000);
         localStorage.setItem("token", response.data.data.token);
         localStorage.setItem("profile", response.data.data.type);
+        localStorage.setItem("doctor_uid", response.data.data.doctor_uid);
         if (typeProfile === "doctor") {
           route.push("/doctor");
         } else if (typeProfile === "patient") {
@@ -130,19 +131,31 @@ function Login() {
                 {/* input button */}
                 <div>
                   <div className={form.inputDiv}>
-                      <div>
-                        <div className={form.input}>
-                          <input type="text" className={form.inputStyle + " pr-[30px]"}  id="nik" placeholder="Username" onChange={(e) => setUsername(e.target.value)}/>
-                          <FiUser/>
-                        </div>
-                      </div>
-                      <div>
-                        <div className={form.input}>
-                          <input type="password" className={form.inputStyle + " pr-[30px]"}  id="full_name" placeholder="Password" onChange={(e) => setPassword(e.target.value)}/>
-                          <MdOutlineVpnKey/>
-                        </div>
+                    <div>
+                      <div className={form.input}>
+                        <input
+                          type="text"
+                          className={form.inputStyle + " pr-[30px]"}
+                          id="nik"
+                          placeholder="Username"
+                          onChange={(e) => setUsername(e.target.value)}
+                        />
+                        <FiUser />
                       </div>
                     </div>
+                    <div>
+                      <div className={form.input}>
+                        <input
+                          type="password"
+                          className={form.inputStyle + " pr-[30px]"}
+                          id="full_name"
+                          placeholder="Password"
+                          onChange={(e) => setPassword(e.target.value)}
+                        />
+                        <MdOutlineVpnKey />
+                      </div>
+                    </div>
+                  </div>
                   {loading ? (
                     <div className="flex justify-center ">
                       <button

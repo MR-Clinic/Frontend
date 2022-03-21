@@ -7,15 +7,15 @@ import swal from "sweetalert";
 import Router, { useRouter } from "next/router";
 
 function NavDashboard(props) {
-  const getToken =
-    typeof window !== "undefined" ? localStorage.getItem("token") : null;
   let name =
     typeof window !== "undefined" ? localStorage.getItem("name") : null;
+  const getType =
+    typeof window !== "undefined" ? localStorage.getItem("profile") : null;
 
   function Logout() {
-    if (getToken) {
-      localStorage.clear();
+    {
       Router.push("/");
+      localStorage.clear();
     }
   }
 
@@ -39,14 +39,20 @@ function NavDashboard(props) {
             <div className="flex justify-between">
               <div className="flex ">
                 <div className="flex flex-col mr-5 ">
-                  <p className="font-bold text-right text-lg w-[200px]">
-                    dr.
-                    {name
-                      ? name
-                      : props.dataDoctor
-                      ? props.dataDoctor.name
-                      : ""}
-                  </p>
+                  {getType === "admin" ? (
+                    <p className="font-bold text-right text-lg w-[200px]">
+                      admin
+                    </p>
+                  ) : (
+                    <p className="font-bold text-right text-lg w-[200px]">
+                      dr.
+                      {name
+                        ? name
+                        : props.dataDoctor
+                        ? props.dataDoctor.name
+                        : ""}
+                    </p>
+                  )}
                   <p className="font-light text-sm text-right"> Dokter Umum</p>
                 </div>
                 <div className="w-[50px] rounded-full mr-5">

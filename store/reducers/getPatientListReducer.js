@@ -1,10 +1,10 @@
-const initialState = { adminPatientList: [], isLoading: true };
+const initialState = { listPatient: [], isLoading: true };
 
 const patientListReducer = (state = initialState, action) => {
   if (action.type === "SET_PATIENT_LIST") {
     return {
       ...state,
-      adminPatientList: action.payload,
+      listPatient: action.payload,
     };
   }
   return state;

@@ -10,14 +10,15 @@ import {
   getAllJK,
   getPatientModal,
   getJKByDate,
-  getVisitPatient
 } from "./dashboardDoctor";
 import { getPatientList } from "./getPatientList";
 import { getVisitList } from "./getVisitList";
 import { todayVisitList } from "./todayVsitAction";
 import { detailPatient, patientDiagnose } from "./detailPatientAction";
+import { getAllPatient } from "./getAllPatientAction";
 import { checkDoctorEmail, checkPatientEmail, checkDoctorUsername, doDoctorCompleteForm, checkPatientUsername ,doPatientCompleteForm } from "./loginRegister";
-import { createVisit, deleteVisit, putVisit } from "./visitCommand";
+import { createVisit, deleteVisit, putVisit, visitConfirmed } from "./visitCommand";
+import { addConfirmVisit } from "./adminConfirmedVisit"
 
 const allStore = {
   getAllDoctors,
@@ -36,6 +37,8 @@ const allStore = {
   todayVisitList,
   detailPatient,
   patientDiagnose,
+  getAllPatient,
+  addConfirmVisit,
   checkDoctorUsername,
   checkDoctorEmail,
   doDoctorCompleteForm,
@@ -45,9 +48,8 @@ const allStore = {
   getJKByDate,
   createVisit,
   deleteVisit,
-  getVisitPatient,
-  putVisit
-  
+  putVisit,
+  visitConfirmed
 };
 
 export default allStore;
