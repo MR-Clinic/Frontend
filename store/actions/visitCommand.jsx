@@ -76,3 +76,24 @@ export const putVisit = (data) =>{
         })
     }
 }
+
+export const visitConfirmed = (data, vUid) =>{
+    return (dispatch) => {
+        return new Promise((resolve,reject)=>{
+            axios
+            .put(visitUrl+"/"+vUid, data, {
+                headers:{
+                    Authorization:"Bearer "+Token
+                }
+            })
+            .then(({data})=>{
+                console.log("put :", data);
+                resolve(data)
+            })
+            .catch(({response})=>{
+                console.log("put :",data);
+                reject(response.data.message);
+            })
+        })
+    }
+}
