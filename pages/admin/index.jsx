@@ -173,21 +173,12 @@ function Index() {
   };
 
   //konfirmasi kunjungan
-  const openModalConfirmedVisit = (nik) => {
-    console.log("confirmed");
+  const openModalConfirmedVisit = (nik, el) => {
+    console.log("confirmed", dataTodayVisit);
     setIsOpenConfirmed(true);
     setLoading(true);
     dispatch(allStore.addConfirmVisit(nik));
     setLoading(false);
-    // .then((response) => {
-    //   setDataDetailVisit(response);
-    // })
-    // .catch((error) => {
-    //   console.log(error);
-    // })
-    // .finally(() => {
-    //   setLoading(false);
-    // });
   };
 
   //visit regist
@@ -227,38 +218,38 @@ function Index() {
   };
 
   //edit complain
-  const putComplain = () => {
+  const putComplain = (e) => {
     setLoading(true);
+    console.log("put Inbound",e);
     const body = {
       complaint: complaint,
-      date: dateSubmit,
-      doctor_uid: uid,
+      status : "ready"
     };
-    axios
-      .post(baseUrl, formData)
-      .then(() => {
-        swal(
-          "Selamat register berhasil !",
-          "Pasien Berhasil Ditambahkan",
-          "success"
-        );
-        dispatch(allStore.getAllPatient());
-        setTimeout(() => {
-          swal.close();
-        }, 3000);
-        closeModalAddPatient();
-      })
-      .catch((error) => {
-        console.log(error);
-        swal(
-          "sorry!",
-          "register gagal, email sudah digunakan atau user sudah terdaftar",
-          "error"
-        );
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+
+    dispatch(allStore.visitConfirmed(body,e))
+    .then(() => {
+      swal(
+        "Selamat register berhasil !",
+        "Pasien Berhasil Ditambahkan",
+        "success"
+      );
+      dispatch(allStore.getAllPatient());
+      setTimeout(() => {
+        swal.close();
+      }, 3000);
+      closeModalAddPatient();
+    })
+    .catch((error) => {
+      console.log(error);
+      swal(
+        "sorry!",
+        "register gagal, email sudah digunakan atau user sudah terdaftar",
+        "error"
+      );
+    })
+    .finally(() => {
+      setLoading(false);
+    });
   };
 
   const dispatch = useDispatch();
@@ -369,102 +360,6 @@ function Index() {
   return (
     <div>
       {/* modal konfirmasi kunjungan */}
-      <Transition appear show={isOpenVisit} as={Fragment}>
-        <Dialog
-          as="div"
-          className="fixed inset-0 z-10 overflow-y-auto"
-          onClose={closeModalVisit}
-        >
-          <div className="min-h-screen px-4 text-center">
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <Dialog.Overlay className="fixed inset-0" />
-            </Transition.Child>
-
-            <span
-              className="inline-block h-screen align-middle"
-              aria-hidden="true"
-            >
-              &#8203;
-            </span>
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 scale-95"
-              enterTo="opacity-100 scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 scale-100"
-              leaveTo="opacity-0 scale-95"
-            >
-              <div className=" text-[#356E79] inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
-                <Dialog.Title
-                  as="h3"
-                  className=" text-[#356E79] flex justify-start text-xl font-bold leading-6  border-b-2 py-3 border-gray-500"
-                >
-                  Data Umum
-                </Dialog.Title>
-
-                <div className=" grid grid-cols-2 text-medium w-full mt-5 ">
-                  <div className="space-y-2 pl-2 text-sm">
-                    {" "}
-                    <p className="font-bold"> NIK </p>
-                    <p className="font-bold"> Nama Lengkap </p>
-                    <p className="font-bold"> Jenis Kelamin </p>
-                    <p className="font-bold"> Alamat </p>
-                    <p className="font-bold"> Tempat/Tanggal Lahir </p>
-                    <p className="font-bold"> Agama </p>
-                    <p className="font-bold"> Status </p>
-                    <p className="font-bold"> Pekerjaan </p>
-                  </div>
-                  <div className="grid items-end space-y-2 pl-5 text-sm">
-                    <p> : 121212121212</p>
-                    <p> : Muhammad Rizki Adiwiganda</p>
-                    <p> : Pria</p>
-                    <p> : Jl. ABCD efghjkkk </p>
-                    <p> : Medan, 22 November 1997</p>
-                    <p> : Islam</p>
-                    <p> : Lajang</p>
-                    <p> : Web Developer</p>
-                  </div>
-                </div>
-
-                <p className=" form-textarea text-[#356E79] flex justify-start text-xl font-bold leading-6 border-b-2 border-gray-500 py-3">
-                  {" "}
-                  Keluhan
-                </p>
-                <textarea
-                  className="border w-11/12 h-[100px] border-[#356E79] rounded-md active:border-[#356E79] mt-5"
-                  type="text"
-                />
-
-                <div className="flex justify-end mt-5 space-x-2 ">
-                  <button
-                    type="button"
-                    className=" text-xs inline-flex justify-center px-2 py-2  font-medium text-white bg-[#356E79] border border-transparent rounded-lg hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                  >
-                    cancel
-                  </button>
-                  <button
-                    type="button"
-                    className="inline-flex justify-center px-2 py-2 text-xs font-medium text-white bg-[#356E79] border border-transparent rounded-lg hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                  >
-                    Konfirmasi Kunjungan
-                  </button>
-                </div>
-              </div>
-            </Transition.Child>
-          </div>
-        </Dialog>
-      </Transition>
-
-      {/* modal konfirmasi kunjungan */}
       <Transition appear show={isOpenConfirmed} as={Fragment}>
         <Dialog
           as="div"
@@ -540,15 +435,12 @@ function Index() {
                         {" "}
                         {adminVisit[0] ? adminVisit[0].date : "~"}
                       </p>
-                      <p className="font-bold">Complain</p>
-                      <p className=' px-1 py-1 font-normal relative before:content-[":"] before:absolute before:left-[-10px]'>
-                        {adminVisit[0] ? adminVisit[0].complaint : "~"}
-                      </p>
                     </div>
-                    <p className="font-bold">Complain </p>
+                    <p className="font-bold">Keluhan </p>
                     <textarea
                       className="px-2  py-1 border-2 w-full min-h-[100px] border-gray-700 rounded-lg"
                       type="text"
+                      placeholder={adminVisit[0] ? adminVisit[0].complaint : "~"}
                       onChange={(e) => setComplaint(e.target.value)}
                     />
                     <div className="flex justify-end mt-5 space-x-2 ">
@@ -563,10 +455,10 @@ function Index() {
                         type="button"
                         className="inline-flex justify-center px-2 py-2 text-xs font-medium text-white bg-[#356E79] border border-transparent rounded-lg hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
                         onClick={() =>
-                          submitVisit(dataDetailPatient.patient_uid)
+                          putComplain(adminVisit[0].visit_uid)
                         }
                       >
-                        Tambah Kunjungan
+                        Konfirmasi Kunjungan
                       </button>
                     </div>
                   </div>
@@ -625,7 +517,7 @@ function Index() {
                     ></ReactLoading>
                   </div>
                 ) : dataDetailPatient ? (
-                  <div className=" text-[#356E79] inline-block w-full max-w-lg p-6 mb-5 overflow-hidden text-left align-middle transition-all transform ">
+                  <div className=" text-[#356E79] inline-block w-full max-w-lg px-6 mb-5 overflow-hidden text-left align-middle transition-all transform ">
                     <Dialog.Title
                       as="h3"
                       className=" text-[#356E79] flex justify-start text-xl font-bold leading-6  border-b-2 py-3 border-gray-500"
@@ -674,7 +566,7 @@ function Index() {
                         {dataDetailPatient ? dataDetailPatient.job : "~"}
                       </p>
                     </div>
-                    <p className="font-bold">Complain </p>
+                    <p className="font-bold mt-2">Keluhan </p>
                     <textarea
                       className="px-2  py-1 border-2 w-full min-h-[100px] border-gray-700 rounded-lg"
                       type="text"
@@ -757,7 +649,7 @@ function Index() {
                       <span>NIK</span>
                       <div className={form.input}>
                         <input
-                          autocomplete="off"
+                          autoComplete="off"
                           type="text"
                           className="{form.inputStyle} "
                           id="nik"
@@ -1132,7 +1024,7 @@ function Index() {
                       {el.status === "ready" || el.status === "pending" ? (
                         <p
                           className="border-2 rounded-md font-semibold ml-10 px-2 py-1 cursor-pointer hover:bg-[#324B50] hover:text-white"
-                          onClick={() => openModalConfirmedVisit(el.nik)}
+                          onClick={() => openModalConfirmedVisit(el.nik,el)}
                         >
                           {" "}
                           Konfirmasi
