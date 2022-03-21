@@ -14,7 +14,7 @@ function Check() {
   const date =moment(new Date).format("YYYY")
   const route = useRouter();
   const dispatch = useDispatch()
-  const pasienUid = route.query.pasien_uid
+  const pasienUid = typeof window !== "undefined" ?  localStorage.getItem("pasienUid") : null;
   const [NIK, NIKSet] = useState("~")
   const [Nama, NamaSet] = useState("~")
   const [Jenis, JenisSet] = useState("~")
@@ -51,6 +51,7 @@ function Check() {
   const visitUid = typeof window !== "undefined" ? localStorage.getItem("vuid") : null;
 
   useEffect(()=>{
+    console.log(pasienUid);
     if(pasienUid){
       console.log("vuid" ,visitUid);
       noMRSet(visitUid)
@@ -91,7 +92,7 @@ function Check() {
 
     dispatch(allStore.putVisit(data))
     .then((e)=>{
-      swal("Data Tersimpan","","Success");
+      swal("Data Tersimpan","","success");
       setTimeout(() => {
         swal.close();
         route.push("/doctor")
