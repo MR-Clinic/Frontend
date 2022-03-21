@@ -18,7 +18,8 @@ import { todayVisitList } from "./todayVsitAction";
 import { detailPatient, patientDiagnose } from "./detailPatientAction";
 import { getAllPatient } from "./getAllPatientAction";
 import { checkDoctorEmail, checkPatientEmail, checkDoctorUsername, doDoctorCompleteForm, checkPatientUsername ,doPatientCompleteForm } from "./loginRegister";
-import { createVisit, deleteVisit, putVisit } from "./visitCommand";
+import { createVisit, deleteVisit, putVisit, visitConfirmed } from "./visitCommand";
+import { addConfirmVisit } from "./adminConfirmedVisit"
 
 const allStore = {
   getAllDoctors,
@@ -49,7 +50,8 @@ const allStore = {
   createVisit,
   deleteVisit,
   getVisitPatient,
-  putVisit
+  putVisit,
+  visitConfirmed
 };
 
 export default allStore;

@@ -15,12 +15,11 @@ export const addConfirmVisit = (nik) => {
         params: {
           kind: "patient",
           uid: nik,
-          status: "pending",
         },
       })
       .then((response) => {
         dispatch(setAdminVisit(response.data.data.visits));
-        console.log(response);
+        console.log("confirme visit",response);
       })
       .catch((response) => {
         console.log(response);
