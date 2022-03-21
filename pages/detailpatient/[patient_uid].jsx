@@ -23,7 +23,7 @@ function Id() {
     console.log("masuk use effect patient uid");
     if (patient_uid) {
       dispatch(allStore.detailPatient(patient_uid)),
-        dispatch(allStore.patientDiagnose(patient_uid));
+      dispatch(allStore.patientDiagnose(patient_uid));
     }
   }, [patient_uid]);
 

@@ -199,14 +199,14 @@ function ListJanjiKunjungan() {
                   <button
                     type="button"
                     className=" outline-none text-xs inline-flex justify-center px-2 py-2  font-medium text-white bg-[#356E79] border border-transparent rounded-lg hover:bg-green-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                    onClick={()=>{route.push("/detailpatient/"+pasienUid)}}
+                    onClick={()=>{route.push("/detailpatient/"+pasienUid); }}
                   >
                     Lihat Detail Pasien
                   </button>
                   <button
                     type="button"
                     className="inline-flex justify-center px-2 py-2 text-xs font-medium text-white bg-[#356E79] border border-transparent rounded-lg hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                    onClick={()=>{localStorage.setItem("complaint", complaint);route.push("/checkup/"+pasienUid)}}
+                    onClick={()=>{localStorage.setItem("pasienUid",pasienUid);localStorage.setItem("complaint", complaint);route.push("/checkup/"+pasienUid)}}
                   >
                     Periksa Sekarang
                   </button>

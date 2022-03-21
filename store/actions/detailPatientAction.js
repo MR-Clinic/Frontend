@@ -2,7 +2,7 @@ import axios from "axios";
 
 const baseUrl = "https://faliqadlan.cloud.okteto.net";
 const detailUrl = baseUrl + "/patient/profile?";
-const detailDiagnose = baseUrl + "/visit?";
+const detailDiagnose = baseUrl + "/visit";
 const getToken =
   typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
@@ -27,12 +27,13 @@ export const detailPatient = (patient_uid) => {
 export const patientDiagnose = (patient_uid) => {
   return (dispatch) => {
     axios
-      .get(detailDiagnose + "patient_uid=" + patient_uid, {
+      .get(detailDiagnose, {
         headers: {
           Authorization: "Bearer " + getToken,
         },
         params: {
           kind: "patient",
+          uid: patient_uid,
           status: "ready",
         },
       })
