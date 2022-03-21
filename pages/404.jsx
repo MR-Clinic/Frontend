@@ -19,7 +19,8 @@ function NotFound() {
         router.push("/doctor");
       } else if (getType === "patient") {
         router.push("/patient");
-      } else if (token === null) {
+      }
+      if (token === null) {
         router.push("/login");
       }
     }, 3000);
@@ -34,7 +35,7 @@ function NotFound() {
         </div>
 
         <div className="w-[30%] animate-bounce">
-          <Image src={notfound} />
+          <Image src={notfound} alt="img-404" />
         </div>
       </div>
     </div>

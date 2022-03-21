@@ -7,15 +7,13 @@ import swal from "sweetalert";
 import Router, { useRouter } from "next/router";
 
 function NavDashboard(props) {
-  const getToken =
-    typeof window !== "undefined" ? localStorage.getItem("token") : null;
   let name =
     typeof window !== "undefined" ? localStorage.getItem("name") : null;
 
   function Logout() {
-    if (getToken) {
-      localStorage.clear();
+    {
       Router.push("/");
+      localStorage.clear();
     }
   }
 

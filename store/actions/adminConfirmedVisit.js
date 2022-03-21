@@ -4,13 +4,8 @@ const baseUrl = "https://faliqadlan.cloud.okteto.net/visit";
 const getToken =
   typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
-export const getPatientList = () => {
+export const addConfirmVisit = (nik) => {
   return (dispatch) => {
-    const getType =
-      typeof window !== "undefined" ? localStorage.getItem("profile") : null;
-    const getdoctorUid =
-      typeof window !== "undefined" ? localStorage.getItem("doctor_uid") : null;
-
     axios
       .get(baseUrl, {
         headers: {
@@ -18,13 +13,13 @@ export const getPatientList = () => {
         },
 
         params: {
-          // kind: `${getType}`,
-          // uid: `${getdoctorUid}`,
-          grouped: "patient",
+          kind: "patient",
+          uid: nik,
+          status: "pending",
         },
       })
       .then((response) => {
-        dispatch(setPatientList(response.data.data.visits));
+        dispatch(setAdminVisit(response.data.data.visits));
         console.log(response);
       })
       .catch((response) => {
@@ -33,9 +28,9 @@ export const getPatientList = () => {
   };
 };
 
-export const setPatientList = (payload) => {
+export const setAdminVisit = (payload) => {
   return {
-    type: "SET_PATIENT_LIST",
+    type: "SET_ADMIN_VISIT",
     payload,
   };
 };
