@@ -5,10 +5,8 @@ const getToken =
   typeof window !== "undefined" ? localStorage.getItem("token") : null;
 const nik = typeof window !== "undefined" ? localStorage.getItem("uid") : null;
 
-
 export const getHistoryVisit = (isJanjiKunjungan, statusParam) => {
   return (dispatch) => {
-    
     const getType =
       typeof window !== "undefined" ? localStorage.getItem("profile") : null;
     const getUid =
@@ -23,7 +21,7 @@ export const getHistoryVisit = (isJanjiKunjungan, statusParam) => {
         params: {
           kind: `${getType}`,
           uid: `${getUid}`,
-          status: statusParam,
+          status: "pending",
         },
       })
       .then((response) => {
@@ -40,26 +38,27 @@ export const getHistoryVisit = (isJanjiKunjungan, statusParam) => {
 };
 
 export const getAllHistoryVisit = () => {
-  return (dispatch)=>{
+  return (dispatch) => {
     axios
-    .get(baseUrl,{
-      headers:{
-        Authorization: "Bearer " + getToken,
-      },
-      params:{
-        kind:"patient",
-        uid: nik
-      }
-    })
-    .then((response) => {
-      console.log("all",response.data.data.visits, nik);
+      .get(baseUrl, {
+        headers: {
+          Authorization: "Bearer " + getToken,
+        },
+        params: {
+          kind: "patient",
+          uid: nik,
+          status: "completed",
+        },
+      })
+      .then((response) => {
+        console.log("all", response.data.data.visits, nik);
         dispatch(setListHistoryVisit(response.data.data.visits));
-    })
-    .catch((error) => {
-      console.log("cek error", error);
-    });
-  }
-}
+      })
+      .catch((error) => {
+        console.log("cek error", error);
+      });
+  };
+};
 
 export const setListHistoryVisit = (payload) => {
   return {
