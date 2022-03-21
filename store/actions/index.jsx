@@ -10,7 +10,6 @@ import {
   getAllJK,
   getPatientModal,
   getJKByDate,
-  getVisitPatient,
 } from "./dashboardDoctor";
 import { getPatientList } from "./getPatientList";
 import { getVisitList } from "./getVisitList";
@@ -56,7 +55,6 @@ const allStore = {
   getJKByDate,
   createVisit,
   deleteVisit,
-  getVisitPatient,
   putVisit,
 };
 

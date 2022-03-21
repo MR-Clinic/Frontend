@@ -9,7 +9,7 @@ function PatientList() {
   const router = useRouter();
   const dispatch = useDispatch();
   const getPatientList = useSelector(
-    (data) => data.patientListReducer.adminPatientList
+    (data) => data.getPatientListReducer.listPatient
   );
   const getType =
     typeof window !== "undefined" ? localStorage.getItem("profile") : null;

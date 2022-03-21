@@ -753,7 +753,7 @@ function Index() {
                       <span>NIK</span>
                       <div className={form.input}>
                         <input
-                          autocomplete="off"
+                          autoComplete="off"
                           type="text"
                           className="{form.inputStyle} "
                           id="nik"
