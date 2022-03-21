@@ -14,7 +14,8 @@ import ReactLoading from "react-loading"
 
 function Index() {
   const [isOpen, setIsOpen] = useState(false);
-  const [load, setLoad] = useState(true);
+  const [loadJK, loadJKSet] = useState(false);
+  const [loadCK, loadCKSet] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
   
@@ -38,7 +39,7 @@ function Index() {
   const [doctor_uid, doctor_uidSet] = useState("");
   const [doctor_cap, doctor_capSet] = useState("");
   const [cap,capSet] = useState("~");
-          
+  
   //Placeholder Date
   const today = moment(new Date()).format("YYYY-MM-DD");
   const [date, setDate] = useState("");
@@ -231,6 +232,10 @@ function Index() {
                       }}
                     >
                       tambah janji
+                      {loadJK ?
+                              <ReactLoading className="ml-2 mb-2 inline-block" type={"spin"} color={"#ffffff"} height={"10px"} width={"20px"}/>
+                      : null
+                      }
                     </button>
                   </div>
                 </div>
@@ -294,8 +299,12 @@ function Index() {
                       <p className="col-span-2 before:content-[':'] before:mr-2">{dataAppointment[0].doctorAddress}</p>
                   </div>
                   
-                  <button className="w-3/12 border-red-500 border-2 col-span-1 mt-5 px-2 py-2 rounded-[5px] text-red-700 capitalize text-sm font-bold" onClick={()=>cancelJK(dataAppointment[0].visit_uid)}>
-                    Batalkan Janji
+                  <button className="w-3/12 border-red-500 border-2 col-span-1 mt-5 px-2 py-3 rounded-[5px] text-red-700 capitalize text-sm font-bold flex justify-center items-center" onClick={()=>cancelJK(dataAppointment[0].visit_uid)}>
+                    Batalkan Janji 
+                    {loadCK ?
+                      <ReactLoading className="ml-2 mb-2 inline-block" type={"spin"} color={"#b91c1c"} height={"10px"} width={"20px"}/>
+                    : null
+                    }
                   </button>
                   </>
                 ) : (
