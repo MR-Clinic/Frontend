@@ -9,6 +9,8 @@ import { Menu, Transition } from "@headlessui/react";
 import { BsChevronDown } from "react-icons/bs"
 import swal from "sweetalert";
 import moment from "moment";
+import ReactLoad from "react-loading";
+
 function Check() {
 
   const date =moment(new Date).format("YYYY")
@@ -46,6 +48,7 @@ function Check() {
   const [dosisSel, dosisSelSet] = useState("Hari / Minggu");
   const [resepList , resepListSet ] = useState([]);
 
+  const [loadSubmit, loadSubmitSet] =useState(false);
 
   const DoctorUid = typeof window !== "undefined" ? localStorage.getItem("doctor_uid") : null;
   const visitUid = typeof window !== "undefined" ? localStorage.getItem("vuid") : null;
@@ -73,6 +76,7 @@ function Check() {
   },[])
 
   function handleSubmit(){
+    loadSubmitSet(true)
     let recipe = ""
     for (let i = 0; i < resepList.length; i++) {
         recipe += ", "+resepList[i].namaObat+" - "+resepList[i].dosis;      
@@ -96,10 +100,13 @@ function Check() {
       setTimeout(() => {
         swal.close();
         route.push("/doctor")
-      }, 50000);
+      }, 3000);
     })
     .catch((e)=>{
       swal("Data Belum Tersimpan", e+" ,Coba dalam beberapa saat", "error")
+    })
+    .finally(()=>{
+      loadSubmitSet(false)
     })
 
   }
@@ -356,8 +363,19 @@ function Check() {
                     </div>
                   </div>
                   <div className="flex justify-end items-end mt-5  ">
-                    <span className="text-white font-semibold px-6 py-1 bg-[#324B50] rounded-lg hover:opacity-80 cursor-pointer" onClick={handleSubmit}>
+                    <span className="text-white font-semibold px-6 py-2 bg-[#324B50] rounded-lg hover:opacity-80 cursor-pointer flex justify-center items-center" onClick={handleSubmit}>
                       submit
+                      {loadSubmit ? 
+                      <ReactLoad
+                      className="ml-2 mb-2 inline-block"
+                      type={"spin"}
+                      color={"#ffffff"}
+                      height={"15px"}
+                      width={"20px"}
+                      />
+                      :
+                      null
+                    }
                     </span>
                   </div>
                 </div>
