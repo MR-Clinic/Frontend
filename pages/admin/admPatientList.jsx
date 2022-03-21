@@ -15,7 +15,7 @@ function AdmPatientList() {
     typeof window !== "undefined" ? localStorage.getItem("profile") : null;
 
   useEffect(() => {
-    if (getType !== "doctor") {
+    if (getType !== "admin") {
       router.push("/404");
     } else {
       dispatch(allStore.getPatientList());

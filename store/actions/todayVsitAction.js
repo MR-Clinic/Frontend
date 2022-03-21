@@ -9,7 +9,6 @@ date = moment(date).format("DD-MM-YYYY");
 
 export const todayVisitList = () => {
   return (dispatch) => {
-    
     const getType =
       typeof window !== "undefined" ? localStorage.getItem("profile") : null;
     const getdoctorUid =
@@ -22,7 +21,7 @@ export const todayVisitList = () => {
         },
 
         params: {
-          kind: `${getType}`,
+          kind: "doctor",
           uid: `${getdoctorUid}`,
           // status: "pending",
           date: date,
