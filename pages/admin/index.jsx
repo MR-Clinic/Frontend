@@ -68,8 +68,6 @@ function Index() {
     (data) => data.adminConfirmedReducer.adminVisitList
   );
 
-  console.log("ini data admin visit", adminVisit);
-
   //get item local storage
   const token =
     typeof window !== "undefined" ? localStorage.getItem("token") : null;
@@ -184,7 +182,7 @@ function Index() {
   //visit regist
   const submitVisit = (patient_uid) => {
     setLoading(true);
-    alert("masuk");
+
     const body = {
       complaint: complaint,
       date: dateSubmit,
@@ -201,7 +199,6 @@ function Index() {
         },
       })
       .then((response) => {
-        alert("masuk then");
         console.log(response, "respon submit");
         swal("Selamat!", "Complain Berhasil Ditambahkan", "success");
         dispatch(allStore.todayVisitList());
@@ -225,7 +222,6 @@ function Index() {
       complaint: complaint,
       status : "ready"
     };
-
     dispatch(allStore.visitConfirmed(body,e))
     .then(() => {
       swal(
@@ -254,13 +250,12 @@ function Index() {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    if (getType !== "doctor") {
+    if (getType !== "admin") {
       router.push("/404");
     } else {
       dispatch(allStore.todayVisitList());
       dispatch(allStore.getAllPatient());
       dispatch(allStore.getPatientDetails());
-      dispatch(allStore.getDoctorProfile(token));
       dispatch(allStore.totalPasien(uid)).then((e) => {
         pasienSumSet(e.data.visits.length);
       });
@@ -810,7 +805,7 @@ function Index() {
                                 <div
                                   className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md"
                                   onClick={() => {
-                                    statusSet("Belum Kawin");
+                                    statusSet("belumKawin");
                                     setOptSel2("Belum Kawin");
                                   }}
                                 >
@@ -822,7 +817,7 @@ function Index() {
                                   className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md"
                                   onClick={() => {
                                     statusSet("kawin");
-                                    setOptSel2("kawin");
+                                    setOptSel2("Kawin");
                                   }}
                                 >
                                   <span className="w-full ">Kawin</span>
@@ -832,7 +827,7 @@ function Index() {
                                 <div
                                   className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md"
                                   onClick={() => {
-                                    statusSet("Cerai Hidup");
+                                    statusSet("ceraiHidup");
                                     setOptSel2("Cerai Hidup");
                                   }}
                                 >
@@ -843,7 +838,7 @@ function Index() {
                                 <div
                                   className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md"
                                   onClick={() => {
-                                    statusSet("Cerai Mati");
+                                    statusSet("ceraiMati");
                                     setOptSel2("Cerai Mati");
                                   }}
                                 >
@@ -878,12 +873,12 @@ function Index() {
                             leaveFrom="transform opacity-100 scale-100"
                             leaveTo="transform opacity-0 scale-95"
                           >
-                            <Menu.Items className="origin-top-right  mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 max-h-[120px] snap-y overflow-y-scroll focus:outline-none ">
+                            <Menu.Items className="origin-top-right  mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 max-h-[120px] snap-y overflow-y-scroll focus:outline-none z-[100] ">
                               <Menu.Item>
                                 <div
                                   className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md"
                                   onClick={() => {
-                                    religionSet("Budha");
+                                    religionSet("budha");
                                     setOptSel3("Budha");
                                   }}
                                 >
@@ -894,7 +889,7 @@ function Index() {
                                 <div
                                   className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md"
                                   onClick={() => {
-                                    religionSet("Hindu");
+                                    religionSet("hindu");
                                     setOptSel3("Hindu");
                                   }}
                                 >
@@ -906,7 +901,7 @@ function Index() {
                                   className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md"
                                   onClick={() => {
                                     religionSet("islam");
-                                    setOptSel3("islam");
+                                    setOptSel3("Islam");
                                   }}
                                 >
                                   <span className="w-full ">Islam</span>
@@ -916,7 +911,7 @@ function Index() {
                                 <div
                                   className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md"
                                   onClick={() => {
-                                    religionSet("Katholik");
+                                    religionSet("katolik");
                                     setOptSel3("Katholik");
                                   }}
                                 >
@@ -927,7 +922,7 @@ function Index() {
                                 <div
                                   className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md"
                                   onClick={() => {
-                                    religionSet("Konghucu");
+                                    religionSet("konghucu");
                                     setOptSel3("Konghucu");
                                   }}
                                 >
@@ -938,7 +933,7 @@ function Index() {
                                 <div
                                   className="py-2 snap-start px-3 hover:bg-slate-200 rounded-md"
                                   onClick={() => {
-                                    religionSet("Protestan");
+                                    religionSet("protestan");
                                     setOptSel3("Protestan");
                                   }}
                                 >
