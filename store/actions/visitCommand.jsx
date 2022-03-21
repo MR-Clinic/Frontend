@@ -39,18 +39,19 @@ export const deleteVisit = (uid) =>{
     return(dispatch) =>{
         return new Promise((resolve, reject)=>{
             axios
-            .delete(visitUrl+"/"+uid,{
+            .put(visitUrl+"/"+uid,data,{
                 headers:{
                     Authorization:"Bearer "+Token
-                }
+                },
             },
-            data
             )
             .then(({data})=>{
                 console.log("delete",data);    
+                resolve(data)
             })
             .catch(({response})=>{
-                console.log("delete",response);
+                console.log("delete",response.data.message);
+                reject(response.data.message)
             })
         })
     }
