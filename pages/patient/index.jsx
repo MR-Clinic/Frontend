@@ -50,7 +50,13 @@ function Index() {
   const getType =
     typeof window !== "undefined" ? localStorage.getItem("profile") : null;
 
+    dispatch(allStore.getAllDoctors());
+    dispatch(allStore.getPatientDetails());
+    dispatch(allStore.getHistoryVisit(true, "pending"));
+    dispatch(allStore.getAllHistoryVisit());
+    
   useEffect(() => {
+
     if (getType !== "patient") {
       router.push("/404");
     } else {
@@ -59,6 +65,7 @@ function Index() {
       dispatch(allStore.getHistoryVisit(true, "pending"));
       dispatch(allStore.getAllHistoryVisit());
     }
+    
     const interval = setInterval(() => {
         dispatch(allStore.getHistoryVisit(true, "pending"));
         dispatch(allStore.getAllHistoryVisit());
