@@ -167,14 +167,14 @@ function Index() {
                   Konfirmasi Janji Kunjungan
                 </Dialog.Title>
 
-                <div className="flex  text-medium">
-                  <div className="mt-5 flex justify-center">
-                    <div className="w-[100px] rounded-full ">
+                <div className="flex  text-medium w-full">
+                  <div className="mt-5 flex justify-center w-full">
+                    <div className="min-w-[100px] w-[100px] rounded-full ">
                       <Image src={avatar} className="rounded-full" alt="logo dokter" />
                     </div>
-                    <div className="pl-10 items-center text-lg">
-                      <p className="text-2xl font-semibold">{doctor_name}</p>
-                      <p className="font-light text-md">
+                    <div className="pl-10 items-center text-lg w-72 max-w-[calc(90% - 100px)]">
+                      <p className="text-2xl font-semibold truncate">{doctor_name}</p>
+                      <p className="font-light text-md truncate">
                         {doctor_address}
                       </p>
                     </div>
@@ -324,12 +324,12 @@ function Index() {
                     <div className="bg-[#324B50] min-h-[150px] pt-3 mt-5 rounded-lg mr-4  drop-shadow-md" key={i}>
                       <div className="flex flex-col justify-between items-center bg-white h-full text-[10px] rounded-b-lg py-3 px-2">
                         <div className="flex justify-start w-full">
-                          <div className="w-[60px] rounded-full mr-3">
+                          <div className="min-w-[60px] rounded-full mr-3">
                             <Image src={avatar} className="rounded-full w-full h-full" alt="doctor-img" layout="responsive" />{" "}
                           </div>
-                          <div className="pr-1 max-w-[calc(100% - 60px)]">
-                            <p className="font-semibold text-lg ">{el.name}</p>
-                            <p > {el.address}</p>
+                          <div className="pr-1 truncate">
+                            <p className="font-semibold text-lg truncate">{el.name}</p>
+                            <p className="truncate"> {el.address}</p>
                           </div>
                         </div>
                         <div className="flex px-3">
