@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import allStore from "../../store/actions";
 import ListJanjiKunjungan from "../../components/dokter/ListJanjiKunjungan";
+import Head from "next/head";
 
 function Dashboard() {
   const [pasienSum, pasienSumSet] = useState("0");
@@ -14,23 +15,24 @@ function Dashboard() {
   const dispatch = useDispatch();
   const token =
     typeof window !== "undefined" ? localStorage.getItem("token") : null;
-  const uid = typeof window !== "undefined" ? localStorage.getItem("doctor_uid") : null;
+  const uid =
+    typeof window !== "undefined" ? localStorage.getItem("doctor_uid") : null;
 
   const dataDoctor = useSelector(
     (data) => data.getAllDoctorsReducer.listAllDoctors
   );
 
   useEffect(() => {
-      dispatch(allStore.totalPasien(uid)).then((e) => {
-        pasienSumSet(e.data.visits.length);
-      });
-      dispatch(allStore.kunjunganTotalToday(uid)).then((e) => {
-        kunjunganTotalTodaySet(e.data.visits.length);
-      });
-      dispatch(allStore.kunjunganTotal(uid)).then((e) => {
-        kunjunganTotalSet(e.data.visits.length);
-      });
-      dispatch(allStore.getDoctorProfile(token));    
+    dispatch(allStore.totalPasien(uid)).then((e) => {
+      pasienSumSet(e.data.visits.length);
+    });
+    dispatch(allStore.kunjunganTotalToday(uid)).then((e) => {
+      kunjunganTotalTodaySet(e.data.visits.length);
+    });
+    dispatch(allStore.kunjunganTotal(uid)).then((e) => {
+      kunjunganTotalSet(e.data.visits.length);
+    });
+    dispatch(allStore.getDoctorProfile(token));
     const interval = setInterval(() => {
       dispatch(allStore.totalPasien(uid)).then((e) => {
         pasienSumSet(e.data.visits.length);
@@ -41,7 +43,7 @@ function Dashboard() {
       dispatch(allStore.kunjunganTotal(uid)).then((e) => {
         kunjunganTotalSet(e.data.visits.length);
       });
-      dispatch(allStore.getDoctorProfile(token));    
+      dispatch(allStore.getDoctorProfile(token));
     }, 4000);
     return () => clearInterval(interval);
   }, []);
@@ -59,6 +61,14 @@ function Dashboard() {
   }
   return (
     <div>
+      <Head>
+        <title>Doctor Page - Dashboard</title>
+        <meta
+          property="og:title"
+          content="Doctor Page - Dashboard"
+          key="title"
+        />
+      </Head>
       <Nav dataDoctor={dataDoctor ? dataDoctor : false} />
       <Sidebar />
       {/* dashboard */}

@@ -3,6 +3,7 @@ import Nav from "../../components/nav";
 import allStore from "../../store/actions";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
+import Head from "next/head";
 
 function AdmPatientList() {
   const router = useRouter();
@@ -24,6 +25,14 @@ function AdmPatientList() {
 
   return (
     <>
+      <Head>
+        <title>Admin Page - Patient List</title>
+        <meta
+          property="og:title"
+          content="Admin Page - Patient List"
+          key="title"
+        />
+      </Head>
       <Nav />
 
       <div className="bg-[#E4F5E9] h-screen text-[#324B50]">

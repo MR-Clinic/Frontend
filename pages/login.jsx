@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import form from "../styles/Form.module.css";
 import axios from "axios";
 import ReactLoading from "react-loading";
+import Head from "next/head";
 
 const urlLogin = "https://faliqadlan.cloud.okteto.net/login";
 
@@ -90,6 +91,10 @@ function Login() {
   };
   return (
     <>
+      <Head>
+        <title>Login Page</title>
+        <meta property="og:title" content="Login Page" key="title" />
+      </Head>
       <div className="bg-[#324B50] p-20 text-[#324B50] font-redhat min-h-screen flex">
         <div className="bg-white px-5 py-3 rounded-lg shadow-white shadow-md min-h-[80vh]">
           <div className="grid grid-cols-3  rounded-lg h-full">

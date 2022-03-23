@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import Nav from "../../components/nav";
-import Sidebar from "../../components/sidebar";
 import allStore from "../../store/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 function VisitList() {
   const dispatch = useDispatch();
@@ -24,6 +24,14 @@ function VisitList() {
 
   return (
     <div>
+      <Head>
+        <title>Admin Page - Visit List</title>
+        <meta
+          property="og:title"
+          content="Admin Page - Visit List"
+          key="title"
+        />
+      </Head>
       <Nav />
 
       <div className="bg-[#E4F5E9] text-[#356E79] h-screen">
