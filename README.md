@@ -1,4 +1,4 @@
-                                                   Mr clinic
+# Mr clinic
 
 ![logo](./assets/Logo.png)
 
@@ -8,7 +8,7 @@
 - Live demo #2 [_https://frontend-mr-clinic.vercel.app_]
 - BackEnd Repository [_https://github.com/MR-Clinic/be_]
 - Quality Assurance Repository[_https://github.com/MR-Clinic/Quality-Assurance_]
-- Figma Design Link [_https://github.com/MR-Clinic/Quality-Assurance_]
+- Figma Design Link [_https://www.figma.com/file/feCwUQewjBqcFxG6jmpzou/Mr-Clinic?node-id=484%3A13_]
 
 ## Table of Contents
 
@@ -25,23 +25,23 @@
 
 ## General Information
 
-- our projects make an web based organizer that help the doctor to make an appointment with patient,
+- our projects make an web based organizer that help the doctor to make an appointment with patient, make an appointment easily with doctor, get a report recipe (for patient), and get organized medical records data by patient (doctor), can work with 3 roles, patients, doctor and admin. so what we expect in future, the clinic can get organized data, the patient can make an appointment easily with the doctor based on their livings and in the end no more untracked data that makes mistreated patient
 
 ## Technologies Used
 
-- Next.js(https://nextjs.org/) - version 12.1.0
-- TailwindCss(https://nextjs.org/) - version 3.0.23
+- [Next.js](https://nextjs.org/) - version 12.1.0
+- [TailwindCss](https://nextjs.org/) - version 3.0.23
 
 ## Built With
 
-- Next Js(https://nextjs.org/) - Next Js simplified HTML, routing and interactions for rapid web development
-- Tailwind Css(https://tailwindui.com/) - simplified to styling, with inline styling
-- React-icons(https://react-icons.github.io/react-icons/search)
-- axios(https://github.com/axios/axios/)
-- moment(https://momentjs.com/)
-- react-redux(https://react-redux.js.org/)
-- redux-thunk(https://github.com/reduxjs/redux-thunk)
-- sweetalert(https://sweetalert.js.org/guides/)
+- [Next Js](https://nextjs.org/) - Next Js simplified HTML, routing and interactions for rapid web development
+- [Tailwind Css](https://tailwindui.com/) - simplified to styling, with inline styling
+- [React-icons](https://react-icons.github.io/react-icons/search)
+- [axios](https://github.com/axios/axios/)
+- [moment](https://momentjs.com/)
+- [react-redux](https://react-redux.js.org/)
+- [redux-thunk](https://github.com/reduxjs/redux-thunk)
+- [sweetalert](https://sweetalert.js.org/guides/)
 
 ## Features
 
