@@ -11,6 +11,7 @@ import form from "../../styles/Form.module.css";
 import ReactLoading from "react-loading";
 import axios from "axios";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 const baseUrl = "https://faliqadlan.cloud.okteto.net/patient";
 const urlSubmit = "https://faliqadlan.cloud.okteto.net/visit?";
@@ -217,39 +218,39 @@ function Index() {
   //edit complain
   const putComplain = (e) => {
     setLoading(true);
-    console.log("put Inbound",e);
+    console.log("put Inbound", e);
     const body = {
       complaint: complaint,
-      status : "ready"
+      status: "ready",
     };
-    dispatch(allStore.visitConfirmed(body,e))
-    .then(() => {
-      swal(
-        "Selamat register berhasil !",
-        "Pasien Berhasil Ditambahkan",
-        "success"
-      );
-      dispatch(allStore.getAllPatient());
-      setTimeout(() => {
-        swal.close();
-      }, 3000);
-      closeModalAddPatient();
-    })
-    .catch((error) => {
-      console.log(error);
-      swal(
-        "sorry!",
-        "register gagal, email sudah digunakan atau user sudah terdaftar",
-        "error"
-      );
-    })
-    .finally(() => {
-      setLoading(false);
-    });
+    dispatch(allStore.visitConfirmed(body, e))
+      .then(() => {
+        swal(
+          "Selamat register berhasil !",
+          "Pasien Berhasil Ditambahkan",
+          "success"
+        );
+        dispatch(allStore.getAllPatient());
+        setTimeout(() => {
+          swal.close();
+        }, 3000);
+        closeModalAddPatient();
+      })
+      .catch((error) => {
+        console.log(error);
+        swal(
+          "sorry!",
+          "register gagal, email sudah digunakan atau user sudah terdaftar",
+          "error"
+        );
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     if (getType !== "admin") {
       router.push("/404");
@@ -283,7 +284,6 @@ function Index() {
       });
     }, 4000);
     return () => clearInterval(interval);
-
   }, []);
 
   useEffect(() => {
@@ -378,6 +378,14 @@ function Index() {
 
   return (
     <div>
+      <Head>
+        <title>Admin Page - Dashboard</title>
+        <meta
+          property="og:title"
+          content="Admin Page - Dashboard"
+          key="title"
+        />
+      </Head>
       {/* modal konfirmasi kunjungan */}
       <Transition appear show={isOpenConfirmed} as={Fragment}>
         <Dialog
@@ -459,7 +467,9 @@ function Index() {
                     <textarea
                       className="px-2  py-1 border-2 w-full min-h-[100px] border-gray-700 rounded-lg"
                       type="text"
-                      placeholder={adminVisit[0] ? adminVisit[0].complaint : "~"}
+                      placeholder={
+                        adminVisit[0] ? adminVisit[0].complaint : "~"
+                      }
                       onChange={(e) => setComplaint(e.target.value)}
                     />
                     <div className="flex justify-end mt-5 space-x-2 ">
@@ -473,9 +483,7 @@ function Index() {
                       <button
                         type="button"
                         className="inline-flex justify-center px-2 py-2 text-xs font-medium text-white bg-[#356E79] border border-transparent rounded-lg hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                        onClick={() =>
-                          putComplain(adminVisit[0].visit_uid)
-                        }
+                        onClick={() => putComplain(adminVisit[0].visit_uid)}
                       >
                         Konfirmasi Kunjungan
                       </button>
@@ -1043,7 +1051,7 @@ function Index() {
                       {el.status === "ready" || el.status === "pending" ? (
                         <p
                           className="border-2 rounded-md font-semibold ml-10 px-2 py-1 cursor-pointer hover:bg-[#324B50] hover:text-white"
-                          onClick={() => openModalConfirmedVisit(el.nik,el)}
+                          onClick={() => openModalConfirmedVisit(el.nik, el)}
                         >
                           {" "}
                           Konfirmasi

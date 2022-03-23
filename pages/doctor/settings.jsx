@@ -3,6 +3,7 @@ import Nav from "../../components/nav";
 import Sidebar from "../../components/sidebar";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
+import Head from "next/head";
 
 function Settings() {
   const [isOpenEdit, setIsOpenEdit] = useState(false);
@@ -22,6 +23,14 @@ function Settings() {
   }
   return (
     <>
+      <Head>
+        <title>Doctor Page - Settings</title>
+        <meta
+          property="og:title"
+          content="Doctor Page - Settings"
+          key="title"
+        />
+      </Head>
       {/* modal edit*/}
       <Transition appear show={isOpenEdit} as={Fragment}>
         <Dialog

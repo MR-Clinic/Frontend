@@ -3,6 +3,7 @@ import notfound from "../assets/not found.png";
 import Image from "next/image";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 function NotFound() {
   const getType =
@@ -28,6 +29,10 @@ function NotFound() {
 
   return (
     <div>
+      <Head>
+        <title>404 Not Found</title>
+        <meta property="og:title" content="404 Not Found" key="title" />
+      </Head>
       <div className="bg-[#E4F5E9] h-screen text-[#324B50] grid place-items-center">
         <div className="mt-20 text-3xl capitalize font-bold">
           {" "}
