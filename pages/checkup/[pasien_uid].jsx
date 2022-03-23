@@ -94,7 +94,7 @@ function Check() {
     data.append("action",action)
     data.append("recipe",recipe)
 
-    dispatch(allStore.putVisit(data))
+    dispatch(allStore.putVisit(data, visitUid))
     .then((e)=>{
       swal("Data Tersimpan","","success");
       setTimeout(() => {
