@@ -57,11 +57,11 @@ export const deleteVisit = (uid) =>{
     }
 }
 
-export const putVisit = (data) =>{
+export const putVisit = (data, idVisit) =>{
     return (dispatch) => {
         return new Promise((resolve,reject)=>{
             axios
-            .put(visitUrl+"/"+Vuid, data, {
+            .put(visitUrl+"/"+idVisit, data, {
                 headers:{
                     Authorization:"Bearer "+Token
                 }

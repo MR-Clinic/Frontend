@@ -334,6 +334,12 @@ function Index() {
           Ready
         </p>
       );
+    } else if (el === "completed") {
+      return (
+        <p className="bg-green-200 text-green-800 font-semibold drop-shadow-lg rounded-md px-2 py-1 ">
+          Completed
+        </p>
+      );
     } else {
       return (
         <p className="bg-red-200 text-red-800 font-semibold drop-shadow-lg rounded-md px-2 py-1 ">

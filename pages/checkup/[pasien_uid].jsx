@@ -96,21 +96,22 @@ function Check() {
     data.append("action", action);
     data.append("recipe", recipe);
 
-    dispatch(allStore.putVisit(data))
-      .then((e) => {
-        swal("Data Tersimpan", "", "success");
-        setTimeout(() => {
-          swal.close();
-          route.push("/doctor");
-        }, 3000);
-      })
-      .catch((e) => {
-        swal("Data Belum Tersimpan", e + " ,Coba dalam beberapa saat", "error");
-      })
-      .finally(() => {
-        loadSubmitSet(false);
-      });
-  }
+
+    dispatch(allStore.putVisit(data, visitUid))
+    .then((e)=>{
+      swal("Data Tersimpan","","success");
+      setTimeout(() => {
+        swal.close();
+        route.push("/doctor")
+      }, 3000);
+    })
+    .catch((e)=>{
+      swal("Data Belum Tersimpan", e+" ,Coba dalam beberapa saat", "error")
+    })
+    .finally(()=>{
+      loadSubmitSet(false)
+    })
+    }
 
   function addObatList() {
     console.log("resep :", resepList);
