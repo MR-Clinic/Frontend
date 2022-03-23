@@ -1,10 +1,11 @@
 # Mr clinic
 
 > this project help the user as a patient get a medical record realtime, help the user to make an appointment with doctor, and help the doctor organize the data
-> Live demo [_https://mrclinic.netlify.app_]
-> Live demo [_https://frontend-mr-clinic.vercel.app_]
-> BackEnd Repository [_https://github.com/MR-Clinic/be_]
-> Quality Assurance Repository[_https://github.com/MR-Clinic/Quality-Assurance_]
+
+- Live demo #1 [_https://mrclinic.netlify.app_]
+- Live demo #2 [_https://frontend-mr-clinic.vercel.app_]
+- BackEnd Repository [_https://github.com/MR-Clinic/be_]
+- Quality Assurance Repository[_https://github.com/MR-Clinic/Quality-Assurance_]
 
 ## Table of Contents
 
@@ -21,49 +22,50 @@
 
 ## General Information
 
-- our project based on airbnb application that provide the customer to book some restplace like hotels or restroom in their nearby area.
-- the purpose of this object is to improve our skill, practice the theory in the class with make a real project, collaborate with backend role. so, it's really a place for us to get many experience, so feel sorry if the project works not at the point.
-  feel free and bigthanks for everyone to comment, criticize and improve this project !
+- our projects make an web based organizer that help the doctor to make an appointment with patient,
 
 ## Technologies Used
 
-- Next.js - version 12.1.0
-- TailwindCss - version 3.0.23
+- Next.js[_https://nextjs.org/_] - version 12.1.0
+- TailwindCss[_https://nextjs.org/_] - version 3.0.23
 
 ## Built With
 
-- Next Js - Next Js simplified HTML, routing and interactions for rapid web development
-- Tailwind Css - simplified to styling, with inline styling
-- Geolib
-- React-Date-Picker
-- axios
-- date-fns
-- react-icons
-- react-map-gl
-- react-redux
-- redux-thunk
-- sweetalert
+- Next Js[_https://nextjs.org/_] - Next Js simplified HTML, routing and interactions for rapid web development
+- Tailwind Css[_https://tailwindui.com/_] - simplified to styling, with inline styling
+- React-icons[_https://react-icons.github.io/react-icons/search_]
+- axios[_https://github.com/axios/axios/_]
+- moment[_https://momentjs.com/_]
+- react-redux[_https://react-redux.js.org/_]
+- redux-thunk[_https://github.com/reduxjs/redux-thunk_]
+- sweetalert[_https://sweetalert.js.org/guides/_]
 
 ## Features
 
 List the ready features here:
 
-- register - sign in - sign out with regex validation
-- dynamic page on detail section, categories section
+- register - sign in - sign out with regex, on username, email input and password validation
+- doctor can check anytime patient data, and fill the patient medical record
+- doctor and admin can check how much patient visit (daily report, and total report)
+- user type validation ( the patient can't access doctor page, etc)
+- patient can make an appointment with doctor (registration needed),patient can cancelled the appointment, and patient can get history visit report (with medicine recipe)
+- auto generate account on admin, doctor can edit the data (username, password, form data, admin password, etc.)
 - work on one flow, from books the room until payment section
 
 ## Screenshots
 
-                Home page and Rooms Nearby Section preview
+                Home page section
 
 ![homepage-section-1](./assets/homepage-section-1.png)
 
 ![homepage-section-2](./assets/Screenshot-categoriespage-bindmap.png)
 
-                Detail Rooms and Other Section preview
+                Dashboard page
 
 ![homepage-section-1](./assets/Payment.png)
 ![homepage-section-1](./assets/Booking.png)
+
+                Diagnose (doctor page)
 
 ## Setup
 
