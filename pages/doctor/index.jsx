@@ -20,16 +20,6 @@ function Dashboard() {
     (data) => data.getAllDoctorsReducer.listAllDoctors
   );
 
-    dispatch(allStore.totalPasien(uid)).then((e) => {
-      pasienSumSet(e.data.visits.length);
-    });
-    dispatch(allStore.kunjunganTotalToday(uid)).then((e) => {
-      kunjunganTotalTodaySet(e.data.visits.length);
-    });
-    dispatch(allStore.kunjunganTotal(uid)).then((e) => {
-      kunjunganTotalSet(e.data.visits.length);
-    });
-    dispatch(allStore.getDoctorProfile(token));    
   useEffect(() => {
       dispatch(allStore.totalPasien(uid)).then((e) => {
         pasienSumSet(e.data.visits.length);
@@ -52,9 +42,9 @@ function Dashboard() {
         kunjunganTotalSet(e.data.visits.length);
       });
       dispatch(allStore.getDoctorProfile(token));    
-    }, 10000);
+    }, 4000);
     return () => clearInterval(interval);
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     dispatch(allStore.getAllDoctors());
