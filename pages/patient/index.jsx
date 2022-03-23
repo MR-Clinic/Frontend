@@ -50,10 +50,6 @@ function Index() {
   const getType =
     typeof window !== "undefined" ? localStorage.getItem("profile") : null;
 
-    dispatch(allStore.getAllDoctors());
-    dispatch(allStore.getPatientDetails());
-    dispatch(allStore.getHistoryVisit(true, "pending"));
-    dispatch(allStore.getAllHistoryVisit());
     
   useEffect(() => {
 
@@ -72,7 +68,7 @@ function Index() {
     }, 10000);
     
     return () => clearInterval(interval);
-  },[dispatch]);
+  },[]);
 
   function closeModal() {
     setIsOpen(false);

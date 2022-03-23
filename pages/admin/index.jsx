@@ -249,19 +249,6 @@ function Index() {
   };
 
   const dispatch = useDispatch();
-
-  dispatch(allStore.todayVisitList());
-  dispatch(allStore.getAllPatient());
-  dispatch(allStore.getPatientDetails());
-  dispatch(allStore.totalPasien(uid)).then((e) => {
-    pasienSumSet(e.data.visits.length);
-  });
-  dispatch(allStore.kunjunganTotalToday(uid)).then((e) => {
-    kunjunganTotalTodaySet(e.data.visits.length);
-  });
-  dispatch(allStore.kunjunganTotal(uid)).then((e) => {
-    kunjunganTotalSet(e.data.visits.length);
-  });
   
   useEffect(() => {
     if (getType !== "admin") {
@@ -280,7 +267,24 @@ function Index() {
         kunjunganTotalSet(e.data.visits.length);
       });
     }
-  }, [dispatch]);
+
+    const interval = setInterval(() => {
+      dispatch(allStore.todayVisitList());
+      dispatch(allStore.getAllPatient());
+      dispatch(allStore.getPatientDetails());
+      dispatch(allStore.totalPasien(uid)).then((e) => {
+        pasienSumSet(e.data.visits.length);
+      });
+      dispatch(allStore.kunjunganTotalToday(uid)).then((e) => {
+        kunjunganTotalTodaySet(e.data.visits.length);
+      });
+      dispatch(allStore.kunjunganTotal(uid)).then((e) => {
+        kunjunganTotalSet(e.data.visits.length);
+      });
+    }, 4000);
+    return () => clearInterval(interval);
+
+  }, []);
 
   useEffect(() => {
     setDataListPatient();
