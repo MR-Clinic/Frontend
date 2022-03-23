@@ -377,7 +377,7 @@ function Index() {
                     {el.doctorAddress}
                   </td>
                   <td className="w-2/12">{el.mainDiagnose}</td>
-                  <td className="w-2/12">{el.addiditionDiagnose}</td>
+                  <td className="w-2/12">{el.additionDiagnose}</td>
                   <td className="w-2/12">{el.recipe}</td>
                 </tr>
                 : 
