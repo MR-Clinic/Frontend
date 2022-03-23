@@ -90,7 +90,7 @@ function Check() {
     data.append("height",height)
     data.append("bmi",bmi)
     data.append("mainDiagnose",mainDiagnose)
-    data.append("addiditonDiagnose",addiditonDiagnose)
+    data.append("additionDiagnose",addiditonDiagnose)
     data.append("action",action)
     data.append("recipe",recipe)
 
