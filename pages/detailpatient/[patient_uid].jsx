@@ -5,10 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import allStore from "../../store/actions";
+import Head from "next/head";
 
 function Id() {
   const router = useRouter();
-  const patient_uid  = typeof window !== "undefined" ? localStorage.getItem("pasienUid") : null;;
+  const patient_uid =
+    typeof window !== "undefined" ? localStorage.getItem("pasienUid") : null;
 
   const dispatch = useDispatch();
 
@@ -22,16 +24,20 @@ function Id() {
   useEffect(() => {
     console.log("masuk use effect patient uid", dataDiagnose);
     if (patient_uid) {
-      dispatch(allStore.detailPatient(patient_uid))
-      .then((el)=>{
-        console.log("then detail",el);
+      dispatch(allStore.detailPatient(patient_uid)).then((el) => {
+        console.log("then detail", el);
         dispatch(allStore.patientDiagnose(el.nik));
-      })
+      });
     }
   }, [patient_uid]);
 
   return (
     <div>
+      <Head>
+        <title>Detail - Patient</title>
+        <meta property="og:title" content="Detail - Patient" key="title" />
+      </Head>
+
       <Nav />
       <Sidebar />
       <div className="bg-[#E4F5E9] text-[#356E79] min-h-screen">
@@ -84,23 +90,22 @@ function Id() {
                 </tr>
               </thead>
               <tbody>
-                {dataDiagnose ? (
-                  dataDiagnose.map((el,i)=>(
-                    el.status === "completed" ?
-                    <tr className="text-center">
-                    <td className="py-2"> {el.visit_uid}</td>
-                    <td>{el.bloodPressuse}</td>
-                    <td>{el.heartRate}</td>
-                    <td>{el.respiratoryRate}</td>
-                    <td>{el.o2Saturate}</td>
-                    <td>{el.weight}</td>
-                    <td>{el.height}</td>
-                    <td>{el.bmi}</td>
-                    </tr>
-                    :
-                    null
-                  ))
-                ) : null}
+                {dataDiagnose
+                  ? dataDiagnose.map((el, i) =>
+                      el.status === "completed" ? (
+                        <tr className="text-center">
+                          <td className="py-2"> {el.visit_uid}</td>
+                          <td>{el.bloodPressuse}</td>
+                          <td>{el.heartRate}</td>
+                          <td>{el.respiratoryRate}</td>
+                          <td>{el.o2Saturate}</td>
+                          <td>{el.weight}</td>
+                          <td>{el.height}</td>
+                          <td>{el.bmi}</td>
+                        </tr>
+                      ) : null
+                    )
+                  : null}
               </tbody>
             </table>
           </div>
@@ -118,21 +123,20 @@ function Id() {
                 </tr>
               </thead>
               <tbody>
-                {dataDiagnose ? (
-                  dataDiagnose.map((el,i)=>(
-                  el.status === "completed" ?
-                  <tr className="text-center">
-                    <td className="py-2">{el.visit_uid}</td>
-                    <td>{el.bloodPressuse} </td>
-                    <td>{el.heartRate} </td>
-                    <td>{el.respiratoryRate} </td>
-                    <td>{el.o2Saturate} </td>
-                    <td>{el.recipe} </td>
-                  </tr>
-                  :
-                    null
-                  ))
-                ) : null}
+                {dataDiagnose
+                  ? dataDiagnose.map((el, i) =>
+                      el.status === "completed" ? (
+                        <tr className="text-center">
+                          <td className="py-2">{el.visit_uid}</td>
+                          <td>{el.bloodPressuse} </td>
+                          <td>{el.heartRate} </td>
+                          <td>{el.respiratoryRate} </td>
+                          <td>{el.o2Saturate} </td>
+                          <td>{el.recipe} </td>
+                        </tr>
+                      ) : null
+                    )
+                  : null}
               </tbody>
             </table>
           </div>

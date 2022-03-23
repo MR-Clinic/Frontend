@@ -4,6 +4,7 @@ import Sidebar from "../../components/sidebar";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import allStore from "../../store/actions";
+import Head from "next/head";
 
 function PatientList() {
   const router = useRouter();
@@ -24,6 +25,14 @@ function PatientList() {
 
   return (
     <>
+      <Head>
+        <title>Doctor Page - Patient List</title>
+        <meta
+          property="og:title"
+          content="Doctor Page - Patient List"
+          key="title"
+        />
+      </Head>
       <Nav />
       <Sidebar />
 
