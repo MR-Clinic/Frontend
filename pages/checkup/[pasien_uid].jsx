@@ -27,7 +27,7 @@ function Check() {
   const [Pekerjaan, PekerjaanSet] = useState("~")
   const complaint = typeof window !== "undefined" ? localStorage.getItem("complaint") : null;
   const [noMR, noMRSet] = useState("~")
-  const [age, ageSet] = useState("");
+  const [age, ageSet] = useState(0);
   
 
   //Input var

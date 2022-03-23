@@ -219,14 +219,14 @@ function ListJanjiKunjungan() {
       <div className="flex flex-wrap items-start mt-10">
         {listJK ?
           listJK.map((e,i)=>(
-            e.status !== "completed" ? 
+            e.status !== "canceled" ? 
             <div key={i} className="bg-white rounded-lg p-5 flex flex-col drop-shadow-lg items-start ml-5 w-[220px] mb-5 capitalize">
               <p className="text-xl font-bold"> {e.patientName} </p>
               <p className=""> {e.gender} </p>
               <p className=""> </p>
-              <div className="flex text-xs mt-3">
+              <div className="flex text-xs mt-3 justify-between w-full">
                 {handleStatus(e.status)}
-                <p className="border-2 rounded-md font-semibold ml-10 px-1 py-1 cursor-pointer"  onClick={(el)=>handleModal(e)}>
+                <p className="border-2 rounded-md font-semibold px-1 py-1 cursor-pointer"  onClick={(el)=>handleModal(e)}>
                   {" "}
                   Detail Data
                 </p>
